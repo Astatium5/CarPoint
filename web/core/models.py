@@ -49,7 +49,7 @@ class Set(models.Model):
     model = models.ForeignKey(Model, on_delete=models.PROTECT, verbose_name="Модель")
     title = models.CharField(max_length=255, verbose_name="Название", unique=False)
     image = models.URLField(verbose_name="Ссылка на картинку")
-    special = models.TextField()
+    special = models.TextField(verbose_name="Конфигурации")
 
     def __str__(self):
         return self.title

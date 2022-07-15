@@ -1,5 +1,6 @@
 import asyncio
 import databases
+from pathlib import Path
 import xml.etree.ElementTree as ET
 
 import orm
@@ -11,6 +12,9 @@ from objects.globals import config
 from objects import globals
 
 
+TEXT_PATH = Path(__file__).resolve().parent
+
+
 async def main():
     globals.bot = Bot(token=config.token, parse_mode="HTML")
     globals.dp = Dispatcher(globals.bot, storage=MemoryStorage())
@@ -18,7 +22,7 @@ async def main():
     bot_info: dict = await globals.bot.get_me()
     logger.info(F"Bot username: @{bot_info.username}, Bot ID: {bot_info.id}")
 
-    tree = ET.parse('text/text.xml')
+    tree = ET.parse(F'{TEXT_PATH}/text/text.xml')
     globals.root = tree.getroot()
 
     # database = databases.Database(F"mysql+aiomysql://root:fG11xztk@localhost/carpointdb")

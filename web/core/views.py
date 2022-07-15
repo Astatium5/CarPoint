@@ -1,4 +1,5 @@
 import json
+from collections import Counter
 
 from django.shortcuts import render
 from django.db.models.query import QuerySet
@@ -75,6 +76,16 @@ class API:
             queryset: QuerySet = Mark.objects.filter(is_visible=True).all()
             all_marks = [mark.title for mark in queryset]
             return HttpResponse(json.dumps({"all_marks": all_marks}), content_type='application/json')
+
+
+    class GetAllBodiesView(ListAPIView):
+        serializer_class: Model = Model
+
+        def get(self, request: HttpRequest):
+            queryset: QuerySet = Model.objects.all()
+            counter = Counter([model.body for model in queryset])
+            bodies = list(counter.keys())
+            return HttpResponse(json.dumps({"all_bodies": bodies}), content_type='application/json')
 
 
 class Web:

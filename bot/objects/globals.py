@@ -15,3 +15,5 @@ phone = None # User phone.
 
 prfp = None # Price range first part.
 prsp = None # Price range second part.
+
+start = None

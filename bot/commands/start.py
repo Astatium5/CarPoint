@@ -19,6 +19,7 @@ api_requests = Requests()
 
 @dp.message_handler(commands="start")
 async def start(message: Message, state: FSMContext):
+    globals.start = start
     await state.finish()
     response = api_requests.create_user(user_id=message.from_user.id, first_name=message.from_user.first_name,
         username=message.from_user.username) # Create new user

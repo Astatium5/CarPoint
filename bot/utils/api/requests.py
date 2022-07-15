@@ -41,3 +41,8 @@ class Requests:
         path = "api/get_all_marks"
         response = make_request(path=path)
         return response
+
+    def get_all_bodies(self):
+        path = "api/get_bodies"
+        response = make_request(path=path)
+        return response

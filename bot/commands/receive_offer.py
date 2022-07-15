@@ -109,7 +109,15 @@ async def get_price(query: CallbackQuery):
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("mark#")))
 async def get_mark(query: CallbackQuery):
-    pass
+    response = api_requests.get_all_bodies()
+    bodies = response.get("all_bodies")
+
+    reply_markup = InlineKeyboardMarkup()
+    for body in bodies:
+        reply_markup.add(InlineKeyboardButton(text=body, callback_data="body#{body}"))
+
+    offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
+    return await query.message.edit_text(offer_page.find("select_body").text, reply_markup=reply_markup)
 
 @dp.callback_query_handler(lambda query: query.data == "new_search")
 async def new_search(query: CallbackQuery):

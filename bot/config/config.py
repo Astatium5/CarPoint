@@ -21,7 +21,7 @@ class Config:
         self.host = os.getenv("HOST")
         self.port = os.getenv("PORT")
 
-    def change_value(self, key: str | int, value):
+    def change_value(self, key, value):
         """ The function changes the value in the file by the key
         Parameters
         ----------

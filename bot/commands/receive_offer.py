@@ -115,9 +115,25 @@ async def get_mark(query: CallbackQuery):
     reply_markup = InlineKeyboardMarkup()
     for body in bodies:
         reply_markup.add(InlineKeyboardButton(text=body, callback_data="body#{body}"))
+    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
     offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
     return await query.message.edit_text(offer_page.find("select_body").text, reply_markup=reply_markup)
+
+
+@dp.callback_query_handler(lambda query: query.data.startswith(("body#")))
+async def get_body(query: CallbackQuery):
+    response = api_requests.get_all_fuel_types()
+    fuel_types = response.get("all_fuel_types")
+
+    reply_markup = InlineKeyboardMarkup()
+    for fuel_type in fuel_types:
+        reply_markup.add(InlineKeyboardButton(text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
+    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+
+    offer_page = globals.root.find("receive_offer")
+    return await query.message.edit_text(offer_page.find("select_fuel_type").text, reply_markup=reply_markup)
+
 
 @dp.callback_query_handler(lambda query: query.data == "new_search")
 async def new_search(query: CallbackQuery):

@@ -9,3 +9,8 @@ class Meeting(StatesGroup):
 class ReceiveOffer(StatesGroup):
     phone = State()
     phone_string = State()
+
+
+class Volume(StatesGroup):
+    first_part = State()
+    second_part = State()

@@ -88,6 +88,16 @@ class API:
             return HttpResponse(json.dumps({"all_bodies": bodies}), content_type='application/json')
 
 
+    class GetAllFuelTypesView(ListAPIView):
+        serializer_class: Engine = Engine
+
+        def get(self, request: HttpRequest):
+            queryset: QuerySet = Engine.objects.all()
+            counter = Counter([engine.type_fuel for engine in queryset])
+            fuel_types = list(counter.keys())
+            return HttpResponse(json.dumps({"all_fuel_types": fuel_types}), content_type='application/json')
+
+
 class Web:
     def index(request) -> HttpResponse:
         return render(request, "index.html")

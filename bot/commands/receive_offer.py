@@ -43,13 +43,13 @@ reply_price_markup = InlineKeyboardMarkup(inline_keyboard=[
 ])
 
 api_requests = Requests() # Init Requests object.
+offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
 
 
 @dp.message_handler(lambda message: message.text == "Получить предложение")
 async def receive_offer(message: Message):
     response = api_requests.check_phone(user_id=message.from_user.id) # Send check user phone request.
 
-    offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
     if not response.get("response"):
         await message.answer(offer_page.find("is_not_phone").text)
         return await ReceiveOffer.phone.set()
@@ -72,7 +72,6 @@ async def get_phone(message: Message, state: FSMContext):
             [InlineKeyboardButton(text="Подтвердить", callback_data="is_agree")]
         ]
     )
-    offer_page = globals.root.find("receive_offer")
 
     await state.finish()
     await message.answer(offer_page.find("personal_data").text, reply_markup=reply_markup)
@@ -103,7 +102,6 @@ async def get_price(query: CallbackQuery):
     reply_markup.add(InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    offer_page = globals.root.find("receive_offer")
     return await query.message.edit_text(offer_page.find("select_mark").text, reply_markup=reply_markup)
 
 
@@ -117,7 +115,6 @@ async def get_mark(query: CallbackQuery):
         reply_markup.add(InlineKeyboardButton(text=body, callback_data="body#{body}"))
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
     return await query.message.edit_text(offer_page.find("select_body").text, reply_markup=reply_markup)
 
 
@@ -131,8 +128,46 @@ async def get_body(query: CallbackQuery):
         reply_markup.add(InlineKeyboardButton(text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    offer_page = globals.root.find("receive_offer")
     return await query.message.edit_text(offer_page.find("select_fuel_type").text, reply_markup=reply_markup)
+
+
+@dp.callback_query_handler(lambda query: query.data.startswith(("fuel_type#")))
+async def get_fuel_type(query: CallbackQuery):
+    reply_markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="По объему", callback_data="by_volume")],
+            [InlineKeyboardButton(text="По мощности", callback_data="by_power")],
+        ]
+    )
+    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    return await query.message.edit_text(offer_page.find("select_volume_or_power").text, reply_markup=reply_markup)
+
+
+@dp.callback_query_handler(lambda query: query.data.startswith(("by_volume")))
+async def get_volume(query: CallbackQuery, state: FSMContext):
+    await query.message.edit_text(offer_page.find("first_volume_part").text)
+    await Volume.first_part.set()
+
+
+@dp.message_handler(state=Volume.first_part)
+async def get_first_volume_part(message: Message, state: FSMContext):
+    if message.text == "/start":
+        return await start(message, state)
+    await message.answer(offer_page.find("second_volume_part").text)
+    await Volume.second_part.set()
+
+
+@dp.message_handler(state=Volume.second_part)
+async def get_second_volume_part(message: Message, state: FSMContext):
+    if message.text == "/start":
+        return await start(message, state)
+
+    reply_markup = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Механика", callback_data="transmission#МКПП")],
+        [InlineKeyboardButton(text="Автомат", callback_data="transmission#АКПП")]
+    ])
+    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data == "new_search")

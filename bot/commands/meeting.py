@@ -1,6 +1,6 @@
 import re
 
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message
 from aiogram.dispatcher.storage import FSMContext
 
 from objects.globals import dp, bot

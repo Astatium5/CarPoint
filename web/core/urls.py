@@ -17,5 +17,6 @@ urlpatterns = [
     path("api/check_phone/<int:user_id>", API.CheckPhoneView.as_view(), name="check_phone"),
     path("api/set_phone/<int:user_id>/<int:phone>", API.SetPhoneView.as_view(), name="set_phone"),
     path("api/get_all_marks", API.GetAllMarksView.as_view(), name="get_all_marks"),
-    path("api/get_bodies", API.GetAllBodiesView.as_view(), name="get_bodies"),
+    path("api/get_all_bodies", API.GetAllBodiesView.as_view(), name="get_all_bodies"),
+    path("api/get_all_fuel_types", API.GetAllFuelTypesView.as_view(), name="get_all_fuel_types"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

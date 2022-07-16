@@ -65,7 +65,7 @@ class Engine(models.Model):
     type_fuel = models.CharField(max_length=255, verbose_name="Тип топлива", null=True)
 
     def __str__(self):
-        return F"{self.volume} - {self.power}"
+        return F"{self.volume} - {self.power} - {self.type_fuel}"
 
     class Meta:
         verbose_name = "Двигатель"

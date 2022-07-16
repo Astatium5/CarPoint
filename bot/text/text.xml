@@ -39,6 +39,18 @@
 <select_fuel_type>
 Чем будешь кормить зверя (укажи тип двигателя)?
 </select_fuel_type>
+<select_volume_or_power>
+А скажи, выбирать будешь по объёму или по мощности двигателя?
+</select_volume_or_power>
+<first_volume_part>
+Объем двигателя напрямую влияет на расход топлива, если только он не на электротяге =) Введи начало диапазона в формате x.x
+</first_volume_part>
+<second_volume_part>
+Отлично,теперь введи конец диапазона в формате x.x
+</second_volume_part>
+<select_transmission>
+Я запомнил, Давай подберем коробку.
+</select_transmission>
 
 </receive_offer>
 

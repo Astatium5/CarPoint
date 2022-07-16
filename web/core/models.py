@@ -108,15 +108,15 @@ class City(models.Model):
 
 class Car(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
-    set_id = models.IntegerField()
+    set = models.ForeignKey(Set, on_delete=models.PROTECT)
     image = models.URLField(verbose_name="Картинка")
     price = models.FloatField(verbose_name="Цена")
-    engine_id = models.ForeignKey(Engine, on_delete=models.PROTECT, verbose_name="Двигатель")
-    transmission_id = models.ForeignKey(Transmission, on_delete=models.PROTECT, verbose_name="Трансмиссия")
-    wd_id = models.ForeignKey(Wd, on_delete=models.PROTECT, verbose_name="Привод")
+    engine = models.ForeignKey(Engine, on_delete=models.PROTECT, verbose_name="Двигатель")
+    transmission = models.ForeignKey(Transmission, on_delete=models.PROTECT, verbose_name="Трансмиссия")
+    wd = models.ForeignKey(Wd, on_delete=models.PROTECT, verbose_name="Привод")
     expenditure = models.CharField(max_length=255, verbose_name="Расход")
-    city_id = models.ForeignKey(City, on_delete=models.PROTECT, verbose_name="Город")
-    mark_id = models.ForeignKey(Mark, on_delete=models.PROTECT, verbose_name="Марка")
+    city = models.ForeignKey(City, on_delete=models.PROTECT, verbose_name="Город")
+    mark = models.ForeignKey(Mark, on_delete=models.PROTECT, verbose_name="Марка")
 
     def __str__(self):
         return self.title

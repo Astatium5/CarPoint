@@ -1,6 +1,7 @@
 from aiogram import Dispatcher, Bot
 
 from config.config import Config
+from states.states import *
 
 config: Config = Config()  # Init config object.
 
@@ -17,3 +18,5 @@ prfp = None # Price range first part.
 prsp = None # Price range second part.
 
 start = None
+
+offer_metadata: OfferMetaData = None

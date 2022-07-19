@@ -3,11 +3,35 @@ from collections import Counter
 
 from django.shortcuts import render
 from django.db.models.query import QuerySet
+from requests import head
 from rest_framework.generics import ListAPIView
 from django.http import (HttpRequest, HttpResponse,
                          HttpResponseRedirect, HttpResponsePermanentRedirect)
 
 from .models import *
+
+
+PRICE_RANGE = {
+    "87506fd2b91be8b7ab7b59d069c42d40": {
+        "from": 500000,
+        "to": 2000000
+    },
+
+    "1ee1876784dfba4421dfbc93272053a8": {
+        "from": 2000000,
+        "to": 4000000
+    },
+
+    "af499ea026c3e952d324d7af4cf7aaee": {
+        "from": 4000000,
+        "to": 6000000
+    },
+
+    "2a3225e2decd960cebe8c4de135f59a0": {
+        "from": 6000000,
+        "to": None
+    },
+} # Keys is ids price range.
 
 
 class API:
@@ -81,8 +105,8 @@ class API:
     class GetAllBodiesView(ListAPIView):
         serializer_class: Model = Model
 
-        def get(self, request: HttpRequest):
-            queryset: QuerySet = Model.objects.all()
+        def get(self, request: HttpRequest, mark: str):
+            queryset: QuerySet = Model.objects.filter(mark=Mark.objects.get(title=mark).pk).all()
             counter = Counter([model.body for model in queryset])
             bodies = list(counter.keys())
             return HttpResponse(json.dumps({"all_bodies": bodies}), content_type='application/json')
@@ -91,11 +115,40 @@ class API:
     class GetAllFuelTypesView(ListAPIView):
         serializer_class: Engine = Engine
 
-        def get(self, request: HttpRequest):
-            queryset: QuerySet = Engine.objects.all()
-            counter = Counter([engine.type_fuel for engine in queryset])
+        def get(self, request: HttpRequest, mark: str):
+            mark: QuerySet = Mark.objects.filter(title=mark).get()
+            cars: QuerySet = Car.objects.filter(mark=mark).all()
+            engines = [Engine.objects.filter(id=car.engine.pk).get() for car in cars]
+            counter = Counter([engine.type_fuel for engine in engines])
             fuel_types = list(counter.keys())
             return HttpResponse(json.dumps({"all_fuel_types": fuel_types}), content_type='application/json')
+
+
+    class FindCarView(ListAPIView):
+        serializer_class: Car = Car
+
+        def get(self, request: HttpRequest,
+            body: str, fuel_type: str, transmission: str
+        ):
+            if body == "Unknow" or fuel_type == "Unknow":
+                return HttpResponse(json.dumps({"response": False}), content_type='application/json')
+            else:
+                headers = request.headers
+                if bool(headers.get("Isrange")):
+                    price_range = PRICE_RANGE.get(headers.get("Rangeid"))
+                    _from = price_range.get("from")
+                    _to = price_range.get("to")
+                    if bool(headers.get("Isvolume")):
+                        mark = Mark.objects.filter(title=headers.get("Mark")).get()
+                        cars = Car.objects.filter(mark=mark, price__range=[_from, _to],).all()
+                        print(len(cars))
+                    elif bool(headers.get("Ispower")):
+                        pass
+                elif bool(headers.get("Ismyselfrange")):
+                    pass
+                elif bool(headers.get("Isspecificamount")):
+                    pass
+            return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
 class Web:

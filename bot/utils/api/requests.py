@@ -42,12 +42,24 @@ class Requests:
         response = make_request(path=path)
         return response
 
-    def get_all_bodies(self):
-        path = "api/get_all_bodies"
-        response = make_request(path=path)
+    def get_all_bodies(self, mark: str):
+        path = "api/get_all_bodies/"
+        response = make_request(path=path, mark=mark)
         return response
 
-    def get_all_fuel_types(self):
-        path = "api/get_all_fuel_types"
-        response = make_request(path=path)
+    def get_all_fuel_types(self, mark: str):
+        path = "api/get_all_fuel_types/"
+        response = make_request(path=path, mark=mark)
+        return response
+
+    def find_car(self,
+        **kwargs
+    ):
+        path = "api/find_car/"
+        _ = kwargs
+        params = dict(body=_.get("Body") if _.get("Body") else "Unknow",
+            fuel_type=_.get("FuelType") if _.get("FuelType") else "Unknow",
+            transmission=_.get("Transmission") if _.get("Transmission") else "Unknow")
+        del kwargs["Body"], kwargs["FuelType"], kwargs["Transmission"]
+        response = make_request(path=path, headers=kwargs, **params)
         return response

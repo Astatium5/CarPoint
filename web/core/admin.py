@@ -73,6 +73,6 @@ class City(admin.ModelAdmin):
 
 @admin.register(Car)
 class Car(admin.ModelAdmin):
-    fields = ["title", "set_id", "image", "price", "engine_id", "transmission_id", "wd_id", "expenditure", "city_id", "mark_id"]
+    fields = ["title", "set", "image", "price", "engine", "transmission", "wd", "expenditure", "city", "mark"]
     list_display = ["title", "price"]
     list_per_page = 20

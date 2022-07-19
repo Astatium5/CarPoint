@@ -7,7 +7,6 @@ from objects.globals import dp, bot
 from objects import globals
 from states.states import Meeting
 from utils.api.requests import Requests
-# from .start import start
 
 
 api_requests = Requests()

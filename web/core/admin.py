@@ -42,7 +42,7 @@ class Set(admin.ModelAdmin):
 @admin.register(Engine)
 class Engine(admin.ModelAdmin):
     fields = ["volume", "power", "type_fuel"]
-    list_display = ["volume", "power"]
+    list_display = ["volume", "power", "type_fuel"]
     search_fields = ["volume"]
     list_per_page = 15
 

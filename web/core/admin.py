@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from .models import *
 
@@ -74,5 +75,11 @@ class City(admin.ModelAdmin):
 @admin.register(Car)
 class Car(admin.ModelAdmin):
     fields = ["title", "set", "image", "price", "engine", "transmission", "wd", "expenditure", "city", "mark"]
-    list_display = ["title", "price"]
+    list_display = ["title", "price", "get_image"]
     list_per_page = 20
+
+    def get_image(self, obj):
+        if obj.image:
+            return mark_safe(f"<img src='{obj.image}' wdith=70 height=70>")
+
+    get_image.short_description = "Изображение"

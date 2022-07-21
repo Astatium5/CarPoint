@@ -121,9 +121,23 @@ class Car(models.Model):
     def __str__(self):
         return self.title
 
+    def to_dict(self):
+        return dict(id=self.id, title=self.title, price=self.price, image=self.image)
+
     class Meta:
         verbose_name = "Автомобиль"
         verbose_name_plural = "Автомобили"
+
+
+class Color(models.Model):
+    title = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Цвет"
+        verbose_name_plural = "Цвета"
 
 
 class SetEngine(models.Model):
@@ -134,3 +148,8 @@ class SetEngine(models.Model):
 class SetTransmission(models.Model):
     set = models.ForeignKey(Set, on_delete=models.PROTECT)
     transmission = models.ForeignKey(Transmission, on_delete=models.PROTECT)
+
+
+class SetColor(models.Model):
+    color = models.ForeignKey(Color, on_delete=models.PROTECT)
+    car = models.ForeignKey(Car, on_delete=models.PROTECT)

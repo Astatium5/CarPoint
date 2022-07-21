@@ -14,6 +14,8 @@ from .start import start
 from log.logger import logger
 
 
+MAX_SHOW = 20
+
 reply_price_markup = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text="500 000₽ - 2 000 000₽", callback_data="pr#87506fd2b91be8b7ab7b59d069c42d40")],
     [InlineKeyboardButton(text="2 000 000₽ - 4 000 000₽", callback_data="pr#1ee1876784dfba4421dfbc93272053a8")],
@@ -37,6 +39,7 @@ async def receive_offer(message: Message):
         return await ReceiveOffer.phone.set()
     else:
         globals.offer_metadata = OfferMetaData()
+        globals.offer_metadata.UserId = message.from_user.id
         return await message.answer(offer_page.find("select_price").text, reply_markup=reply_price_markup)
 
 
@@ -270,12 +273,36 @@ async def get_max_power(message: Message, state: FSMContext):
 
 @dp.inline_handler()
 async def inline_echo(query: InlineQuery):
+    #if not globals.offer_metadata.Body:
+    #    return await bot.send_message(query.from_user.id, "Начните поиск заново!")
+
     transmission = query.query
     globals.offer_metadata.Transmission = transmission
-
-    #if not globals.offer_metadata.Body:
-        #return await bot.answer_callback_query(call_query.id, "Начините поиск заново!", show_alert=True)
     response = api_requests.find_car(**globals.offer_metadata.__dict__)
+
+    status = bool(response.get("response"))
+    if status:
+        cars = response.get("cars")
+        if cars:
+            n = 0
+            items = []
+            for car in cars:
+                id = car.get("id")
+                title = car.get("title")
+                price = car.get("price")
+                image = car.get("image")
+                item = InlineQueryResultArticle(id=id, title=title,
+                    input_message_content=InputTextMessageContent(title), description=F"Цена: {price}",
+                    hide_url=True, thumb_url=image)
+                items.append(item)
+                n+=1
+                if n == MAX_SHOW:
+                    break
+            return await globals.bot.answer_inline_query(query.id, items)
+        else:
+            return await not_found(query)
+    else:
+        return await not_found(query)
 
 
 @dp.callback_query_handler(lambda query: query.data == "new_search")
@@ -283,3 +310,11 @@ async def new_search(query: CallbackQuery):
     globals.offer_metadata = OfferMetaData()
     offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
     return await query.message.edit_text(offer_page.find("select_price").text, reply_markup=reply_price_markup)
+
+
+async def not_found(query: InlineQuery):
+    thumb = "https://www.pngitem.com/pimgs/m/558-5585968_thumb-image-not-found-icon-png-transparent-png.png"
+    not_found_item = InlineQueryResultArticle(
+        id='1', title="Автомобиль не найден!", input_message_content=InputTextMessageContent("Auto not found"),
+        description="Нам не удалось найти авотомобиль по данным параметрам.", hide_url=True, thumb_url=thumb)
+    return await globals.bot.answer_inline_query(query.id, [not_found_item])

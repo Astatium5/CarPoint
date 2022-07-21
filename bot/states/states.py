@@ -31,6 +31,9 @@ class Price(StatesGroup):
 
 @dataclass
 class OfferMetaData:
+    # User Id
+    UserId: int
+
     # Price
     IsRange: bool
     IsMyselfRange: bool
@@ -66,12 +69,13 @@ class OfferMetaData:
 
 
     def __init__(self,
-        IsRange=False, IsMyselfRange=False, IsSpecificAmount=False,
+        UserId=0, IsRange=False, IsMyselfRange=False, IsSpecificAmount=False,
         RangeId="", MinPrice=0, MaxPrice=0, SpecificPriceAmount=0,
         IsAnyMark=False, Mark="", Body="", FuelType="",
         IsVolume=False, IsPower=False, MinVolume=0.0, MaxVolume=0.0, MinPower=0, MaxPower=0,
         Transmission=""
     ):
+        self.UserId = UserId
         self.IsRange = IsRange
         self.IsMyselfRange = IsMyselfRange
         self.IsSpecificAmount = IsSpecificAmount

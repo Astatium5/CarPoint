@@ -1,6 +1,7 @@
 import json
 from collections import Counter
 
+from loguru import logger
 from django.shortcuts import render
 from django.db.models.query import QuerySet
 from requests import head
@@ -134,14 +135,23 @@ class API:
                 return HttpResponse(json.dumps({"response": False}), content_type='application/json')
             else:
                 headers = request.headers
+                user_id = int(headers.get("Userid"))
                 if bool(headers.get("Isrange")):
                     price_range = PRICE_RANGE.get(headers.get("Rangeid"))
                     _from = price_range.get("from")
                     _to = price_range.get("to")
                     if bool(headers.get("Isvolume")):
-                        mark = Mark.objects.filter(title=headers.get("Mark")).get()
-                        cars = Car.objects.filter(mark=mark, price__range=[_from, _to],).all()
-                        print(len(cars))
+                        try:
+                            user = BotUser.objects.get(user_id=user_id)
+                            mark = Mark.objects.filter(title=headers.get("Mark")).get()
+                            transmission_obj = Transmission.objects.filter(title=transmission).get()
+                            cars = Car.objects.filter(mark=mark, price__range=[_from, _to], city=user.city, transmission=transmission_obj).all()
+                            if cars:
+                                cars = [car.to_dict() for car in cars]
+                                return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+                        except Exception as e:
+                            logger.error(e)
+                            return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
                     elif bool(headers.get("Ispower")):
                         pass
                 elif bool(headers.get("Ismyselfrange")):

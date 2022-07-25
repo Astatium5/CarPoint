@@ -38,7 +38,8 @@ async def start(message: Message, state: FSMContext):
             reply_markup = ReplyKeyboardMarkup(resize_keyboard=True,
                 keyboard=[
                     [KeyboardButton(text="Получить предложение"), KeyboardButton(text="Для инвесторов")],
-                    [KeyboardButton(text="Контакты"), KeyboardButton(text="О проекте"), KeyboardButton(text="Для дистрибьюторов")]
+                    [KeyboardButton(text="Контакты"), KeyboardButton(text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
+                    [KeyboardButton(text="Как мы работаем")]
                 ])
             return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name),
                 reply_markup=reply_markup)

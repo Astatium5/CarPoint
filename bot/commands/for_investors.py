@@ -1,6 +1,6 @@
 from aiogram.types import Message
 
-from objects.globals import dp, bot
+from objects.globals import dp
 from objects import globals
 
 @dp.message_handler(lambda message: message.text == "Для инвесторов")

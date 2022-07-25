@@ -76,6 +76,7 @@ class City(admin.ModelAdmin):
 class Car(admin.ModelAdmin):
     fields = ["title", "set", "image", "price", "engine", "transmission", "wd", "expenditure", "city", "mark"]
     list_display = ["title", "price", "get_image"]
+    search_fields = ["title"]
     list_per_page = 20
 
     def get_image(self, obj):

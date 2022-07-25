@@ -179,11 +179,16 @@ async def get_mark(query: CallbackQuery):
     bodies = response.get("all_bodies")
 
     reply_markup = InlineKeyboardMarkup()
-    for body in bodies:
-        reply_markup.add(InlineKeyboardButton(text=body, callback_data=F"body#{body}"))
+
+    if bodies:
+        for body in bodies:
+            reply_markup.add(InlineKeyboardButton(text=body, callback_data=F"body#{body}"))
+        text = offer_page.find("select_body").text
+    else:
+        text = offer_page.find("not_found").text
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    return await query.message.edit_text(offer_page.find("select_body").text, reply_markup=reply_markup)
+    return await query.message.edit_text(text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("body#")))
@@ -194,11 +199,16 @@ async def get_body(query: CallbackQuery):
     fuel_types = response.get("all_fuel_types")
 
     reply_markup = InlineKeyboardMarkup()
-    for fuel_type in fuel_types:
-        reply_markup.add(InlineKeyboardButton(text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
+
+    if fuel_types:
+        for fuel_type in fuel_types:
+            reply_markup.add(InlineKeyboardButton(text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
+        text = offer_page.find("select_fuel_type").text
+    else:
+        text = offer_page.find("not_found").text
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    return await query.message.edit_text(offer_page.find("select_fuel_type").text, reply_markup=reply_markup)
+    return await query.message.edit_text(text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("fuel_type#")))
@@ -307,8 +317,15 @@ async def inline_echo(query: InlineQuery):
                 title = car.get("title")
                 price = car.get("price")
                 image = car.get("image")
+                engine_volume = car.get("engine_volume")
+                engine_power = car.get("engine_power")
+                type_fuel = car.get("engine_type_fuel")
                 item = InlineQueryResultArticle(id=id, title=title,
-                    input_message_content=InputTextMessageContent(title), description=F"Цена: {price}",
+                    input_message_content=InputTextMessageContent(title),
+                    description=(F"Цена: {int(price)}₽\t"
+                                 F"Объем: {engine_volume}\t"
+                                 F"Мощность: {engine_power}\t"
+                                 F"Тип: {type_fuel}"),
                     hide_url=True, thumb_url=image)
                 items.append(item)
                 n+=1

@@ -136,30 +136,33 @@ class API:
             else:
                 headers = request.headers
                 user_id = int(headers.get("Userid"))
-                if bool(headers.get("Isrange")):
-                    price_range = PRICE_RANGE.get(headers.get("Rangeid"))
-                    min_p = price_range.get("min")
-                    max_p = price_range.get("max")
-                    if bool(headers.get("Isvolume")):
-                        try:
-                            user = BotUser.objects.get(user_id=user_id)
-                            mark = Mark.objects.filter(title=headers.get("Mark")).get()
-                            transmission_obj = Transmission.objects.filter(title=transmission).get()
+                try:
+                    user = BotUser.objects.get(user_id=user_id)
+                    mark = Mark.objects.filter(title=headers.get("Mark")).get()
+                    transmission_obj = Transmission.objects.filter(title=transmission).get()
+                    if bool(headers.get("Isrange")):
+                        price_range = PRICE_RANGE.get(headers.get("Rangeid"))
+                        min_p = price_range.get("min")
+                        max_p = price_range.get("max")
+                        if bool(headers.get("Isvolume")):
                             cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], city=user.city, transmission=transmission_obj).all()
                             if cars:
-                                cars = [car.to_dict() for car in cars]
-                                print(len(cars))
+                                cars = [car.to_dict() for car in cars if car.set.model.body == body and car.engine.type_fuel == fuel_type]
                                 return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
-                        except Exception as e:
-                            logger.error(e)
-                            return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
-                    elif bool(headers.get("Ispower")):
+                        elif bool(headers.get("Ispower")):
+                            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], city=user.city, transmission=transmission_obj).all()
+                            if cars:
+                                cars = [car.to_dict() for car in cars if car.set.model.body == body and car.engine.type_fuel == fuel_type]
+                                return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+                    elif bool(headers.get("Ismyselfrange")):
+                        min_price = headers.get("Minprice")
+                        max_price = headers.get("Maxprice")
+                    elif bool(headers.get("Isspecificamount")):
                         pass
-                elif bool(headers.get("Ismyselfrange")):
-                    pass
-                elif bool(headers.get("Isspecificamount")):
-                    pass
-            return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+                except Exception as e:
+                    logger.error(e)
+                    return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
+                return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
 
 
 class Web:

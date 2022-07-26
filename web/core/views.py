@@ -1,3 +1,4 @@
+from email import header
 import json
 from collections import Counter
 
@@ -6,33 +7,9 @@ from django.shortcuts import render
 from django.db.models.query import QuerySet
 from requests import head
 from rest_framework.generics import ListAPIView
-from django.http import (HttpRequest, HttpResponse,
-                         HttpResponseRedirect, HttpResponsePermanentRedirect)
+from django.http import HttpRequest, HttpResponse
 
 from .models import *
-
-
-PRICE_RANGE = {
-    "87506fd2b91be8b7ab7b59d069c42d40": {
-        "min": 500000,
-        "max": 2000000
-    },
-
-    "1ee1876784dfba4421dfbc93272053a8": {
-        "min": 2000000,
-        "max": 4000000
-    },
-
-    "af499ea026c3e952d324d7af4cf7aaee": {
-        "min": 4000000,
-        "max": 6000000
-    },
-
-    "2a3225e2decd960cebe8c4de135f59a0": {
-        "min": 6000000,
-        "max": None
-    },
-} # Keys is ids price range.
 
 
 class API:
@@ -116,11 +93,15 @@ class API:
     class GetAllFuelTypesView(ListAPIView):
         serializer_class: Engine = Engine
 
-        def get(self, request: HttpRequest, mark: str):
+        def get(self, request: HttpRequest, mark: str, body: str, user_id: int, min_price: int, max_price: int):
+            user = BotUser.objects.get(user_id=user_id)
             mark: QuerySet = Mark.objects.filter(title=mark).get()
-            cars: QuerySet = Car.objects.filter(mark=mark).all()
-            engines = [Engine.objects.filter(id=car.engine.pk).get() for car in cars]
-            counter = Counter([engine.type_fuel for engine in engines])
+            if max_price == 0:
+                cars: QuerySet = Car.objects.filter(mark=mark, price__gte=min_price).all()
+            else:
+                cars: QuerySet = Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all()
+            engines = [car.engine.type_fuel for car in cars if car.set.model.body == body and car.city == user.city]
+            counter = Counter(engines)
             fuel_types = list(counter.keys())
             return HttpResponse(json.dumps({"all_fuel_types": fuel_types}), content_type='application/json')
 
@@ -129,40 +110,44 @@ class API:
         serializer_class: Car = Car
 
         def get(self, request: HttpRequest,
-            body: str, fuel_type: str, transmission: str
+            body: str, fuel_type: str, transmission: str, user_id: int
         ):
-            if body == "Unknow" or fuel_type == "Unknow":
-                return HttpResponse(json.dumps({"response": False}), content_type='application/json')
-            else:
-                headers = request.headers
-                user_id = int(headers.get("Userid"))
-                try:
-                    user = BotUser.objects.get(user_id=user_id)
-                    mark = Mark.objects.filter(title=headers.get("Mark")).get()
-                    transmission_obj = Transmission.objects.filter(title=transmission).get()
-                    if bool(headers.get("Isrange")):
-                        price_range = PRICE_RANGE.get(headers.get("Rangeid"))
-                        min_p = price_range.get("min")
-                        max_p = price_range.get("max")
-                        if bool(headers.get("Isvolume")):
-                            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], city=user.city, transmission=transmission_obj).all()
-                            if cars:
-                                cars = [car.to_dict() for car in cars if car.set.model.body == body and car.engine.type_fuel == fuel_type]
-                                return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
-                        elif bool(headers.get("Ispower")):
-                            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], city=user.city, transmission=transmission_obj).all()
-                            if cars:
-                                cars = [car.to_dict() for car in cars if car.set.model.body == body and car.engine.type_fuel == fuel_type]
-                                return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
-                    elif bool(headers.get("Ismyselfrange")):
-                        min_price = headers.get("Minprice")
-                        max_price = headers.get("Maxprice")
-                    elif bool(headers.get("Isspecificamount")):
-                        pass
-                except Exception as e:
-                    logger.error(e)
-                    return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
+            headers = request.headers
+            try:
+                user = BotUser.objects.get(user_id=user_id)
+                mark = Mark.objects.filter(title=headers.get("Mark")).get()
+                transmission = Transmission.objects.filter(title=transmission).get()
+                min_p = headers.get("Min-Price")
+                max_p = headers.get("Max-Price")
+                if bool(headers.get("Is-Volume")):
+                    min_volume = float(headers.get("Min-Volume"))
+                    max_volume = float(headers.get("Max-Volume"))
+                    if int(max_p) == 0:
+                        cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__volume__range=[min_volume, max_volume],
+                            city=user.city, transmission=transmission).all()
+                    else:
+                        cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume],
+                            city=user.city, transmission=transmission).all()
+                    if cars:
+                        cars = [car.to_dict() for car in cars
+                            if car.set.model.body == body and car.engine.type_fuel == fuel_type]
+                        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+                if bool(headers.get("Is-Power")):
+                    min_power = int(headers.get("Min-Power"))
+                    max_power = int(headers.get("Max-Power"))
+                    if int(max_p) == 0:
+                        cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__power__range=[min_power, max_power],
+                            city=user.city, transmission=transmission).all()
+                    else:
+                        cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power],
+                            city=user.city, transmission=transmission).all()
+                    if cars:
+                        cars = [car.to_dict() for car in cars if car.set.model.body == body and car.engine.type_fuel == fuel_type]
+                        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+            except Exception as e:
+                logger.error(e)
                 return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
+            return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
 
 
 class Web:

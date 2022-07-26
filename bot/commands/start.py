@@ -19,7 +19,6 @@ api_requests = Requests()
 async def start(message: Message, state: FSMContext):
     globals.start = start
     globals.offer_metadata = OfferMetaData() # Init OfferMetaData and set to vatiable
-    globals.offer_metadata.UserId = message.from_user.id
     await state.finish()
     response = api_requests.create_user(user_id=message.from_user.id, first_name=message.from_user.first_name,
         username=message.from_user.username) # Create new user

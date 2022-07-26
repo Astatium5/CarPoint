@@ -129,8 +129,11 @@ class API:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume],
                             city=user.city, transmission=transmission).all()
                     if cars:
-                        cars = [car.to_dict() for car in cars
-                            if car.set.model.body == body and car.engine.type_fuel == fuel_type]
+                        if bool(headers.get("Is-Any-Fuel-Type")):
+                            cars = [car.to_dict() for car in cars if car.set.model.body == body]
+                        else:
+                            cars = [car.to_dict() for car in cars
+                                if car.set.model.body == body and car.engine.type_fuel == fuel_type]
                         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
                 if bool(headers.get("Is-Power")):
                     min_power = int(headers.get("Min-Power"))
@@ -142,7 +145,11 @@ class API:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power],
                             city=user.city, transmission=transmission).all()
                     if cars:
-                        cars = [car.to_dict() for car in cars if car.set.model.body == body and car.engine.type_fuel == fuel_type]
+                        if bool(headers.get("Is-Any-Fuel-Type")):
+                            cars = [car.to_dict() for car in cars if car.set.model.body == body]
+                        else:
+                            cars = [car.to_dict() for car in cars
+                                if car.set.model.body == body and car.engine.type_fuel == fuel_type]
                         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
             except Exception as e:
                 logger.error(e)

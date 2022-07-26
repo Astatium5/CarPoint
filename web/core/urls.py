@@ -23,5 +23,6 @@ urlpatterns = [
     path("api/get_all_marks", API.GetAllMarksView.as_view(), name="get_all_marks"),
     path("api/get_all_bodies/<str:mark>", API.GetAllBodiesView.as_view(), name="get_all_bodies"),
     path("api/get_all_fuel_types/<str:mark>/<str:body>/<int:user_id>/<int:min_price>/<int:max_price>", API.GetAllFuelTypesView.as_view(), name="get_all_fuel_types"),
-    path("api/find_car/<str:body>/<str:fuel_type>/<str:transmission>/<str:user_id>", API.FindCarView.as_view(), name="find_car")
+    path("api/find_car/<str:body>/<str:fuel_type>/<str:transmission>/<str:user_id>", API.FindCarView.as_view(), name="find_car"),
+    path("api/get_car_info/<int:id>", API.GetCarInfoView.as_view(), name="get_car_info"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

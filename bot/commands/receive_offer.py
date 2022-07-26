@@ -377,6 +377,6 @@ async def new_search(query: CallbackQuery):
 async def not_found(query: InlineQuery):
     thumb = "https://raw.githubusercontent.com/amtp1/CarPoint/main/image/thumb.png"
     not_found_item = InlineQueryResultArticle(
-        id='1', title="Автомобиль не найден!", input_message_content=InputTextMessageContent("Auto not found"),
+        id=-1, title="Автомобиль не найден!", input_message_content=InputTextMessageContent("Auto not found"),
         description="Нам не удалось найти авотомобиль по данным параметрам.", hide_url=True, thumb_url=thumb)
     return await globals.bot.answer_inline_query(query.id, [not_found_item], cache_time=3)

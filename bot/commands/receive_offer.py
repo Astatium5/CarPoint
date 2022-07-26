@@ -1,8 +1,9 @@
 import re
 
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.types import InlineQuery, \
-    InputTextMessageContent, InlineQueryResultArticle
+from aiogram.types import (Message, CallbackQuery,
+    InlineKeyboardMarkup, InlineKeyboardButton)
+from aiogram.types import (InlineQuery,
+    InputTextMessageContent, InlineQueryResultArticle)
 from aiogram.dispatcher.storage import FSMContext
 from aiogram.utils.exceptions import MessageNotModified
 from requests import request
@@ -17,6 +18,28 @@ from utils.converter import *
 
 
 MAX_SHOW: int = 30
+
+PRICE_RANGE = {
+    "87506fd2b91be8b7ab7b59d069c42d40": {
+        "min": 500000,
+        "max": 2000000
+    },
+
+    "1ee1876784dfba4421dfbc93272053a8": {
+        "min": 2000000,
+        "max": 4000000
+    },
+
+    "af499ea026c3e952d324d7af4cf7aaee": {
+        "min": 4000000,
+        "max": 6000000
+    },
+
+    "2a3225e2decd960cebe8c4de135f59a0": {
+        "min": 6000000,
+        "max": 0
+    },
+} # Keys is ids price range.
 
 reply_price_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text="500 000₽ - 2 000 000₽", callback_data="pr#87506fd2b91be8b7ab7b59d069c42d40")],
@@ -41,7 +64,6 @@ async def receive_offer(message: Message):
         return await ReceiveOffer.phone.set()
     else:
         globals.offer_metadata = OfferMetaData()
-        globals.offer_metadata.UserId = message.from_user.id
         return await message.answer(offer_page.find("select_price").text, reply_markup=reply_price_markup)
 
 
@@ -79,10 +101,9 @@ async def is_agree(query: CallbackQuery, state: FSMContext):
 @dp.callback_query_handler(lambda query: query.data.startswith(("pr#")))
 async def get_price(query: CallbackQuery):
     price_range_id = re.sub("pr#", "", query.data)
-    globals.offer_metadata.IsRange = True
-    globals.offer_metadata.RangeId = price_range_id
-    # globals.prfp = PRICE_RANGE.get(price_range_id).get("from") # Price range first part.
-    # globals.prsp = PRICE_RANGE.get(price_range_id).get("to") # Price range second part.
+    price_range = PRICE_RANGE.get(price_range_id)
+    globals.offer_metadata.MinPrice = price_range.get("min")
+    globals.offer_metadata.MaxPrice = price_range.get("max")
 
     response = api_requests.get_all_marks()
     all_marks = response.get("all_marks")
@@ -102,7 +123,6 @@ async def get_price(query: CallbackQuery):
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("myself_range")))
 async def myself_range(query: CallbackQuery):
-    globals.offer_metadata.IsMyselfRange = True
     await query.message.edit_text(offer_page.find("min_price").text)
     return await Price.min.set()
 
@@ -142,7 +162,6 @@ async def get_max_price(message: Message, state: FSMContext):
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("specific_amount")))
 async def specific_amount(query: CallbackQuery):
-    globals.offer_metadata.IsSpecificAmount = True
     await query.message.edit_text(offer_page.find("specific_amount").text)
     return await Price.specific_amount.set()
 
@@ -152,8 +171,10 @@ async def get_specific_amount(message: Message, state: FSMContext):
     if message.text == "/start":
         return await start(message, state)
 
+    if not is_int(message.text):
+        return await message.answer("Некорректный формат ввода!")
     await state.finish()
-    globals.offer_metadata.SpecificPriceAmount = message.text
+    globals.offer_metadata.MinPrice = message.text
     response = api_requests.get_all_marks()
     all_marks = response.get("all_marks")
 
@@ -195,7 +216,8 @@ async def get_mark(query: CallbackQuery):
 async def get_body(query: CallbackQuery):
     body = re.sub("body#", "", query.data)
     globals.offer_metadata.Body = body
-    response = api_requests.get_all_fuel_types(mark=globals.offer_metadata.Mark)
+    response = api_requests.get_all_fuel_types(mark=globals.offer_metadata.Mark, body=body, user_id=query.from_user.id,
+        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     fuel_types = response.get("all_fuel_types")
 
     reply_markup = InlineKeyboardMarkup()
@@ -208,7 +230,10 @@ async def get_body(query: CallbackQuery):
         text = offer_page.find("not_found").text
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    return await query.message.edit_text(text, reply_markup=reply_markup)
+    try:
+        return await query.message.edit_text(text, reply_markup=reply_markup)
+    except MessageNotModified as e:
+        logger.error(e)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("fuel_type#")))
@@ -299,12 +324,14 @@ async def get_max_power(message: Message, state: FSMContext):
 
 @dp.inline_handler()
 async def inline_echo(query: InlineQuery):
-    #if not globals.offer_metadata.Body:
-    #    return await bot.send_message(query.from_user.id, "Начните поиск заново!")
+    if not globals.offer_metadata.Body:
+        return await not_found(query)
 
-    transmission = query.query
+    transmission: str = query.query
     globals.offer_metadata.Transmission = transmission
-    response = api_requests.find_car(**globals.offer_metadata.__dict__)
+    _ = globals.offer_metadata
+    response: dict = api_requests.find_car(body=_.Body, fuel_type=_.FuelType, user_id=query.from_user.id,
+        transmission=_.Transmission, **globals.offer_metadata.to_header())
 
     status = bool(response.get("response"))
     if status:
@@ -320,12 +347,14 @@ async def inline_echo(query: InlineQuery):
                 engine_volume = car.get("engine_volume")
                 engine_power = car.get("engine_power")
                 type_fuel = car.get("engine_type_fuel")
+                wd = car.get("wd")
                 item = InlineQueryResultArticle(id=id, title=title,
                     input_message_content=InputTextMessageContent(title),
                     description=(F"Цена: {int(price)}₽\t"
                                  F"Объем: {engine_volume}\t"
                                  F"Мощность: {engine_power}\t"
-                                 F"Тип: {type_fuel}"),
+                                 F"Тип: {type_fuel},\t"
+                                 F"{wd}"),
                     hide_url=True, thumb_url=image)
                 items.append(item)
                 n+=1
@@ -341,13 +370,12 @@ async def inline_echo(query: InlineQuery):
 @dp.callback_query_handler(lambda query: query.data == "new_search")
 async def new_search(query: CallbackQuery):
     globals.offer_metadata = OfferMetaData()
-    globals.offer_metadata.UserId = query.from_user.id
     offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
     return await query.message.edit_text(offer_page.find("select_price").text, reply_markup=reply_price_markup)
 
 
 async def not_found(query: InlineQuery):
-    thumb = "https://www.pngitem.com/pimgs/m/558-5585968_thumb-image-not-found-icon-png-transparent-png.png"
+    thumb = "https://raw.githubusercontent.com/amtp1/CarPoint/main/image/thumb.png"
     not_found_item = InlineQueryResultArticle(
         id='1', title="Автомобиль не найден!", input_message_content=InputTextMessageContent("Auto not found"),
         description="Нам не удалось найти авотомобиль по данным параметрам.", hide_url=True, thumb_url=thumb)

@@ -5,7 +5,7 @@ from aiogram.types import (Message, CallbackQuery,
 from aiogram.types import (InlineQuery,
     InputTextMessageContent, InlineQueryResultArticle)
 from aiogram.dispatcher.storage import FSMContext
-from aiogram.utils.exceptions import MessageNotModified
+from aiogram.utils.exceptions import MessageNotModified, BadRequest
 from requests import request
 
 from objects.globals import dp, bot
@@ -225,12 +225,15 @@ async def get_body(query: CallbackQuery):
     reply_markup = InlineKeyboardMarkup()
 
     if fuel_types:
+        n = 0
         for fuel_type in fuel_types:
             reply_markup.add(InlineKeyboardButton(text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
+            n+=1
+        if n > 1:
+            reply_markup.add(InlineKeyboardButton(text="Любой", callback_data="fuel_type#any"))
         text = offer_page.find("select_fuel_type").text
     else:
         text = offer_page.find("not_found").text
-    reply_markup.add(InlineKeyboardButton(text="Любой", callback_data="fuel_type#any"))
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
     try:
@@ -377,7 +380,11 @@ async def inline_echo(query: InlineQuery):
 async def new_search(query: CallbackQuery):
     globals.offer_metadata = OfferMetaData()
     offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
-    return await query.message.edit_text(offer_page.find("select_price").text, reply_markup=reply_price_markup)
+    try:
+        return await query.message.edit_text(offer_page.find("select_price").text, reply_markup=reply_price_markup)
+    except BadRequest:
+        await bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
+        return await bot.send_message(chat_id=query.message.chat.id, text=offer_page.find("select_price").text, reply_markup=reply_price_markup)
 
 
 async def not_found(query: InlineQuery):

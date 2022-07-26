@@ -15,3 +15,10 @@ class BooleanUrlParameterConverter:
 
     def to_url(self, value):
         return str(value)
+
+
+def str_to_bool(value):
+    if value == "True":
+        return True
+    elif value == "False":
+        return False

@@ -146,8 +146,16 @@ class API:
                         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
             except Exception as e:
                 logger.error(e)
-                return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
-            return HttpResponse(json.dumps({"response": True, "car": []}), content_type='application/json')
+                return HttpResponse(json.dumps({"response": True, "cars": []}), content_type='application/json')
+            return HttpResponse(json.dumps({"response": True, "cars": []}), content_type='application/json')
+
+
+    class GetCarInfoView(ListAPIView):
+        serializer_class: Car = Car
+
+        def get(self, request: HttpRequest, id: int):
+            car = Car.objects.get(id=id)
+            return HttpResponse(json.dumps({"response": True, "car": car.to_dict()}), content_type='application/json')
 
 
 class Web:

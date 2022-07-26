@@ -1,6 +1,6 @@
 from typing import Any
 
-from aiogram.types import ChosenInlineResult
+from aiogram.types import ChosenInlineResult, InlineKeyboardMarkup, InlineKeyboardButton
 
 from utils.api.requests import Requests
 from objects.globals import dp, bot
@@ -28,5 +28,13 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
                      F"Мощность двигателя: {engine_power}\n"
                      F"Тип двигателя: {engine_type_fuel}\n"
                      F"Привод: {wd}\n"
-                     F"Расход: {expenditure}")
-        return await bot.send_photo(chosen_result.from_user.id, photo=image, caption=text_page)
+                     F"Расход: {expenditure}\n")
+        reply_markup = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Оставить заявку", callback_data="leave_request")]
+        ])
+        reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+        try:
+            return await bot.send_photo(chosen_result.from_user.id, photo=image, caption=text_page, reply_markup=reply_markup)
+        except:
+            text_page+=image
+            return await bot.send_message(chosen_result.from_user.id, text_page, reply_markup=reply_markup)

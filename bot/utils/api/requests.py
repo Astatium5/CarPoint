@@ -51,3 +51,8 @@ class Requests:
         params: dict[str, Any] = dict(body=body, fuel_type=fuel_type, transmission=transmission, user_id=user_id)
         response: dict = make_request(path=path, timeout=5, headers=kwargs, **params)
         return response
+
+    def get_car_info(self, id: int) -> dict:
+        path: str = "api/get_car_info/"
+        response: dict = make_request(path=path, id=id)
+        return response

@@ -10,6 +10,7 @@ from rest_framework.generics import ListAPIView
 from django.http import HttpRequest, HttpResponse
 
 from .models import *
+from .converts import str_to_bool
 
 
 class API:
@@ -119,7 +120,7 @@ class API:
                 transmission = Transmission.objects.filter(title=transmission).get()
                 min_p = headers.get("Min-Price")
                 max_p = headers.get("Max-Price")
-                if bool(headers.get("Is-Volume")):
+                if str_to_bool(headers.get("Is-Volume")):
                     min_volume = float(headers.get("Min-Volume"))
                     max_volume = float(headers.get("Max-Volume"))
                     if int(max_p) == 0:
@@ -129,13 +130,13 @@ class API:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume],
                             city=user.city, transmission=transmission).all()
                     if cars:
-                        if bool(headers.get("Is-Any-Fuel-Type")):
+                        if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             cars = [car.to_dict() for car in cars if car.set.model.body == body]
                         else:
                             cars = [car.to_dict() for car in cars
                                 if car.set.model.body == body and car.engine.type_fuel == fuel_type]
                         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
-                if bool(headers.get("Is-Power")):
+                elif str_to_bool(headers.get("Is-Power")):
                     min_power = int(headers.get("Min-Power"))
                     max_power = int(headers.get("Max-Power"))
                     if int(max_p) == 0:
@@ -145,7 +146,7 @@ class API:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power],
                             city=user.city, transmission=transmission).all()
                     if cars:
-                        if bool(headers.get("Is-Any-Fuel-Type")):
+                        if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             cars = [car.to_dict() for car in cars if car.set.model.body == body]
                         else:
                             cars = [car.to_dict() for car in cars

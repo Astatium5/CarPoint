@@ -112,8 +112,9 @@ async def get_price(query: CallbackQuery):
 
     for mark in all_marks:
         reply_markup.add(InlineKeyboardButton(text=mark, callback_data=F"mark#{mark}"))
-    reply_markup.add(InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+    reply_markup.add(
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any")
 
     try:
         return await query.message.edit_text(offer_page.find("select_mark").text, reply_markup=reply_markup)
@@ -182,8 +183,9 @@ async def get_specific_amount(message: Message, state: FSMContext):
 
     for mark in all_marks:
         reply_markup.add(InlineKeyboardButton(text=mark, callback_data=F"mark#{mark}"))
-    reply_markup.add(InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+    reply_markup.add(
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any")
 
     return await message.answer(offer_page.find("select_mark").text, reply_markup=reply_markup)
 
@@ -228,6 +230,7 @@ async def get_body(query: CallbackQuery):
         text = offer_page.find("select_fuel_type").text
     else:
         text = offer_page.find("not_found").text
+    reply_markup.add(InlineKeyboardButton(text="Любой", callback_data="fuel_type#any"))
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
     try:
@@ -239,7 +242,10 @@ async def get_body(query: CallbackQuery):
 @dp.callback_query_handler(lambda query: query.data.startswith(("fuel_type#")))
 async def get_fuel_type(query: CallbackQuery):
     fuel_type = re.sub("fuel_type#", "", query.data)
-    globals.offer_metadata.FuelType = fuel_type
+    if fuel_type == "any":
+        globals.offer_metadata.IsAnyFuelType = True
+    else:
+        globals.offer_metadata.FuelType = fuel_type
     reply_markup = InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="По объему", callback_data="by_volume")],

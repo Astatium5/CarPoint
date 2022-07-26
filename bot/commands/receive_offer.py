@@ -17,7 +17,7 @@ from log.logger import logger
 from utils.converter import *
 
 
-MAX_SHOW: int = 30
+MAX_SHOW: int = 50
 
 PRICE_RANGE = {
     "87506fd2b91be8b7ab7b59d069c42d40": {

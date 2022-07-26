@@ -31,18 +31,9 @@ class Price(StatesGroup):
 
 @dataclass
 class OfferMetaData:
-    # User Id
-    UserId: int
-
     # Price
-    IsRange: bool
-    IsMyselfRange: bool
-    IsSpecificAmount: bool
-
-    RangeId: str
     MinPrice: int
     MaxPrice: int
-    SpecificPriceAmount: int
 
     # Marks
     IsAnyMark: bool
@@ -69,21 +60,14 @@ class OfferMetaData:
 
 
     def __init__(self,
-        UserId=0, IsRange=False, IsMyselfRange=False, IsSpecificAmount=False,
-        RangeId="", MinPrice=0, MaxPrice=0, SpecificPriceAmount=0,
+        MinPrice=0, MaxPrice=0,
         IsAnyMark=False, Mark="", Body="", FuelType="",
         IsVolume=False, IsPower=False, MinVolume=0.0, MaxVolume=0.0, MinPower=0, MaxPower=0,
         Transmission=""
     ):
-        self.UserId = UserId
-        self.IsRange = IsRange
-        self.IsMyselfRange = IsMyselfRange
-        self.IsSpecificAmount = IsSpecificAmount
 
-        self.RangeId = RangeId
         self.MinPrice = MinPrice
         self.MaxPrice = MaxPrice
-        self.SpecificPriceAmount = SpecificPriceAmount
 
         self.IsAnyMark = IsAnyMark
         self.Mark = Mark
@@ -94,9 +78,18 @@ class OfferMetaData:
 
         self.IsVolume = IsVolume
         self.IsPower = IsPower
+
         self.MinVolume = MinVolume
         self.MaxVolume = MaxVolume
+
         self.MinPower = MinPower
         self.MaxPower = MaxPower
 
-        self.transmission = Transmission
+        self.Transmission = Transmission
+
+
+    def to_header(self):
+        return {"Min-Price": self.MinPrice, "Max-Price": self.MaxPrice,
+                "Is-Any-Mark": self.IsAnyMark, "Mark": self.Mark, "Is-Volume": self.IsVolume,
+                "Is-Power": self.IsPower, "Min-Volume": self.MinVolume, "Max-Volume": self.MaxVolume,
+                "Min-Power": self.MinPower, "Max-Power": self.MaxPower}

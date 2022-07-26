@@ -38,19 +38,16 @@ class Requests:
         response: dict = make_request(path=path, mark=mark)
         return response
 
-    def get_all_fuel_types(self, mark: str) -> dict:
+    def get_all_fuel_types(self, mark: str, body: str, user_id: int, min_price: int, max_price: int) -> dict:
         path: str = "api/get_all_fuel_types/"
-        response: dict = make_request(path=path, mark=mark)
+        response: dict = make_request(path=path, mark=mark, body=body, user_id=user_id, min_price=min_price, max_price=max_price)
         return response
 
     def find_car(self,
-        **kwargs
+        body, fuel_type, transmission, user_id, **kwargs
     ) -> dict:
         path: str = "api/find_car/"
         _: dict[str, Any] = kwargs
-        params: dict[str, Any] = dict(body=_.get("Body") if _.get("Body") else "Unknow",
-            fuel_type=_.get("FuelType") if _.get("FuelType") else "Unknow",
-            transmission=_.get("Transmission") if _.get("Transmission") else "Unknow")
-        del kwargs["Body"], kwargs["FuelType"], kwargs["Transmission"]
-        response: dict = make_request(path=path, headers=kwargs, **params)
+        params: dict[str, Any] = dict(body=body, fuel_type=fuel_type, transmission=transmission, user_id=user_id)
+        response: dict = make_request(path=path, timeout=5, headers=kwargs, **params)
         return response

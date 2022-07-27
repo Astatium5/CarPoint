@@ -51,7 +51,7 @@ class Requests:
         if not fuel_type:
             fuel_type = "undefined"
         params: dict[str, Any] = dict(body=body, fuel_type=fuel_type, transmission=transmission, user_id=user_id)
-        response: dict = make_request(path=path, timeout=5, headers=kwargs, **params)
+        response: dict = make_request(path=path, timeout=7, headers=kwargs, **params)
         return response
 
     def get_car_info(self, id: int) -> dict:

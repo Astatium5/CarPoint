@@ -14,9 +14,7 @@ root = None # Xml data from local file.
 user_id: int = None # State user id.
 phone = None # User phone.
 
-prfp = None # Price range first part.
-prsp = None # Price range second part.
-
 start = None
 
 offer_metadata: OfferMetaData = None
+leave_request_metadata: LeaveRequestMetaData = None

@@ -6,7 +6,6 @@ from aiogram.types import (InlineQuery,
     InputTextMessageContent, InlineQueryResultArticle)
 from aiogram.dispatcher.storage import FSMContext
 from aiogram.utils.exceptions import MessageNotModified, BadRequest
-from requests import request
 
 from objects.globals import dp, bot
 from objects import globals

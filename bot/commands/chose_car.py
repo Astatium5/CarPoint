@@ -30,7 +30,7 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
                      F"Привод: {wd}\n"
                      F"Расход: {expenditure}\n")
         reply_markup = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Оставить заявку", callback_data="leave_request")]
+            [InlineKeyboardButton(text="Оставить заявку", callback_data=F"leave_request#{chosen_result.result_id}")]
         ])
         reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
         try:

@@ -73,6 +73,25 @@
 
 </receive_offer>
 
+<leave_request>
+
+<input_email>
+Теперь нужно ввести email:
+    </input_email>
+
+<input_full_name>
+Еще нужно Полное Ф.И.О:
+    </input_full_name>
+
+<input_address>
+Адрес куда доставляем:
+    </input_address>
+
+<end>
+Спасибо, скоро наш менеджер свяжется и обо все окончательно договоримся
+    </end>
+</leave_request>
+
 <about>
 CARPOINT - это сервис on-line покупки автомобиля.
 Всем нам нравится получать нужные продукты в пару кликов, с доставкой на дом.

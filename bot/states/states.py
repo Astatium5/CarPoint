@@ -29,6 +29,12 @@ class Price(StatesGroup):
     specific_amount = State()
 
 
+class LeaveRequest(StatesGroup):
+    email = State()
+    full_name = State()
+    address = State()
+
+
 @dataclass
 class OfferMetaData:
     # Price
@@ -95,3 +101,17 @@ class OfferMetaData:
                 "Is-Any-Mark": self.IsAnyMark, "Mark": self.Mark, "Is-Volume": self.IsVolume,
                 "Is-Power": self.IsPower, "Min-Volume": self.MinVolume, "Max-Volume": self.MaxVolume,
                 "Min-Power": self.MinPower, "Max-Power": self.MaxPower}
+
+
+@dataclass
+class LeaveRequestMetaData:
+    car_id: int
+    email: str
+    full_name: str
+    address: str
+
+    def __init__(self, car_id=0, email="", full_name="", address=""):
+        self.car_id = car_id
+        self.email = email
+        self.full_name = full_name
+        self.address = address

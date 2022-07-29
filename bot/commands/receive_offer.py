@@ -210,7 +210,10 @@ async def get_mark(query: CallbackQuery):
         text = offer_page.find("not_found").text
     reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
-    return await query.message.edit_text(text, reply_markup=reply_markup)
+    try:
+        return await query.message.edit_text(text, reply_markup=reply_markup)
+    except Exception as e:
+        logger.error(e)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("body#")))

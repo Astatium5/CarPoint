@@ -9,6 +9,7 @@ from dotenv import load_dotenv, find_dotenv
 class Config:
     token: str
     host: str
+    chat_id: int
 
     def __init__(self):
         load_dotenv(find_dotenv()) # Load all config from .env file.
@@ -18,6 +19,7 @@ class Config:
         # Bot config data.
         self.token = os.getenv("BOT_TOKEN")
         self.host = os.getenv("HOST")
+        self.chat_id = os.getenv("CHAT_ID")
 
     def change_value(self, key, value):
         """ The function changes the value in the file by the key

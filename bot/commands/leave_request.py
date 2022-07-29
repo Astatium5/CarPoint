@@ -4,9 +4,13 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.dispatcher.storage import FSMContext
 
 from objects import globals
-from objects.globals import dp
+from objects.globals import dp, bot
 from states.states import LeaveRequest, LeaveRequestMetaData
 from .start import start
+from config.config import Config
+
+
+config = Config()
 
 
 globals.leave_request_metadata: LeaveRequestMetaData = LeaveRequestMetaData() # Init new LeaveRequestMetaData obj
@@ -51,5 +55,13 @@ async def get_address(message: Message, state: FSMContext):
 
     address = message.text
     globals.leave_request_metadata.address = address
-    print(globals.leave_request_metadata)
+    _ = globals.leave_request_metadata
+    new_leave_request_page = (F"<b>Новая заявка!</b>\n"
+                              F"ID пользователя: {message.from_user.id}\n"
+                              F"ID автомобиля: {_.car_id}\n"
+                              F"Эл. почта: {_.email}\n"
+                              F"Полное имя: {_.full_name}\n"
+                              F"Адрес: {_.address}\n"
+                              F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>")
+    await bot.send_message(config.chat_id, new_leave_request_page)
     return await message.answer(leave_request_page.find("end").text)

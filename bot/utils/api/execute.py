@@ -8,6 +8,7 @@ from .serializer import serialize_content
 
 config = Config()
 
+
 def make_request(path: str, headers=None, timeout=5, **kwargs) -> dict:
     if headers:
         HEADERS.update(convert_to_headers(**headers))

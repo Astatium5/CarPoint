@@ -13,8 +13,10 @@ from config.config import Config
 config = Config()
 
 
-globals.leave_request_metadata: LeaveRequestMetaData = LeaveRequestMetaData() # Init new LeaveRequestMetaData obj
-leave_request_page = globals.root.find("leave_request") # Get receive_offer tag from xml data.
+# Init new LeaveRequestMetaData obj
+globals.leave_request_metadata: LeaveRequestMetaData = LeaveRequestMetaData()
+# Get receive_offer tag from xml data.
+leave_request_page = globals.root.find("leave_request")
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("leave_request#")))

@@ -2,10 +2,12 @@ from typing import Any
 from urllib import response
 from .execute import make_request
 
+
 class Requests:
     def create_user(self, user_id: int, first_name: str, username: str) -> dict:
         path: str = "api/create_user/"
-        response: dict = make_request(path=path, user_id=user_id, first_name=first_name, username=username)
+        response: dict = make_request(
+            path=path, user_id=user_id, first_name=first_name, username=username)
         return response
 
     def set_name(self, user_id: int, name: str) -> dict:
@@ -40,18 +42,21 @@ class Requests:
 
     def get_all_fuel_types(self, mark: str, body: str, user_id: int, min_price: int, max_price: int) -> dict:
         path: str = "api/get_all_fuel_types/"
-        response: dict = make_request(path=path, mark=mark, body=body, user_id=user_id, min_price=min_price, max_price=max_price)
+        response: dict = make_request(
+            path=path, mark=mark, body=body, user_id=user_id, min_price=min_price, max_price=max_price)
         return response
 
     def find_car(self,
-        body, fuel_type, transmission, user_id, **kwargs
-    ) -> dict:
+                 body, fuel_type, transmission, user_id, **kwargs
+                 ) -> dict:
         path: str = "api/find_car/"
         _: dict[str, Any] = kwargs
         if not fuel_type:
             fuel_type = "undefined"
-        params: dict[str, Any] = dict(body=body, fuel_type=fuel_type, transmission=transmission, user_id=user_id)
-        response: dict = make_request(path=path, timeout=7, headers=kwargs, **params)
+        params: dict[str, Any] = dict(
+            body=body, fuel_type=fuel_type, transmission=transmission, user_id=user_id)
+        response: dict = make_request(
+            path=path, timeout=7, headers=kwargs, **params)
         return response
 
     def get_car_info(self, id: int) -> dict:

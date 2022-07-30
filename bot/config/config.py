@@ -12,8 +12,8 @@ class Config:
     chat_id: int
 
     def __init__(self):
-        load_dotenv(find_dotenv()) # Load all config from .env file.
-        self.set_config() # Call set config function.
+        load_dotenv(find_dotenv())  # Load all config from .env file.
+        self.set_config()  # Call set config function.
 
     def set_config(self):
         # Bot config data.

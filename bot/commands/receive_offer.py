@@ -1,9 +1,9 @@
 import re
 
 from aiogram.types import (Message, CallbackQuery,
-    InlineKeyboardMarkup, InlineKeyboardButton)
+                           InlineKeyboardMarkup, InlineKeyboardButton)
 from aiogram.types import (InlineQuery,
-    InputTextMessageContent, InlineQueryResultArticle)
+                           InputTextMessageContent, InlineQueryResultArticle)
 from aiogram.dispatcher.storage import FSMContext
 from aiogram.utils.exceptions import MessageNotModified, BadRequest
 
@@ -38,25 +38,34 @@ PRICE_RANGE = {
         "min": 6000000,
         "max": 0
     },
-} # Keys is ids price range.
+}  # Keys is ids price range.
 
 reply_price_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text="500 000₽ - 2 000 000₽", callback_data="pr#87506fd2b91be8b7ab7b59d069c42d40")],
-    [InlineKeyboardButton(text="2 000 000₽ - 4 000 000₽", callback_data="pr#1ee1876784dfba4421dfbc93272053a8")],
-    [InlineKeyboardButton(text="4 000 000₽ - 6 000 000₽", callback_data="pr#af499ea026c3e952d324d7af4cf7aaee")],
-    [InlineKeyboardButton(text="более 6 000 000₽", callback_data="pr#2a3225e2decd960cebe8c4de135f59a0")],
-    [InlineKeyboardButton(text="Указать диапазон", callback_data="myself_range")],
-    [InlineKeyboardButton(text="Подбери под конкретную сумму", callback_data="specific_amount")],
+    [InlineKeyboardButton(text="500 000₽ - 2 000 000₽",
+                          callback_data="pr#87506fd2b91be8b7ab7b59d069c42d40")],
+    [InlineKeyboardButton(text="2 000 000₽ - 4 000 000₽",
+                          callback_data="pr#1ee1876784dfba4421dfbc93272053a8")],
+    [InlineKeyboardButton(text="4 000 000₽ - 6 000 000₽",
+                          callback_data="pr#af499ea026c3e952d324d7af4cf7aaee")],
+    [InlineKeyboardButton(text="более 6 000 000₽",
+                          callback_data="pr#2a3225e2decd960cebe8c4de135f59a0")],
+    [InlineKeyboardButton(text="Указать диапазон",
+                          callback_data="myself_range")],
+    [InlineKeyboardButton(text="Подбери под конкретную сумму",
+                          callback_data="specific_amount")],
 ])
 
-api_requests: Requests = Requests() # Init Requests object.
-offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
-globals.offer_metadata: OfferMetaData = OfferMetaData() # Init OfferMetaData and set to vatiable
+api_requests: Requests = Requests()  # Init Requests object.
+# Get receive_offer tag from xml data.
+offer_page = globals.root.find("receive_offer")
+# Init OfferMetaData and set to vatiable
+globals.offer_metadata: OfferMetaData = OfferMetaData()
 
 
 @dp.message_handler(lambda message: message.text == "Получить предложение")
 async def receive_offer(message: Message):
-    response: dict = api_requests.check_phone(user_id=message.from_user.id) # Send check user phone request.
+    # Send check user phone request.
+    response: dict = api_requests.check_phone(user_id=message.from_user.id)
 
     if not response.get("response"):
         await message.answer(offer_page.find("is_not_phone").text)
@@ -71,7 +80,8 @@ async def get_phone(message: Message, state: FSMContext):
     if message.text == "/start":
         return await start(message, state)
 
-    phone: str = re.sub("[^0-9]", "", message.text) # Remove unnecessary characters, leaving only numbers.
+    # Remove unnecessary characters, leaving only numbers.
+    phone: str = re.sub("[^0-9]", "", message.text)
 
     # Check for correct phone.
     if not phone:
@@ -79,7 +89,8 @@ async def get_phone(message: Message, state: FSMContext):
     globals.phone = int(phone)
     reply_markup = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="Подтвердить", callback_data="is_agree")]
+            [InlineKeyboardButton(text="Подтвердить",
+                                  callback_data="is_agree")]
         ]
     )
 
@@ -110,7 +121,8 @@ async def get_price(query: CallbackQuery):
     reply_markup = InlineKeyboardMarkup()
 
     for mark in all_marks:
-        reply_markup.add(InlineKeyboardButton(text=mark, callback_data=F"mark#{mark}"))
+        reply_markup.add(InlineKeyboardButton(
+            text=mark, callback_data=F"mark#{mark}"))
     reply_markup.add(
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
     # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any")
@@ -154,9 +166,10 @@ async def get_max_price(message: Message, state: FSMContext):
     reply_markup = InlineKeyboardMarkup()
 
     for mark in all_marks:
-        reply_markup.add(InlineKeyboardButton(text=mark, callback_data=F"mark#{mark}"))
+        reply_markup.add(InlineKeyboardButton(
+            text=mark, callback_data=F"mark#{mark}"))
     reply_markup.add(InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
-        InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+                     InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(offer_page.find("select_mark").text, reply_markup=reply_markup)
 
 
@@ -181,7 +194,8 @@ async def get_specific_amount(message: Message, state: FSMContext):
     reply_markup = InlineKeyboardMarkup()
 
     for mark in all_marks:
-        reply_markup.add(InlineKeyboardButton(text=mark, callback_data=F"mark#{mark}"))
+        reply_markup.add(InlineKeyboardButton(
+            text=mark, callback_data=F"mark#{mark}"))
     reply_markup.add(
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
     # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any")
@@ -204,11 +218,13 @@ async def get_mark(query: CallbackQuery):
 
     if bodies:
         for body in bodies:
-            reply_markup.add(InlineKeyboardButton(text=body, callback_data=F"body#{body}"))
+            reply_markup.add(InlineKeyboardButton(
+                text=body, callback_data=F"body#{body}"))
         text = offer_page.find("select_body").text
     else:
         text = offer_page.find("not_found").text
-    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
 
     try:
         return await query.message.edit_text(text, reply_markup=reply_markup)
@@ -221,7 +237,7 @@ async def get_body(query: CallbackQuery):
     body = re.sub("body#", "", query.data)
     globals.offer_metadata.Body = body
     response = api_requests.get_all_fuel_types(mark=globals.offer_metadata.Mark, body=body, user_id=query.from_user.id,
-        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+                                               min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     fuel_types = response.get("all_fuel_types")
 
     reply_markup = InlineKeyboardMarkup()
@@ -229,14 +245,17 @@ async def get_body(query: CallbackQuery):
     if fuel_types:
         n = 0
         for fuel_type in fuel_types:
-            reply_markup.add(InlineKeyboardButton(text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
-            n+=1
+            reply_markup.add(InlineKeyboardButton(
+                text=fuel_type, callback_data=F"fuel_type#{fuel_type}"))
+            n += 1
         if n > 1:
-            reply_markup.add(InlineKeyboardButton(text="Любой", callback_data="fuel_type#any"))
+            reply_markup.add(InlineKeyboardButton(
+                text="Любой", callback_data="fuel_type#any"))
         text = offer_page.find("select_fuel_type").text
     else:
         text = offer_page.find("not_found").text
-    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
 
     try:
         return await query.message.edit_text(text, reply_markup=reply_markup)
@@ -253,11 +272,14 @@ async def get_fuel_type(query: CallbackQuery):
         globals.offer_metadata.FuelType = fuel_type
     reply_markup = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="По объему", callback_data="by_volume")],
-            [InlineKeyboardButton(text="По мощности", callback_data="by_power")],
+            [InlineKeyboardButton(
+                text="По объему", callback_data="by_volume")],
+            [InlineKeyboardButton(text="По мощности",
+                                  callback_data="by_power")],
         ]
     )
-    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
     return await query.message.edit_text(offer_page.find("select_volume_or_power").text, reply_markup=reply_markup)
 
 
@@ -290,10 +312,13 @@ async def get_max_volume(message: Message, state: FSMContext):
     await state.finish()
     globals.offer_metadata.MaxVolume = message.text
     reply_markup = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Механика", switch_inline_query_current_chat="МКПП")],
-        [InlineKeyboardButton(text="Автомат", switch_inline_query_current_chat="АКПП")],
+        [InlineKeyboardButton(
+            text="Механика", switch_inline_query_current_chat="МКПП")],
+        [InlineKeyboardButton(
+            text="Автомат", switch_inline_query_current_chat="АКПП")],
     ])
-    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
@@ -326,10 +351,13 @@ async def get_max_power(message: Message, state: FSMContext):
     await state.finish()
     globals.offer_metadata.MaxPower = message.text
     reply_markup = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Механика", switch_inline_query_current_chat="МКПП")],
-        [InlineKeyboardButton(text="Автомат", switch_inline_query_current_chat="АКПП")],
+        [InlineKeyboardButton(
+            text="Механика", switch_inline_query_current_chat="МКПП")],
+        [InlineKeyboardButton(
+            text="Автомат", switch_inline_query_current_chat="АКПП")],
     ])
-    reply_markup.add(InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
@@ -342,7 +370,7 @@ async def inline_echo(query: InlineQuery):
     globals.offer_metadata.Transmission = transmission
     _ = globals.offer_metadata
     response: dict = api_requests.find_car(body=_.Body, fuel_type=_.FuelType, user_id=query.from_user.id,
-        transmission=_.Transmission, **globals.offer_metadata.to_header())
+                                           transmission=_.Transmission, **globals.offer_metadata.to_header())
 
     status = bool(response.get("response"))
     if status:
@@ -360,15 +388,16 @@ async def inline_echo(query: InlineQuery):
                 type_fuel = car.get("engine_type_fuel")
                 wd = car.get("wd")
                 item = InlineQueryResultArticle(id=id, title=title,
-                    input_message_content=InputTextMessageContent(title),
-                    description=(F"Цена: {int(price)}₽\t"
-                                 F"Объем: {engine_volume}\t"
-                                 F"Мощность: {engine_power}\t"
-                                 F"Тип: {type_fuel},\t"
-                                 F"{wd}"),
-                    hide_url=True, thumb_url=image)
+                                                input_message_content=InputTextMessageContent(
+                                                    title),
+                                                description=(F"Цена: {int(price)}₽\t"
+                                                             F"Объем: {engine_volume}\t"
+                                                             F"Мощность: {engine_power}\t"
+                                                             F"Тип: {type_fuel},\t"
+                                                             F"{wd}"),
+                                                hide_url=True, thumb_url=image)
                 items.append(item)
-                n+=1
+                n += 1
                 if n == MAX_SHOW:
                     break
             return await globals.bot.answer_inline_query(query.id, items, cache_time=3)
@@ -381,7 +410,8 @@ async def inline_echo(query: InlineQuery):
 @dp.callback_query_handler(lambda query: query.data == "new_search")
 async def new_search(query: CallbackQuery):
     globals.offer_metadata = OfferMetaData()
-    offer_page = globals.root.find("receive_offer") # Get receive_offer tag from xml data.
+    # Get receive_offer tag from xml data.
+    offer_page = globals.root.find("receive_offer")
     try:
         return await query.message.edit_text(offer_page.find("select_price").text, reply_markup=reply_price_markup)
     except BadRequest:

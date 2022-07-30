@@ -36,11 +36,11 @@ async def get_city(message: Message, state: FSMContext):
     if not city:
         await message.answer(welcome_page.find("city_is_not_found").text)
     else:
-        response = api_requests.set_city(user_id=message.from_user.id, city=city)
+        response = api_requests.set_city(
+            user_id=message.from_user.id, city=city)
 
         if not response.get("response"):
             return await message.answer(welcome_page.find("city_is_not_found").text)
         else:
             await message.answer(response.get("message"))
             return await globals.start(message, state)
-

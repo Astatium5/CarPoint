@@ -65,13 +65,12 @@ class OfferMetaData:
     # Transmission
     Transmission: str
 
-
     def __init__(self,
-        MinPrice=0, MaxPrice=0,
-        IsAnyMark=False, Mark="", Body="", IsAnyFuelType=False, FuelType="",
-        IsVolume=False, IsPower=False, MinVolume=0.0, MaxVolume=0.0, MinPower=0, MaxPower=0,
-        Transmission=""
-    ):
+                 MinPrice=0, MaxPrice=0,
+                 IsAnyMark=False, Mark="", Body="", IsAnyFuelType=False, FuelType="",
+                 IsVolume=False, IsPower=False, MinVolume=0.0, MaxVolume=0.0, MinPower=0, MaxPower=0,
+                 Transmission=""
+                 ):
 
         self.MinPrice = MinPrice
         self.MaxPrice = MaxPrice
@@ -94,7 +93,6 @@ class OfferMetaData:
         self.MaxPower = MaxPower
 
         self.Transmission = Transmission
-
 
     def to_header(self):
         return {"Min-Price": self.MinPrice, "Max-Price": self.MaxPrice, "Is-Any-Fuel-Type": self.IsAnyFuelType,

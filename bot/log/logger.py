@@ -5,10 +5,12 @@ file_handler = logging.FileHandler(filename='logging.ini')
 stdout_handler = logging.StreamHandler(sys.stdout)
 handlers = [file_handler, stdout_handler]
 
+
 class CustomAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
         my_context = kwargs.pop('session_name', self.extra['session_name'])
         return '[%s] %s' % (my_context, msg), kwargs
+
 
 logging.basicConfig(
     level=logging.INFO,

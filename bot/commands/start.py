@@ -19,12 +19,13 @@ api_requests = Requests()
 async def start(message: Message, state: FSMContext):
     if message.chat.type != "group":
         globals.start = start
-        globals.offer_metadata = OfferMetaData() # Init OfferMetaData and set to vatiable
+        # Init OfferMetaData and set to vatiable
+        globals.offer_metadata = OfferMetaData()
         await state.finish()
         response = api_requests.create_user(user_id=message.from_user.id, first_name=message.from_user.first_name,
-            username=message.from_user.username) # Create new user
+                                            username=message.from_user.username)  # Create new user
 
-        bot_info = await bot.get_me() # Get bot info
+        bot_info = await bot.get_me()  # Get bot info
         welcome_page = globals.root.find("welcome")
 
         if not response.get("response"):
@@ -36,13 +37,16 @@ async def start(message: Message, state: FSMContext):
                 return await Meeting.city.set()
             else:
                 reply_markup = ReplyKeyboardMarkup(resize_keyboard=True,
-                    keyboard=[
-                        [KeyboardButton(text="Получить предложение"), KeyboardButton(text="Для инвесторов")],
-                        [KeyboardButton(text="Контакты"), KeyboardButton(text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
-                        [KeyboardButton(text="Как мы работаем")]
-                    ])
+                                                   keyboard=[
+                                                       [KeyboardButton(text="Получить предложение"), KeyboardButton(
+                                                           text="Для инвесторов")],
+                                                       [KeyboardButton(text="Контакты"), KeyboardButton(
+                                                           text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
+                                                       [KeyboardButton(
+                                                           text="Как мы работаем")]
+                                                   ])
                 return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name),
-                    reply_markup=reply_markup)
+                                            reply_markup=reply_markup)
         else:
             await message.answer(welcome_page.find("is_empty").text.format(bot_info.first_name))
             return await Meeting.name.set()

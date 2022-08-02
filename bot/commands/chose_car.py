@@ -22,13 +22,15 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
         engine_type_fuel = car.get("engine_type_fuel")
         wd = car.get("wd")
         expenditure = car.get("expenditure")
+        transmission = car.get("transmission")
         text_page = (F"Название: <b>{title}</b>\n"
                      F"Цена: {price}₽\n"
                      F"Объем двигателя: {engine_volume}\n"
                      F"Мощность двигателя: {engine_power}\n"
                      F"Тип двигателя: {engine_type_fuel}\n"
                      F"Привод: {wd}\n"
-                     F"Расход: {expenditure}\n")
+                     F"Расход: {expenditure}\n"
+                     F"Коробка: {transmission}")
         reply_markup = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(
                 text="Оставить заявку", callback_data=F"leave_request#{chosen_result.result_id}")]

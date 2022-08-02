@@ -1,6 +1,7 @@
 import re
 
 from aiogram.types import CallbackQuery, Message
+from aiogram.utils.exceptions import ChatNotFound
 from aiogram.dispatcher.storage import FSMContext
 
 from objects import globals
@@ -8,6 +9,7 @@ from objects.globals import dp, bot
 from states.states import LeaveRequest, LeaveRequestMetaData
 from .start import start
 from config.config import Config
+from log.logger import logger
 
 
 config = Config()
@@ -65,5 +67,8 @@ async def get_address(message: Message, state: FSMContext):
                               F"Полное имя: {_.full_name}\n"
                               F"Адрес: {_.address}\n"
                               F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>")
-    await bot.send_message(config.chat_id, new_leave_request_page)
+    try:
+        await bot.send_message(config.chat_id, new_leave_request_page)
+    except ChatNotFound as e:
+        logger.error(e)
     return await message.answer(leave_request_page.find("end").text)

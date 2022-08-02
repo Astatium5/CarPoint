@@ -10,6 +10,7 @@ from objects import globals
 from utils.api.requests import Requests
 from .meeting import *
 from states.states import *
+from keyboard.keyboard import *
 
 
 api_requests = Requests()
@@ -36,17 +37,8 @@ async def start(message: Message, state: FSMContext):
                 await message.answer(welcome_page.find("is_not_city").text)
                 return await Meeting.city.set()
             else:
-                reply_markup = ReplyKeyboardMarkup(resize_keyboard=True,
-                                                   keyboard=[
-                                                       [KeyboardButton(text="Получить предложение"), KeyboardButton(
-                                                           text="Для инвесторов")],
-                                                       [KeyboardButton(text="Контакты"), KeyboardButton(
-                                                           text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
-                                                       [KeyboardButton(
-                                                           text="Как мы работаем")]
-                                                   ])
                 return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name),
-                                            reply_markup=reply_markup)
+                                            reply_markup=choice_markup)
         else:
             await message.answer(welcome_page.find("is_empty").text.format(bot_info.first_name))
             return await Meeting.name.set()

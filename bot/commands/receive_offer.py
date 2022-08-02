@@ -117,6 +117,7 @@ async def get_price(query: CallbackQuery):
 
     response = api_requests.get_all_marks()
     all_marks = response.get("all_marks")
+    all_marks.sort()
 
     reply_markup = InlineKeyboardMarkup()
 

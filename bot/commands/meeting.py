@@ -43,5 +43,6 @@ async def get_city(message: Message, state: FSMContext):
         if not response.get("response"):
             return await message.answer(welcome_page.find("city_is_not_found").text)
         else:
+            await state.finish()
             await message.answer(response.get("message"))
             return await message.answer(welcome_page.find("is_city").text, reply_markup=choice_markup)

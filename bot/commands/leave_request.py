@@ -59,13 +59,25 @@ async def get_address(message: Message, state: FSMContext):
 
     address = message.text
     globals.leave_request_metadata.address = address
+    await message.answer(leave_request_page.find("input_phone").text)
+    return await LeaveRequest.phone.set()
+
+
+@dp.message_handler(state=LeaveRequest.phone)
+async def get_phone(message: Message, state: FSMContext):
+    if message.text == "/start":
+        return await start(message, state)
+
+    phone = re.sub("[^0-9]", "", message.text)
+    globals.leave_request_metadata.phone = phone
     _ = globals.leave_request_metadata
     new_leave_request_page = (F"<b>Новая заявка!</b>\n"
-                              F"ID пользователя: {message.from_user.id}\n"
-                              F"ID автомобиля: {_.car_id}\n"
-                              F"Эл. почта: {_.email}\n"
-                              F"Полное имя: {_.full_name}\n"
-                              F"Адрес: {_.address}\n"
+                              F"ID пользователя: <code>{message.from_user.id}</code>\n"
+                              F"ID автомобиля: <code>{_.car_id}</code>\n"
+                              F"Эл. почта: <code>{_.email}</code>\n"
+                              F"Полное имя: <code>{_.full_name}</code>\n"
+                              F"Адрес: <code>{_.address}</code>\n"
+                              F"Номер телефона: <code>{_.phone}</code>\n"
                               F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>")
     try:
         await bot.send_message(config.chat_id, new_leave_request_page)

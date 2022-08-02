@@ -7,6 +7,7 @@ from objects.globals import dp, bot
 from objects import globals
 from states.states import Meeting
 from utils.api.requests import Requests
+from keyboard.keyboard import *
 
 
 api_requests = Requests()
@@ -43,4 +44,4 @@ async def get_city(message: Message, state: FSMContext):
             return await message.answer(welcome_page.find("city_is_not_found").text)
         else:
             await message.answer(response.get("message"))
-            return await globals.start(message, state)
+            return await message.answer(welcome_page.find("is_city").text, reply_markup=choice_markup)

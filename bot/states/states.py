@@ -33,6 +33,7 @@ class LeaveRequest(StatesGroup):
     email = State()
     full_name = State()
     address = State()
+    phone = State()
 
 
 @dataclass
@@ -107,9 +108,11 @@ class LeaveRequestMetaData:
     email: str
     full_name: str
     address: str
+    phone: str
 
-    def __init__(self, car_id=0, email="", full_name="", address=""):
+    def __init__(self, car_id=0, email="", full_name="", address="", phone=""):
         self.car_id = car_id
         self.email = email
         self.full_name = full_name
         self.address = address
+        self.phone = phone

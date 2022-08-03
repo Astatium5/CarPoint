@@ -14,10 +14,7 @@ api_requests = Requests()
 
 
 @dp.message_handler(state=Meeting.name)
-async def get_name(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await globals.start(message, state)
-
+async def get_name(message: Message):
     name = re.sub("[^a-zA-Zа-яА-Я]", "", message.text)
     api_requests.set_name(user_id=message.from_user.id, name=name)
 
@@ -28,9 +25,6 @@ async def get_name(message: Message, state: FSMContext):
 
 @dp.message_handler(state=Meeting.city)
 async def get_city(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await globals.start(message, state)
-
     city = re.sub("[^а-яА-Я]", "", message.text)
     welcome_page = globals.root.find("welcome")
 

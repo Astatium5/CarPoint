@@ -83,4 +83,5 @@ async def get_phone(message: Message, state: FSMContext):
         await bot.send_message(config.chat_id, new_leave_request_page)
     except ChatNotFound as e:
         logger.error(e)
+    await state.finish()
     return await message.answer(leave_request_page.find("end").text)

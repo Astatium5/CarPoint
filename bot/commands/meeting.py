@@ -8,6 +8,7 @@ from objects import globals
 from states.states import Meeting
 from utils.api.requests import Requests
 from keyboard.keyboard import *
+from . import receive_offer
 
 
 api_requests = Requests()

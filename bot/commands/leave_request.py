@@ -9,6 +9,7 @@ from objects.globals import dp, bot
 from states.states import LeaveRequest, LeaveRequestMetaData
 from config.config import Config
 from log.logger import logger
+from . import receive_offer
 
 config = Config()
 

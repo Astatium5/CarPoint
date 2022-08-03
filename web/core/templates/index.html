@@ -1,1 +1,527 @@
-<h1>Car Point</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OneTwoCar</title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">	
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+	<!-- Style -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<!-- Owl Carousel Assets -->
+    <link href="{% static 'owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'owl-carousel/owl.theme.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+	 <section class="header">
+       <div class="container">
+	      <div class="row">
+		    <div class="col-lg-2 col-12">
+			   <div class="logo"><a href="/"><img src="{% static 'img/logo.svg' %}" alt="OneTwoCar"></a></div>
+			</div>
+			<div class="col-lg-6">
+			   <div class="menu">
+			    <a href="/">Подобрать авто</a>
+				<a href="/">Новинки</a>
+				<a href="/">Порядок работы</a>
+				<a href="/">О компании</a>
+				<a href="/">Faq</a>
+				<a href="/">Контакты</a>
+			  </div>
+			</div>
+			<div class="col-lg-2"><div class="bot"><a href="/"><img src="{% static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div></div>
+			<div class="col-lg-2">
+			   <div class="soc-icon">
+			      <img src="{% static 'img/Facebook_white_1.svg' %}" alt="Facebook">
+			      <img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram">
+			      <img src="{% static 'img/Telegram_white_1.svg' %}" alt="Telegram">
+			      <img src="{% static 'img/Tiktok_white_1.svg' %}" alt="Tiktok_white">
+			      <img src="{% static 'img/Youtube_white_1.svg' %}" alt="Youtube_white">
+			   </div>
+			</div>
+		  </div>
+		  <div class="header-baner">
+		  <div class="row">
+		    <div class="col-lg-7">
+			   <h1>Автомобили от производителя</br>с доставкой и <span class="red">экономией</br>до 20%</span> от цены салона</h1>
+			   <span class="subtitle">OneTwoCar - первый мультибрендовый официальный online дилер в России с</br> честными ценами от производителя</span>
+			   <a href="/" class="button
+			   ">Подобрать автомобиль</a>
+			</div>
+			<div class="col-lg-5">
+			   <div class="baner-img"><a href="/"><img src="{% static 'img/car.svg' %}" alt="Car"></a></div>
+			</div>
+		   </div>
+		 </div>
+		 <div class="header-info">
+		  <div class="row">
+		    <div class="col-lg-3">
+			  <img src="{% static 'img/img1.svg' %}" alt="WOW Цена">
+              <h4>WOW Цена</h4>
+			  <span>Честная цена от производителя, без накруток и навязанных услуг</span>
+			</div>
+			<div class="col-lg-3">
+			  <img src="{% static 'img/img2.svg' %}" alt="Car">
+              <h4>Доставка на дом</h4>
+			  <span>Мы привезем автомобиль и полный пакет документов прямо к вашему дому</span>
+			</div>
+			<div class="col-lg-3">
+			  <img src="{% static 'img/img3.svg' %}" alt="Car">
+              <h4>Огромнейший выбор</h4>
+			  <span>Большой выбор производителей и комплектаций и все в одном месте</span>
+			</div>
+			<div class="col-lg-3">
+			  <img src="{% static 'img/img4.svg' %}" alt="Car">
+              <h4>Быстро. Просто. Безопасно</h4>
+			  <span>Прозрачный цикл приобретения автомобиля. Покупка в 3 клика.</span>
+			</div>
+		   </div>
+		 </div>
+	   </div>
+	 </section>
+	</header>
+	<section class="logo-brand">
+       <div class="container">
+	        <div class="logo-img">
+	            <img src="{% static 'img/Frame125.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame126.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame130.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame131.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame132.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame133.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame134.svg' %}" alt="brand">
+				<img src="{% static 'img/Frame136.svg' %}" alt="brand">
+	        </div>
+	   </div>
+	</section>
+	<section class="podbor">
+       <div class="container">
+	      <h2>Подобрать автомобиль по параметрам</h2>
+	        <div class="podbor-form">
+	        <form>
+			   <div class="fields-bl">
+				  <label>Город для доставки автомобиля*</label>
+				  <input type="text" name="city" list="cityname" placeholder="Выберите из списка" class="">
+                   <datalist id="cityname">
+                      <option value="Boston">
+                      <option value="Cambridge">
+                   </datalist>
+				</div>
+				<div class="fields-bl">
+				  <label>Ценовой диапазон, ₽*</label>
+				  <input type="text" name="pricename" list="pricename" placeholder="Выберите из списка">
+                   <datalist id="pricename">
+                      <option value="1000">
+                      <option value="2000">
+                   </datalist>
+				</div>
+				<div class="fields-bl">
+				  <label>Марка*</label>
+				  <input type="text" name="marka" list="marka" placeholder="Выберите из списка">
+                   <datalist id="marka">
+                      <option value="BMW">
+                      <option value="Ford">
+                   </datalist>
+				</div>
+				<div class="fields-bl">
+				  <label>КПП</label>
+				  <input type="text" name="kpp" list="kpp" placeholder="Выберите из списка">
+                   <datalist id="kpp">
+                      <option value="Автомат">
+                      <option value="Механика">
+                   </datalist>
+				</div>
+				<div class="fields-bl">
+				  <label>Тип кузова</label>
+				  <input type="text" name="tipkuzova" list="tipkuzova" placeholder="Выберите из списка">
+                   <datalist id="tipkuzova">
+                      <option value="Sedan">
+                      <option value="Limusine">
+                   </datalist>
+				</div>
+				<div class="fields-bl">
+				  <label>Тип двигателя</label>
+				  <input type="text" name="motor" list="motor" placeholder="Выберите из списка">
+                   <datalist id="motor">
+                      <option value="Benzin">
+                      <option value="Diesel">
+                   </datalist>
+				</div>
+				<div class="fields-bl">
+				  <label>Объем или мощность двигателя</label>
+				  <input type="text" name="obem" list="obem" placeholder="Выберите из списка">
+                   <datalist id="obem">
+                      <option value="1.6">
+                      <option value="1.9">
+                   </datalist>
+				</div>
+				<div class="fields-bl btn-blue">
+				  <a href="" class="look-btn">Смотреть 245 авто</a>
+				</div>
+				<div class="fields-bl">
+				  <a href="" class="clean-btn">Сбросить все параметры</a>
+				</div>
+			</form>
+	        </div>
+	</section>
+	<section class="slider">
+       <div class="container">
+	      <h2>Новинки<span class="new">new</span></h2>
+		  <div class="slider-bl">
+		  <div id="owl-demo" class="owl-carousel">
+    <div class="item"><h3 class="">HAVAL F7x Elite, 20221</h3><img src="{% static 'img/car1.svg' %}" alt="Car"><div class="bottom-item"><span class="price">2 654 321 ₽</span><a hraf="/">Купить</a></div></div>
+    <div class="item"><h3 class="">Geely Tugella, 2022</h3><img src="{% static 'img/car2.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 678 123 ₽</span><a hraf="/">Купить</a></div></div>
+    <div class="item"><h3 class="">Exeed TXL, 2022</h3><img src="{% static 'img/car3.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 000 000 ₽</span><a hraf="/">Купить</a></div></div>
+    <div class="item"><h3 class="">HAVAL F7x Elite, 20221</h3><img src="{% static 'img/car1.svg' %}" alt="Car"><div class="bottom-item"><span class="price">2 654 321 ₽</span><a hraf="/">Купить</a></div></div>
+    <div class="item"><h3 class="">Geely Tugella, 2022</h3><img src="{% static 'img/car2.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 678 123 ₽</span><a hraf="/">Купить</a></div></div>
+    <div class="item"><h3 class="">Exeed TXL, 2022</h3><img src="{% static 'img/car3.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 000 000 ₽</span><a hraf="/">Купить</a></div></div>
+		   </div>
+		   <div class="customNavigation">
+                <a class="btn prev"><img src="{% static 'img/prev.svg' %}" alt="Previous"></a>
+                <a class="btn next"><img src="{% static 'img/next.svg' %}" alt="Next"></a>
+            </div>
+			</div>
+	   </div>
+	</section>
+    <section class="order-work">
+       <div class="container">
+	      <h2>Порядок работы</h2>
+		  <div class="blocks">
+		    <div class="block-1">
+			   <span>Выбираете</br> автомобиль</span>
+			   <span>Мы отправляем вам</br> электронный договор</span>
+			   <span>Производитель в течение</br>3-ех дней отгружает</br>автомобиль</span>
+			   <span>Автомобиль прибывает к вам, вы</br> проводите осмотр и</br> подписываете акт приемки</span>
+			</div>
+		    <div class="block-2">
+			<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>Наслаждайтесь!</span>
+			</div>
+			<div class="block-3">
+			   <span>Оставляете заявку</br>на бронирование</span>
+			   <span>После подписания договора</br> вы вносите предоплату 100%</br>напрямую производителю</span>
+			   <span>Доставка автомобиля до</br> вашего адреса</span>
+			</div>
+		  </div>
+	   </div>
+	 </section>    
+    <section class="about">
+       <div class="container">
+          <h2>Кто такие OneTwoCar?</h2>
+	      <span class="subtitle">
+	       Онлайн-покупки стали неотъемлемой частью нашей жизни. Все больше сфер переходят в online. OneTwoCar - это первый полностью дистанционный сервис покупки автомобилей напрямую у производителя, без накруток и переплат. 
+	       </span>
+		   <h3>OneTwoCar vs. Дилер</h3>
+		   <div class="table-grid">
+		      <div class="col-one">
+			    <strong class="head-title">Параметр</strong>
+				<span>Цена</span>
+				<span>Доставка</span>
+				<span>Выбор</span>
+				<span>Процесс поиска</span>
+				<span>Ассортимент</span>
+				<span>Дополнительные услуги</span>
+				<span>Общение с менеджерами</span>
+				<span>Бюрократия</span>
+				<span>Прозрачность сделки</span>
+				<span>Акции и скидки</span>
+			  </div>
+			  <div class="col-two">
+			    <strong class="head-title">Покупка у OneTwoCar</strong>
+				<span>Честная цена от производителя.</br>Экономия до 70% от цены диллера</span>
+				<span>Доставка автомобиля прямо к дому</span>
+				<span>Огромный выбор автомобилей. Возможность сравнить</br> актуальные цены и комплектации сразу по всем производителям</span>
+				<span>Все марки и модели в вашем смартфоне - </br>выбирайте, не выходя из дома</span>
+				<span>Возможность найти эксклюзивные марки, модели и</br> комплектации, не представленные в вашем городе</span>
+				<span>Опции и финансовые услуги только по запросу клиента</span>
+				<span>Не нужно общаться с навязчивыми менеджерами</span>
+				<span>Максимальная простота и скорость покупки - вы выбираете</br> автомобиль, все остальные вопросы мы решаем за вас</span>
+				<span>Прозрачность и безопасность сделки,</br>возможность оформления смарт-контракта</span>
+				<span>Прозрачная цена, без нюансов. Вы можете воспользоваться официальными акциями от дистрибьютора</span>
+			  </div>
+			  <div class="col-three">
+			    <strong class="head-title">Покупка у дилера</strong>
+				<span>Необоснованно завышенные цены на автомобили</span>
+				<span>Многократные визиты в салон,</br>прежде чем вы сможете купить свой автомобиль</span>
+				<span>Очень трудно найти нужный</br>автомобиль в нужной комплектации</span>
+				<span>Нужно посетить всех дилеров в городе,</br>чтобы выбрать подходящий вам автомобиль</span>
+				<span>Скудный выбор марок, моделей и комплектаций, ограниченный дилерами, представленными в вашем городе</span>
+				<span>Навязывание дополнительных опций, кредитов, пакетов и услуг</span>
+				<span>Менеджеры, которые упорно будут навязывать</br>покупку и надоедать звонками</span>
+				<span>Долгий цикл покупки, сопровождающийся бесконечной бумажной волокитой и многократными визитами в салон</span>
+				<span>Дилеры, заинтересованные в получении максимальной прибыли, часто скрывают полные условия сделки</span>
+				<span>Все скидки искусственны – дилер всегда компенсирует свои издержки.Официальные акции от дистрибьютора чаще всего не афишируются</span>
+			  </div>
+		   </div>
+       </div>
+	</section>  
+	<section class="faq">
+       <div class="container">
+	    <h2>Часто задаваемые вопросы</h2>
+		<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+        Какие документы я получаю на руки?
+      </button>
+    <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item"> 
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+        Можно ли купить автомобиль в кредит?
+      </button>
+    <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">   
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+        Будет ли расширяться ассортимент марок?
+      </button>
+    <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+        Какие документы я получаю на руки?
+      </button>
+    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">   
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+        Можно ли купить автомобиль в кредит?
+      </button>
+    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+        Будет ли расширяться ассортимент марок?
+      </button>
+    <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+        Какие документы я получаю на руки?
+      </button>
+    <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+        Можно ли купить автомобиль в кредит?
+      </button>
+    <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">  
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+        Будет ли расширяться ассортимент марок?
+      </button>
+    <div id="collapse9" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item"> 
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
+        Какие документы я получаю на руки?
+      </button>
+    <div id="collapse10" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">   
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse11" aria-expanded="false" aria-controls="collapse11">
+        Можно ли купить автомобиль в кредит?
+      </button>
+    <div id="collapse11" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+</div>
+	   </div>
+	 </section> 
+	<section class="question">
+       <div class="container">
+	     <div class="wrap">
+	        <div class="form">
+		      <h2>Есть вопрос?</h2>
+			  <span class="subtitle">Задайте его через форму ниже, мы ответим вам в ближайшее время</span>
+			  <form action="" method="post">
+                <input id="name" type="text" name="name" placeholder="Ваше имя">
+				<input id="phone" type="text" name="phone" placeholder="+7 (- - -) - - -   - -   - -   ">
+				<textarea id="text" name="text" placeholder="Ваш вопрос"></textarea>
+				<span class="form-text">Нажимая "Отправить", вы соглашаетесь на сбор и обработку персональных данных</span>
+                <input type="submit" class="submit" value="Отправить">
+              </form>
+		    </div>
+		 </div>
+	   </div>
+	</section>  
+	<section class="contact">
+       <div class="container">
+		    <h2>Контакты</h2>
+            <div class="soc-icon">
+			   <img src="{% static 'img/Facebook_white.svg' %}" alt="Facebook">
+			   <img src="{% static 'img/Instagram_white.svg' %}" alt="Instagram">
+			   <img src="{% static 'img/Telegram_white.svg' %}" alt="Telegram">
+			   <img src="{% static 'img/Tiktok_white.svg' %}" alt="Tiktok_white">
+			   <img src="{% static 'img/Youtube_white.svg' %}" alt="Youtube_white">
+			</div>
+			<span class="bot"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</span>
+			<a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
+	   </div>
+	</section>
+	<footer>
+	  <div class="footer">
+        <div class="container">
+		  <div class="row">
+		    <div class="col-lg-2">
+			    <a href="/"><img src="{% static 'img/logo_footer.svg' %}" alt="OneTwoCar"></a>
+			</div>
+			<div class="col-lg-3">
+			  <div class="menu-footer">
+			    <a href="/">Подобрать автомобиль</a>
+				<a href="/">Новинки</a>
+				<a href="/">Порядок работы</a>
+				<a href="/">О компании</a>
+				<a href="/">Контакты</a>
+			  </div>
+			</div>
+			<div class="col-lg-4">
+			    <div class="menu-footer">
+			    <a href="/">Часто задаваемые вопросы</a>
+				<a href="/">Договор оферты</a>
+			  </div>
+			</div>
+			<div class="col-lg-3">
+                <div class="soc-icon">
+			      <img src="{% static 'img/Facebook_white_1.svg' %}" alt="Facebook">
+			      <img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram">
+			      <img src="{% static 'img/Telegram_white_1.svg' %}" alt="Telegram">
+			      <img src="{% static 'img/Tiktok_white_1.svg' %}" alt="Tiktok_white">
+			      <img src="{% static 'img/Youtube_white_1.svg' %}" alt="Youtube_white">
+			    </div>  
+			   <span class="bot"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</span>
+			   <a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
+			 </div>
+		   </div>
+		<div class="copyright">
+		   <div class="row">
+		    <div class="col-lg-4"><span>© 2022 One Two Car.  Все права защищены.</span></div>
+			<div class="col-lg-8"><span class="text-right">Все материалы, размещенные на настоящем сайте носят исключительно информационный характер и не являются публичной офертой.</span></div>
+		   </div>
+	   </div>	
+	    </div>
+	   </div>
+    </footer>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+	
+	
+    <script src="{% static 'owl-carousel/owl.carousel.js' %}"></script>
+
+
+    <!-- Demo -->
+
+    <style>
+    #owl-demo .item{
+        background: #F5F6F8;
+        padding: 30px 0px;
+        margin: 10px;
+        color: #FFF;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        text-align: center;
+    }
+    .customNavigation{
+      text-align: center;
+    }
+    .customNavigation a{
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    </style>
+
+
+    <script>
+    $(document).ready(function() {
+
+      var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+
+      items : 3, //10 items above 1000px browser width
+      itemsDesktop : [1000,5], //5 items between 1000px and 901px
+      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
+      itemsTablet: [600,2], //2 items between 600 and 0;
+      itemsMobile : false, // itemsMobile disabled - inherit from itemsTablet option
+      dots : false
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl.trigger('owl.prev');
+      })
+      $(".play").click(function(){
+        owl.trigger('owl.play',1000);
+      })
+      $(".stop").click(function(){
+        owl.trigger('owl.stop');
+      })
+
+
+    });
+    </script>
+  </body>
+</html>

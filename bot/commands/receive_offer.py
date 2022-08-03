@@ -11,11 +11,9 @@ from objects.globals import dp, bot
 from objects import globals
 from utils.api.requests import Requests
 from states.states import *
-from .start import start
 from log.logger import logger
 from utils.converter import *
 from keyboard.keyboard import *
-
 
 MAX_SHOW: int = 50
 
@@ -63,8 +61,9 @@ offer_page = globals.root.find("receive_offer")
 globals.offer_metadata: OfferMetaData = OfferMetaData()
 
 
-@dp.message_handler(lambda message: message.text == "Получить предложение")
-async def receive_offer(message: Message):
+@dp.message_handler(lambda message: message.text == "Получить предложение", state="*")
+async def receive_offer(message: Message, state: FSMContext):
+    await state.finish()
     # Send check user phone request.
     response: dict = api_requests.check_phone(user_id=message.from_user.id)
 
@@ -78,9 +77,6 @@ async def receive_offer(message: Message):
 
 @dp.message_handler(state=ReceiveOffer.phone)
 async def get_phone(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     # Remove unnecessary characters, leaving only numbers.
     phone: str = re.sub("[^0-9]", "", message.text)
 
@@ -146,9 +142,6 @@ async def myself_range(query: CallbackQuery):
 
 @dp.message_handler(state=Price.min)
 async def get_min_price(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
     globals.offer_metadata.MinPrice = message.text
@@ -158,9 +151,6 @@ async def get_min_price(message: Message, state: FSMContext):
 
 @dp.message_handler(state=Price.max)
 async def get_max_price(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
     await state.finish()
@@ -186,9 +176,6 @@ async def specific_amount(query: CallbackQuery):
 
 @dp.message_handler(state=Price.specific_amount)
 async def get_specific_amount(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
     await state.finish()
@@ -287,17 +274,14 @@ async def get_fuel_type(query: CallbackQuery):
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("by_volume")))
-async def get_volume(query: CallbackQuery, state: FSMContext):
+async def get_volume(query: CallbackQuery):
     globals.offer_metadata.IsVolume = True
     await query.message.edit_text(offer_page.find("min_volume").text)
     return await Volume.min.set()
 
 
 @dp.message_handler(state=Volume.min)
-async def get_min_volume(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
+async def get_min_volume(message: Message):
     if not is_float(message.text):
         return await message.answer("Некорректный формат ввода!")
     globals.offer_metadata.MinVolume = message.text
@@ -307,12 +291,8 @@ async def get_min_volume(message: Message, state: FSMContext):
 
 @dp.message_handler(state=Volume.max)
 async def get_max_volume(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     if not is_float(message.text):
         return await message.answer("Некорректный формат ввода!")
-    await state.finish()
     globals.offer_metadata.MaxVolume = message.text
     reply_markup = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
@@ -322,6 +302,7 @@ async def get_max_volume(message: Message, state: FSMContext):
     ])
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
+    await state.finish()
     return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
@@ -333,10 +314,7 @@ async def get_power(query: CallbackQuery):
 
 
 @dp.message_handler(state=Power.min)
-async def get_min_power(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
+async def get_min_power(message: Message):
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
     globals.offer_metadata.MinPower = message.text
@@ -346,12 +324,8 @@ async def get_min_power(message: Message, state: FSMContext):
 
 @dp.message_handler(state=Power.max)
 async def get_max_power(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
-    await state.finish()
     globals.offer_metadata.MaxPower = message.text
     reply_markup = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
@@ -361,14 +335,12 @@ async def get_max_power(message: Message, state: FSMContext):
     ])
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
+    await state.finish()
     return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
 @dp.inline_handler()
 async def inline_echo(query: InlineQuery):
-    if not globals.offer_metadata.Body:
-        return await not_found(query)
-
     transmission: str = query.query
     globals.offer_metadata.Transmission = transmission
     _ = globals.offer_metadata

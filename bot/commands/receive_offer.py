@@ -14,6 +14,7 @@ from states.states import *
 from .start import start
 from log.logger import logger
 from utils.converter import *
+from keyboard.keyboard import *
 
 
 MAX_SHOW: int = 50
@@ -119,17 +120,20 @@ async def get_price(query: CallbackQuery):
     all_marks = response.get("all_marks")
     all_marks.sort()
 
+    """
     reply_markup = InlineKeyboardMarkup()
 
     for mark in all_marks:
         reply_markup.add(InlineKeyboardButton(
             text=mark, callback_data=F"mark#{mark}"))
-    reply_markup.add(
+    """
+    _marks_markup = marks_markup(marks=all_marks, callback_data="mark#")
+    _marks_markup.add(
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
     # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any")
 
     try:
-        return await query.message.edit_text(offer_page.find("select_mark").text, reply_markup=reply_markup)
+        return await query.message.edit_text(offer_page.find("select_mark").text, reply_markup=_marks_markup)
     except MessageNotModified as e:
         logger.error(e)
 
@@ -194,9 +198,7 @@ async def get_specific_amount(message: Message, state: FSMContext):
 
     reply_markup = InlineKeyboardMarkup()
 
-    for mark in all_marks:
-        reply_markup.add(InlineKeyboardButton(
-            text=mark, callback_data=F"mark#{mark}"))
+    
     reply_markup.add(
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
     # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any")

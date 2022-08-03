@@ -7,13 +7,10 @@ from aiogram.dispatcher.storage import FSMContext
 from objects import globals
 from objects.globals import dp, bot
 from states.states import LeaveRequest, LeaveRequestMetaData
-from .start import start
 from config.config import Config
 from log.logger import logger
 
-
 config = Config()
-
 
 # Init new LeaveRequestMetaData obj
 globals.leave_request_metadata: LeaveRequestMetaData = LeaveRequestMetaData()
@@ -31,10 +28,7 @@ async def leave_request(query: CallbackQuery):
 
 
 @dp.message_handler(state=LeaveRequest.email)
-async def get_email(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
+async def get_email(message: Message):
     email = message.text
     globals.leave_request_metadata.email = email
     await message.answer(leave_request_page.find("input_full_name").text)
@@ -42,10 +36,7 @@ async def get_email(message: Message, state: FSMContext):
 
 
 @dp.message_handler(state=LeaveRequest.full_name)
-async def get_full_name(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
+async def get_full_name(message: Message):
     full_name = message.text
     globals.leave_request_metadata.full_name = full_name
     await message.answer(leave_request_page.find("input_address").text)
@@ -53,10 +44,7 @@ async def get_full_name(message: Message, state: FSMContext):
 
 
 @dp.message_handler(state=LeaveRequest.address)
-async def get_address(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
+async def get_address(message: Message):
     address = message.text
     globals.leave_request_metadata.address = address
     await message.answer(leave_request_page.find("input_phone").text)
@@ -65,9 +53,6 @@ async def get_address(message: Message, state: FSMContext):
 
 @dp.message_handler(state=LeaveRequest.phone)
 async def get_phone(message: Message, state: FSMContext):
-    if message.text == "/start":
-        return await start(message, state)
-
     phone = re.sub("[^0-9]", "", message.text)
     globals.leave_request_metadata.phone = phone
     _ = globals.leave_request_metadata

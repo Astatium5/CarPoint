@@ -1,9 +1,7 @@
 import hashlib
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import Message
 
 from aiogram.dispatcher.storage import FSMContext
-from requests import request
-
 
 from objects.globals import dp, bot
 from objects import globals
@@ -16,7 +14,7 @@ from keyboard.keyboard import *
 api_requests = Requests()
 
 
-@dp.message_handler(commands="start")
+@dp.message_handler(commands="start", state="*")
 async def start(message: Message, state: FSMContext):
     if message.chat.type != "group":
         globals.start = start

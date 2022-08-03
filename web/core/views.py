@@ -85,10 +85,14 @@ class API:
         serializer_class: Model = Model
 
         def get(self, request: HttpRequest, mark: str):
-            queryset: QuerySet = Model.objects.filter(mark=Mark.objects.get(title=mark).pk).all()
-            counter = Counter([model.body for model in queryset])
-            bodies = list(counter.keys())
-            return HttpResponse(json.dumps({"all_bodies": bodies}), content_type='application/json')
+            mark = Mark.objects.get(title=mark)
+            if Car.objects.filter(mark_id=mark.pk).exists():
+                queryset: QuerySet = Model.objects.filter(mark=mark.pk).all()
+                counter = Counter([model.body for model in queryset if Set.objects.filter(model=model).exists()])
+                bodies = list(counter.keys())
+                return HttpResponse(json.dumps({"all_bodies": bodies}), content_type='application/json')
+            else:
+                return HttpResponse(json.dumps({"all_bodies": []}), content_type='application/json')
 
 
     class GetAllFuelTypesView(ListAPIView):

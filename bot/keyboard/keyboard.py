@@ -36,6 +36,18 @@ choice_transmission_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_k
         text="Начать поиск сначала", callback_data="new_search")]
 ])
 
+support_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(
+        text="Задать вопрос", callback_data="support"
+    )]
+])
+
+contact_me_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(
+        text="Свяжитесь со мной", callback_data="contact_me"
+    )]
+])
+
 
 def marks_markup(marks: list, callback_data: str) -> InlineKeyboardMarkup:
     inline_marks: list = []

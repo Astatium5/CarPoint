@@ -4,18 +4,40 @@ from aiogram.types import (
 
 from utils.paginate import paginate
 
-choice_markup = ReplyKeyboardMarkup(resize_keyboard=True,
-                                                   keyboard=[
-                                                       [KeyboardButton(text="Получить предложение"), KeyboardButton(
-                                                           text="Для инвесторов")],
-                                                       [KeyboardButton(text="Контакты"), KeyboardButton(
-                                                           text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
-                                                       [KeyboardButton(
-                                                           text="Как мы работаем")]
-                                                   ])
+choice_markup: ReplyKeyboardMarkup = ReplyKeyboardMarkup(resize_keyboard=True, keyboard=[
+    [KeyboardButton(text="Получить предложение"),
+     KeyboardButton(text="Для инвесторов")],
+    [KeyboardButton(text="Контакты"), KeyboardButton(
+        text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
+    [KeyboardButton(text="Как мы работаем")]
+])
+
+choice_price_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text="500 000₽ - 2 000 000₽",
+                          callback_data="pr#87506fd2b91be8b7ab7b59d069c42d40")],
+    [InlineKeyboardButton(text="2 000 000₽ - 4 000 000₽",
+                          callback_data="pr#1ee1876784dfba4421dfbc93272053a8")],
+    [InlineKeyboardButton(text="4 000 000₽ - 6 000 000₽",
+                          callback_data="pr#af499ea026c3e952d324d7af4cf7aaee")],
+    [InlineKeyboardButton(text="более 6 000 000₽",
+                          callback_data="pr#2a3225e2decd960cebe8c4de135f59a0")],
+    [InlineKeyboardButton(text="Указать диапазон",
+                          callback_data="myself_range")],
+    [InlineKeyboardButton(text="Подбери под конкретную сумму",
+                          callback_data="specific_amount")],
+])
+
+choice_transmission_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(
+        text="Механика", switch_inline_query_current_chat="МКПП")],
+    [InlineKeyboardButton(
+        text="Автомат", switch_inline_query_current_chat="АКПП")],
+    [InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search")]
+])
 
 
-def marks_markup(marks: list, callback_data: str):
+def marks_markup(marks: list, callback_data: str) -> InlineKeyboardMarkup:
     inline_marks: list = []
     marks: list[list] = list(paginate(marks, 2))
     for mark in marks:

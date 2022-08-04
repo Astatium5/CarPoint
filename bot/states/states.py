@@ -36,6 +36,19 @@ class LeaveRequest(StatesGroup):
     phone = State()
 
 
+class Support(StatesGroup):
+    name = State()
+    email = State()
+    phone = State()
+    question = State()
+
+
+class ContactMe(StatesGroup):
+    name = State()
+    email = State()
+    phone = State()
+
+
 @dataclass
 class OfferMetaData:
     # Price
@@ -115,4 +128,30 @@ class LeaveRequestMetaData:
         self.email = email
         self.full_name = full_name
         self.address = address
+        self.phone = phone
+
+
+@dataclass
+class SupportMetaData:
+    name: str
+    email: str
+    phone: str
+    question: str
+
+    def __init__(self, name="", email="", phone="", question=""):
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.question = question
+
+
+@dataclass
+class ContactMeMetaData:
+    name: str
+    email: str
+    phone: str
+
+    def __init__(self, name="", email="", phone=""):
+        self.name = name
+        self.email = email
         self.phone = phone

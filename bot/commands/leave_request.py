@@ -58,16 +58,21 @@ async def get_phone(message: Message, state: FSMContext) -> Message:
     phone = re.sub("[^0-9]", "", message.text)
     globals.leave_request_metadata.phone = phone
     _ = globals.leave_request_metadata
-    new_leave_request_page: str = (F"<b>Новая заявка!</b>\n"
-                              F"ID пользователя: <code>{message.from_user.id}</code>\n"
-                              F"ID автомобиля: <code>{_.car_id}</code>\n"
-                              F"Эл. почта: <code>{_.email}</code>\n"
-                              F"Полное имя: <code>{_.full_name}</code>\n"
-                              F"Адрес: <code>{_.address}</code>\n"
-                              F"Номер телефона: <code>{_.phone}</code>\n"
-                              F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>")
+    user_id = message.from_user.id
+    username = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
+    _leave_request_page: str = (
+        F"<b>Новая заявка!</b>\n"
+        F"ID пользователя: <code>{user_id}</code>\n"
+        F"Имя пользователя: {username}\n"
+        F"ID автомобиля: <code>{_.car_id}</code>\n"
+        F"Эл. почта: <code>{_.email}</code>\n"
+        F"Полное имя: <code>{_.full_name}</code>\n"
+        F"Адрес: <code>{_.address}</code>\n"
+        F"Номер телефона: <code>{_.phone}</code>\n"
+        F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>"
+    )
     try:
-        await bot.send_message(config.chat_id, new_leave_request_page)
+        await bot.send_message(config.chat_id, _leave_request_page)
     except ChatNotFound as e:
         logger.error(e)
     await state.finish()

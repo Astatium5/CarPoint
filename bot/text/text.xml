@@ -191,4 +191,48 @@ FAQ. Вопросы и ответы.
 Вы можете связаться с нашим сотрудником @kolmazz, чтобы задать ваш вопрос.
     </how_work>
 
+<support>
+
+<name>
+Имя
+    </name>
+
+<email>
+Email:
+    </email>
+
+<phone>
+Телефон:
+    </phone>
+
+<question>
+Ваш вопрос:
+    </question>
+
+<end>
+Вопрос отправлен на рассмотрение!
+    </end>
+
+</support>
+
+<contact_me>
+
+<name>
+Имя:
+    </name>
+
+<email>
+Email:
+    </email>
+
+<phone>
+Телефон:
+    </phone>
+
+<end>
+Запрос отправлен на рассмотрение!
+    </end>
+
+</contact_me>
+
 </texts>

@@ -16,8 +16,8 @@ TEXT_PATH = Path(__file__).resolve().parent
 
 
 async def main():
-    globals.bot = Bot(token=config.token, parse_mode="HTML")
-    globals.dp = Dispatcher(globals.bot, storage=MemoryStorage())
+    globals.bot: Bot = Bot(token=config.token, parse_mode="HTML")
+    globals.dp: Dispatcher = Dispatcher(globals.bot, storage=MemoryStorage())
 
     bot_info: dict = await globals.bot.get_me()
     logger.info(F"Bot username: @{bot_info.username}, Bot ID: {bot_info.id}")

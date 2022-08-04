@@ -5,8 +5,7 @@ from config.config import Config
 from .headers import HEADERS, convert_to_headers
 from .serializer import serialize_content
 
-
-config = Config()
+config: Config = Config()
 
 
 def make_request(path: str, headers=None, timeout=5, **kwargs) -> dict:

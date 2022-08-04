@@ -15,13 +15,13 @@ class Config:
         load_dotenv(find_dotenv())  # Load all config from .env file.
         self.set_config()  # Call set config function.
 
-    def set_config(self):
+    def set_config(self) -> None:
         # Bot config data.
         self.token = os.getenv("BOT_TOKEN")
         self.host = os.getenv("HOST")
         self.chat_id = os.getenv("CHAT_ID")
 
-    def change_value(self, key, value):
+    def change_value(self, key, value) -> None:
         """ The function changes the value in the file by the key
         Parameters
         ----------

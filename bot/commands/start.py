@@ -1,4 +1,5 @@
-import hashlib
+from typing import Union, Any
+
 from aiogram.types import Message
 
 from aiogram.dispatcher.storage import FSMContext
@@ -10,12 +11,11 @@ from .meeting import *
 from states.states import *
 from keyboard.keyboard import *
 
-
-api_requests = Requests()
+api_requests: Requests = Requests()
 
 
 @dp.message_handler(commands="start", state="*")
-async def start(message: Message, state: FSMContext):
+async def start(message: Message, state: FSMContext) -> Union[Message, None]:
     if message.chat.type != "group":
         globals.start = start
         # Init OfferMetaData and set to vatiable
@@ -25,7 +25,7 @@ async def start(message: Message, state: FSMContext):
                                             username=message.from_user.username)  # Create new user
 
         bot_info = await bot.get_me()  # Get bot info
-        welcome_page = globals.root.find("welcome")
+        welcome_page: Any = globals.root.find("welcome")
 
         if not response.get("response"):
             if not response.get("name"):

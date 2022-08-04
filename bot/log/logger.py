@@ -3,7 +3,7 @@ import logging
 
 file_handler = logging.FileHandler(filename='logging.ini')
 stdout_handler = logging.StreamHandler(sys.stdout)
-handlers = [file_handler, stdout_handler]
+handlers: list = [file_handler, stdout_handler]
 
 
 class CustomAdapter(logging.LoggerAdapter):

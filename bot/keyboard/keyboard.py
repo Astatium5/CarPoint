@@ -27,15 +27,6 @@ choice_price_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard
                           callback_data="specific_amount")],
 ])
 
-choice_transmission_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(
-        text="Механика", switch_inline_query_current_chat="МКПП")],
-    [InlineKeyboardButton(
-        text="Автомат", switch_inline_query_current_chat="АКПП")],
-    [InlineKeyboardButton(
-        text="Начать поиск сначала", callback_data="new_search")]
-])
-
 support_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(
         text="Задать вопрос", callback_data="support"

@@ -1,6 +1,6 @@
 from typing import Any
 
-HEADERS: dict[str, str] = {'Content-Type': 'application/json',
+HEADERS: dict = {'Content-Type': 'application/json',
            'Accept': 'application/json',
            'Accept-Encoding': 'gzip, deflate, br',
            'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7'}

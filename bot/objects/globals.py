@@ -18,3 +18,5 @@ start = None
 
 offer_metadata: OfferMetaData = None
 leave_request_metadata: LeaveRequestMetaData = None
+
+cars = None

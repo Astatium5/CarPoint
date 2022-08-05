@@ -31,9 +31,10 @@ async def leave_request(query: CallbackQuery) -> None:
 
 @dp.message_handler(state=LeaveRequest.email)
 async def get_email(message: Message) -> None:
-    email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
-    if email:
+    _email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
+    if _email:
         return await message.answer("Почта не является валидной!")
+    email = message.text
     globals.leave_request_metadata.email = email
     await message.answer(leave_request_page.find("input_full_name").text)
     return await LeaveRequest.full_name.set()

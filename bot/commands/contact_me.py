@@ -32,9 +32,10 @@ async def get_name(message: Message):
 
 @dp.message_handler(state=ContactMe.email)
 async def get_email(message: Message):
-    email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
-    if email:
+    _email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
+    if _email:
         return await message.answer("Почта не является валидной!")
+    email = message.text
     globals.ContactMeMetaData.email = email
     await message.answer(contact_me_page.find("phone").text)
     return await ContactMe.phone.set()

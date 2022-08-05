@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 from typing import Any, Dict, Union
 
 from aiogram.types import (Message, CallbackQuery,
@@ -270,7 +271,15 @@ async def get_max_volume(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MaxVolume = message.text
 
     await state.finish()
-    return await message.answer(offer_page.find("select_transmission").text, reply_markup=choice_transmission_markup)
+    globals.cars = await find_car(message.from_user.id)
+    transmissions = await get_transmission(globals.cars)
+    reply_markup = InlineKeyboardMarkup()
+    for transmission in transmissions:
+        reply_markup.add(InlineKeyboardButton(
+            text=transmission, switch_inline_query_current_chat=transmission))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
+    return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("by_power")))
@@ -295,52 +304,46 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
         return await message.answer("Некорректный формат ввода!")
     globals.offer_metadata.MaxPower = message.text
     await state.finish()
-    return await message.answer(offer_page.find("select_transmission").text, reply_markup=choice_transmission_markup)
+    globals.cars = await find_car(message.from_user.id)
+    transmissions = await get_transmission(globals.cars)
+    reply_markup = InlineKeyboardMarkup()
+    for transmission in transmissions:
+        reply_markup.add(InlineKeyboardButton(
+            text=transmission, switch_inline_query_current_chat=transmission))
+    reply_markup.add(InlineKeyboardButton(
+        text="Начать поиск сначала", callback_data="new_search"))
+    return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
 
 
 @dp.inline_handler()
 async def inline_echo(query: InlineQuery) -> Any:
     transmission: str = query.query
-    globals.offer_metadata.Transmission = transmission
-    _ = globals.offer_metadata
-    response: dict = api_requests.find_car(body=_.Body, fuel_type=_.FuelType, user_id=query.from_user.id,
-                                           transmission=_.Transmission, **globals.offer_metadata.to_header())
-    if not response:
-        return await not_found(query)
-
-    status: bool = bool(response.get("response"))
-    if status:
-        cars: Union[Any, None] = response.get("cars")
-        if cars:
-            n: int = 0
-            items: dict = []
-            for car in cars:
-                id: Any = car.get("id")
-                title: Any = car.get("title")
-                price: Any = car.get("price")
-                image: Any = car.get("image")
-                engine_volume: Any = car.get("engine_volume")
-                engine_power: Any = car.get("engine_power")
-                type_fuel: Any = car.get("engine_type_fuel")
-                wd: Any = car.get("wd")
-                item: InlineQueryResultArticle = InlineQueryResultArticle(id=id, title=title,
-                                                                          input_message_content=InputTextMessageContent(
-                                                                              title),
-                                                                          description=(F"Цена: {int(price)}₽\t"
-                                                                                       F"Объем: {engine_volume}\t"
-                                                                                       F"Мощность: {engine_power}\t"
-                                                                                       F"Тип: {type_fuel},\t"
-                                                                                       F"{wd}"),
-                                                                          hide_url=True, thumb_url=image)
-                items.append(item)
-                n += 1
-                if n == MAX_SHOW:
-                    break
-            return await globals.bot.answer_inline_query(query.id, items, cache_time=3)
-        else:
-            return await not_found(query)
-    else:
-        return await not_found(query)
+    n: int = 0
+    items: dict = []
+    for car in globals.cars:
+        if car.get("transmission") == transmission:
+            id: Any = car.get("id")
+            title: Any = car.get("title")
+            price: Any = car.get("price")
+            image: Any = car.get("image")
+            engine_volume: Any = car.get("engine_volume")
+            engine_power: Any = car.get("engine_power")
+            type_fuel: Any = car.get("engine_type_fuel")
+            wd: Any = car.get("wd")
+            item: InlineQueryResultArticle = InlineQueryResultArticle(id=id, title=title,
+                                                                        input_message_content=InputTextMessageContent(
+                                                                            title),
+                                                                        description=(F"Цена: {int(price)}₽\t"
+                                                                                    F"Объем: {engine_volume}\t"
+                                                                                    F"Мощность: {engine_power}\t"
+                                                                                    F"Тип: {type_fuel},\t"
+                                                                                    F"{wd}"),
+                                                                        hide_url=True, thumb_url=image)
+            items.append(item)
+            n += 1
+            if n == MAX_SHOW:
+                break
+    return await globals.bot.answer_inline_query(query.id, items, cache_time=3)
 
 
 @dp.callback_query_handler(lambda query: query.data == "new_search")
@@ -354,6 +357,17 @@ async def new_search(query: CallbackQuery) -> Message:
         await bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
         return await bot.send_message(chat_id=query.message.chat.id, text=offer_page.find("select_price").text, reply_markup=choice_price_markup)
 
+
+async def find_car(user_id: int) -> Union[Any, None]:
+    _ = globals.offer_metadata
+    response: dict = api_requests.find_car(body=_.Body, fuel_type=_.FuelType, user_id=user_id, **globals.offer_metadata.to_header())
+    cars: Union[Any, None] = response.get("cars")
+    return cars
+
+async def get_transmission(cars: list) -> list:
+    transmission = [car.get("transmission") for car in cars]
+    counter = Counter(transmission)
+    return list(counter)
 
 async def not_found(query: InlineQuery) -> Any:
     thumb: str = "https://raw.githubusercontent.com/amtp1/CarPoint/main/image/thumb.png"

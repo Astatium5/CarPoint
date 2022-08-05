@@ -115,13 +115,12 @@ class API:
         serializer_class: Car = Car
 
         def get(self, request: HttpRequest,
-            body: str, fuel_type: str, transmission: str, user_id: int
+            body: str, fuel_type: str, user_id: int
         ):
             headers = request.headers
             try:
                 user = BotUser.objects.get(user_id=user_id)
                 mark = Mark.objects.filter(title=headers.get("Mark")).get()
-                transmission = Transmission.objects.filter(title=transmission).get()
                 min_p = headers.get("Min-Price")
                 max_p = headers.get("Max-Price")
                 if str_to_bool(headers.get("Is-Volume")):
@@ -129,10 +128,10 @@ class API:
                     max_volume = float(headers.get("Max-Volume"))
                     if int(max_p) == 0:
                         cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__volume__range=[min_volume, max_volume],
-                            city=user.city, transmission=transmission).all()
+                            city=user.city).all()
                     else:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume],
-                            city=user.city, transmission=transmission).all()
+                            city=user.city).all()
                     if cars:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             cars = [car.to_dict() for car in cars if car.set.model.body == body]
@@ -145,10 +144,10 @@ class API:
                     max_power = int(headers.get("Max-Power"))
                     if int(max_p) == 0:
                         cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__power__range=[min_power, max_power],
-                            city=user.city, transmission=transmission).all()
+                            city=user.city).all()
                     else:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power],
-                            city=user.city, transmission=transmission).all()
+                            city=user.city).all()
                     if cars:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             cars = [car.to_dict() for car in cars if car.set.model.body == body]
@@ -173,3 +172,6 @@ class API:
 class Web:
     def index(request) -> HttpResponse:
         return render(request, "index.html")
+
+    def oferta(request):
+        return render(request, "oferta.html")

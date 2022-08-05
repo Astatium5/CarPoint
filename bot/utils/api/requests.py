@@ -47,14 +47,14 @@ class Requests:
         return response
 
     def find_car(self,
-                 body, fuel_type, transmission, user_id, **kwargs
+                 body, fuel_type, user_id, **kwargs
                  ) -> dict:
         path: str = "api/find_car/"
         _: dict[str, Any] = kwargs
         if not fuel_type:
             fuel_type = "undefined"
         params: dict[str, Any] = dict(
-            body=body, fuel_type=fuel_type, transmission=transmission, user_id=user_id)
+            body=body, fuel_type=fuel_type, user_id=user_id)
         response: dict = make_request(
             path=path, timeout=7, headers=kwargs, **params)
         return response

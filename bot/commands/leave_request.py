@@ -31,7 +31,9 @@ async def leave_request(query: CallbackQuery) -> None:
 
 @dp.message_handler(state=LeaveRequest.email)
 async def get_email(message: Message) -> None:
-    email: str = message.text
+    email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
+    if email:
+        return await message.answer("Почта не является валидной!")
     globals.leave_request_metadata.email = email
     await message.answer(leave_request_page.find("input_full_name").text)
     return await LeaveRequest.full_name.set()
@@ -56,6 +58,8 @@ async def get_address(message: Message) -> None:
 @dp.message_handler(state=LeaveRequest.phone)
 async def get_phone(message: Message, state: FSMContext) -> Message:
     phone = re.sub("[^0-9]", "", message.text)
+    if not phone:
+        return await message.answer("Телефон не является валидным!")
     globals.leave_request_metadata.phone = phone
     _ = globals.leave_request_metadata
     user_id = message.from_user.id

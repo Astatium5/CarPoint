@@ -32,7 +32,9 @@ async def get_name(message: Message):
 
 @dp.message_handler(state=Support.email)
 async def get_email(message: Message):
-    email = message.text
+    email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
+    if email:
+        return await message.answer("Почта не является валидной!")
     globals.SupportMetaData.email = email
     await message.answer(support_page.find("phone").text)
     return await Support.phone.set()
@@ -41,6 +43,8 @@ async def get_email(message: Message):
 @dp.message_handler(state=Support.phone)
 async def get_phone(message: Message):
     phone = re.sub("[^0-9]", "", message.text)
+    if not phone:
+        return await message.answer("Телефон не является валидным!")
     globals.SupportMetaData.phone = phone
     await message.answer(support_page.find("question").text)
     return await Support.question.set()

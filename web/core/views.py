@@ -5,7 +5,6 @@ from collections import Counter
 from loguru import logger
 from django.shortcuts import render
 from django.db.models.query import QuerySet
-from requests import head
 from rest_framework.generics import ListAPIView
 from django.http import HttpRequest, HttpResponse
 
@@ -171,7 +170,11 @@ class API:
 
 class Web:
     def index(request) -> HttpResponse:
-        return render(request, "index.html")
+        cities = City.objects.all()
+        marks = Mark.objects.all()
+        return render(request, "index.html",
+            {"cities": cities, "marks": marks}
+        )
 
     def oferta(request):
         return render(request, "oferta.html")

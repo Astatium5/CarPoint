@@ -102,7 +102,6 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
 
     response: dict = api_requests.get_all_marks()
     all_marks: Union[Any, None] = response.get("all_marks")
-    all_marks.sort()
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(
@@ -137,7 +136,6 @@ async def get_max_price(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MaxPrice = message.text
     response: dict = api_requests.get_all_marks()
     all_marks: Union[Any, None] = response.get("all_marks")
-    all_marks.sort()
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(
@@ -159,7 +157,6 @@ async def get_specific_amount(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MinPrice = message.text
     response: dict = api_requests.get_all_marks()
     all_marks: Union[Any, None] = response.get("all_marks")
-    all_marks.sort()
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(

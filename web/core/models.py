@@ -28,6 +28,7 @@ class Mark(models.Model):
     class Meta:
         verbose_name = "Марка"
         verbose_name_plural = "Марки"
+        ordering = ['title']
 
 
 class Model(models.Model):
@@ -104,6 +105,7 @@ class City(models.Model):
     class Meta:
         verbose_name = "Город"
         verbose_name_plural = "Города"
+        ordering = ['title']
 
 
 class Car(models.Model):

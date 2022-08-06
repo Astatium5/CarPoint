@@ -93,10 +93,20 @@ h1 {
    text-align: center;
    color: #FFFFFF;
    text-decoration: none;
+   border: 0;
 }
 .button:hover {
    background: #092449;
    color: #FFFFFF;
+}
+button.close {
+    position: absolute;
+    top: 18px;
+    width: min-content;
+    opacity: 1;
+    right: 18px;
+	border: 0;
+    background: none;
 }
 .header-info {
     position: relative;
@@ -104,7 +114,6 @@ h1 {
     top: 80px;
 }
 .header-info span {
-	font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -113,7 +122,6 @@ h1 {
     opacity: 0.5;
 }
 .header-info h4 {
-   font-family: 'Inter';
    font-style: normal;
    font-weight: 500;
    font-size: 14px;
@@ -676,7 +684,278 @@ footer {
 .footer .bot {
     text-align: right;
 }
-
+.modal-dialog {
+    max-width: 480px;
+}
+.modal-content {
+    border-radius: 20px;
+}
+.modal-header {
+    border-bottom: 0;
+	display: block;
+}
+.modal-title {
+    margin: 20px 0;
+    font-size: 20px;
+	text-align: center;
+}
+.auto-form {
+	background: #F6F6F8;
+    padding: 7px;
+    margin-bottom: 30px;
+	display: flex;
+}
+.auto-info {
+    margin-left: 10px;
+}
+.auto-title {
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 110%;
+    color: #092449;
+	margin-bottom: 5px;
+}
+.auto-info span {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    color: #092449;
+}
+.auto-subtitle {
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 110%;
+    color: #818B99;
+	margin-bottom: 5px;
+	display: block;
+}
+.modal-body {
+    padding: 10px;
+}
+.modal-form input {
+	display: block;
+    width: 100%;
+    max-width: 312px;
+    border: 1px solid #CFD9E3;
+    border-radius: 8px;
+    margin: 0 auto 20px;
+    height: 40px;
+    padding: 8px 20px;
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #9DA8B7;
+}
+.modal-form .button {
+    border: 0;
+    background: #092449;
+    color: #fff;
+    max-width: 312px;
+    width: 100%;
+    margin: 0 auto 20px;
+}
+.modal-form .button:hover {
+    background: #ffffff;
+	color: #092449;
+	border: 1px solid #092449;
+}
+.btn-otmena {
+    display: block;
+    text-align: center;
+    border: 0;
+    background: none;
+    color: #092449;
+    margin: 0 auto;
+	padding-bottom: 40px;
+}
+.modal-success .modal-content {
+    padding: 26px;
+}
+.modal-success .modal-body {
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.modal-success p {
+   font-family: 'Manrope';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 150%;
+   color: #818B99;
+}
+.modal-success .modal-header {
+    padding: 0;
+}
+.catalog {
+    margin-top: 30px;
+}
+.item-auto {
+    margin-bottom: 20px;
+}
+.item-auto-open {
+    display: flex;
+    background: #F6F6F8;
+    padding: 8.5px 19px;
+	align-items: center;
+}
+.item-auto h5 {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 110%;
+    color: #151515;
+    margin-bottom: 0;
+	margin-left: 23px;
+	min-width: 280px;
+	
+}
+.item-auto .red-color {
+    color: #E30613;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Manrope';
+	margin-left: auto;
+}
+.item-auto-hide {
+	display:none;
+}
+.item-auto-plus .item-auto-hide {
+	display: block;
+	background: #F6F6F8;
+	padding: 16px;
+}
+.item-auto-plus .item-wrap {
+	display: flex;
+    align-items: center;
+	background: #FFFFFF;
+	justify-content: space-around;
+	margin-bottom: 16px;
+}
+.item-auto-open img {
+    cursor: pointer;
+}
+.item-auto-info {
+   
+}
+.variant-color {
+    display: flex;
+    gap: 5px;
+	margin-top: 30px;
+}
+.item-auto-price span {
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 110%;
+    text-align: right;
+    color: #092449;
+	display: block;
+}
+.item-auto-price a {
+    font-size: 16px;
+    color: #092449;
+    border: solid 1px #092449;
+    height: 40px;
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+.item-auto-first {
+    background: #F6F6F8;
+    padding: 16px;
+}
+.item-auto-first .item-wrap {
+    display: flex;
+    align-items: center;
+}
+.item-auto-first .item-wrap h5 {
+    margin-left: 0;
+	margin-bottom: 20px;
+}
+.item-auto-first .item-auto-info {
+    margin-left: 30px;
+}
+.item-auto .count {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 110%;
+    color: #092449;
+}
+.item-auto-first span {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #818B99;
+	margin-right: 5px;
+}
+.item-wrap-open {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+/*Page*/
+.page {
+    padding-bottom: 100px;
+}
+.page header {
+    background: #151515;
+    min-height: auto;
+}
+.page .header {
+    padding: 43px 0;
+}
+.page h2 {
+    text-align: left;
+}
+.page .subtitle {
+    max-width: inherit;
+    text-align: left;
+}
+.page p {
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #818B99;
+    margin-bottom: 20px;
+}
+h4 {
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 110%;
+    color: #151515;
+	margin-bottom: 20px;
+}
+h5 {
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 110%;
+    color: #151515;
+	margin-bottom: 20px;
+}
 @media (max-width: 576px) {
 	.header {
   padding: 40px 0;
@@ -787,5 +1066,42 @@ footer {
   font-size: 12px;
   text-align: center;
   margin-top: 20px;
+}
+.item-auto-first .item-wrap {
+    display: block;
+}
+.item-wrap {
+    display: block;
+	padding: 16px;
+}
+.item-auto-first span {
+    margin-right: 0;
+    display: block;
+    line-height: 30px;
+}
+.auto-form {
+    display: block;
+}
+.item-wrap-open {
+    display: block;
+	margin-left:23px;
+}
+.item-auto-open {
+    padding: 19px;
+}
+.item-wrap-open span {
+    display: block;
+}
+.item-wrap-open h5 {
+    margin-left: 0;
+    min-width: auto;
+}
+.item-auto-plus .item-wrap {
+    display: block;
+}
+.item-auto-price span {
+    text-align: left;
+    display: block;
+    margin: 10px 0;
 }
 }

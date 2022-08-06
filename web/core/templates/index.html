@@ -187,8 +187,9 @@
 				  <label>Город для доставки автомобиля*</label>
 				  <input type="text" name="city" list="cityname" placeholder="Выберите из списка" class="">
                    <datalist id="cityname">
-                      <!--<option value="Boston">
-                      <option value="Cambridge">-->
+						{% for city in cities %}
+							<option value="{{city.title}}">
+						{% endfor %}
                    </datalist>
 				</div>
 				<div class="fields-bl">
@@ -203,8 +204,9 @@
 				  <label>Марка*</label>
 				  <input type="text" name="marka" list="marka" placeholder="Выберите из списка">
                    <datalist id="marka">
-                      <option value="BMW">
-                      <option value="Ford">
+					{% for mark in marks %}
+						<option value="{{mark.title}}">
+					{% endfor %}
                    </datalist>
 				</div>
 				<div class="fields-bl">

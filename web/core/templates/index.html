@@ -14,11 +14,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
 	<!-- Style -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 	<!-- Owl Carousel Assets -->
     <link href="{% static 'owl-carousel/owl.carousel.css' %}" rel="stylesheet">
     <link href="{% static 'owl-carousel/owl.theme.css' %}" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>
+ $(document).ready(function(){
+	$('.item-auto').click(function () {
+		$(this).toggleClass('item-auto-plus');
+		});
+	});
+</script>
   </head>
   <body>
     <header>
@@ -54,8 +65,72 @@
 		    <div class="col-lg-7">
 			   <h1>Автомобили от производителя</br>с доставкой и <span class="red">экономией</br>до 20%</span> от цены салона</h1>
 			   <span class="subtitle">OneTwoCar - первый мультибрендовый официальный online дилер в России с</br> честными ценами от производителя</span>
-			   <a href="/" class="button
-			   ">Подобрать автомобиль</a>
+               <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Подобрать автомобиль</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Купить автомобиль</h5>
+      </div>
+      <div class="modal-body">
+	    <div class="auto-form">
+            <div class="auto-img"><img src="{% static 'img/auto.svg' %}" alt="Auto"></div>
+			<div class="auto-info">
+			    <h5 class="auto-title">HAVAL F7x  Универсал 5 дверей</h5>
+				<h6 class="auto-subtitle">Comfort 1.5  4x2</h6>
+				<span>АКПП,</span><span> бензин,</span><span>передний 2WD,</span><span> ДВС 1.5</span>
+			</div>
+        </div>
+        <form class="modal-form" action="" method="post">
+			<input id="name" type="text" name="name" placeholder="Ваше имя">
+			<input id="phone" type="tel" name="phone" placeholder="+7 (- - -) - - -   - -   - -   ">
+			<input id="email" type="email" name="email" placeholder="E-mail">
+			<input id="city" type="text" name="city" placeholder="Город">
+			<button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModalSearch" data-bs-dismiss="modal">Купить</button>
+			<button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-success" id="exampleModalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Найдено 1 234 566 вариантов</h5>
+      </div>
+      <div class="modal-body">
+        <p> Пожалуйста, укажите дополнительные параметры для сужения поиска</p>
+      </div>
+	  <div class="modal-form">
+	     <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Хорошо</button>
+	     <button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>
+	  </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-success" id="exampleModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Автомобиль успешно забронирован</h5>
+      </div>
+      <div class="modal-body">
+        <p>На указанный вами e-mail выслан электронный договор, подпишите его и вышлете ответным письмом. После этого мы вышлем вам детали для оплаты.</p>
+      </div>
+	  <div class="modal-form">
+	     <button type="button" class="button" data-bs-dismiss="modal">Закрыть</button>
+	  </div>
+    </div>
+  </div>
+</div>
 			</div>
 			<div class="col-lg-5">
 			   <div class="baner-img"><a href="/"><img src="{% static 'img/car.svg' %}" alt="Car"></a></div>
@@ -112,8 +187,8 @@
 				  <label>Город для доставки автомобиля*</label>
 				  <input type="text" name="city" list="cityname" placeholder="Выберите из списка" class="">
                    <datalist id="cityname">
-                      <option value="Boston">
-                      <option value="Cambridge">
+                      <!--<option value="Boston">
+                      <option value="Cambridge">-->
                    </datalist>
 				</div>
 				<div class="fields-bl">
@@ -172,6 +247,49 @@
 				</div>
 			</form>
 	        </div>
+			
+	</section>
+	<section class="catalog">
+       <div class="container">
+	    <div class="item-auto item-auto-first">
+	       <div class="item-wrap">
+		       <img src="{% static 'img/car-list.svg' %}" alt="Car">
+			   <div class="item-auto-info">
+			      <h5>HAVAL Jolion</h5>
+				      <span class="count">245</span>
+			          <span>автомобилей от</span>
+			          <span class="red-color">от 2 134 786 ₽</span>
+			   </div>
+			  </div>
+		</div>
+	    <div class="item-auto">
+		  <div class="item-auto-open">
+		    <img src="{% static 'img/plus.svg' %}" alt="Plus">
+		    <div class="item-wrap-open">
+		       <h5>HAVAL Jolion</h5>
+			   <span class="count">12 вариантов</span>
+			   <span class="red-color">от 2 134 786 ₽</span>
+			</div>
+		  </div>
+		 <div class="item-auto-hide">
+		    <div class="item-wrap">
+		       <img src="{% static 'img/car-list.svg' %}" alt="Car">
+			   <div class="item-auto-info">
+			      <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+			      <!--<div class="variant-color"><span>Выбрать цвет:</span>
+					<img src="{% static 'img/color1.svg' %}" alt="white">
+					<img src="{% static 'img/color2.svg' %}" alt="white">
+					<img src="{% static 'img/color3.svg' %}" alt="white">
+					<img src="{% static 'img/color4.svg' %}" alt="white">
+				  </div>-->
+			   </div>
+			   <div class="item-auto-price">
+			       <span>2 134 786 ₽ </span>
+			       <a hraf="/">Купить</a>
+			   </div>
+			</div>
+		 </div>
+	    </div>	
 	</section>
 	<section class="slider">
        <div class="container">
@@ -388,7 +506,7 @@
 			  <span class="subtitle">Задайте его через форму ниже, мы ответим вам в ближайшее время</span>
 			  <form action="" method="post">
                 <input id="name" type="text" name="name" placeholder="Ваше имя">
-				<input id="phone" type="text" name="phone" placeholder="+7 (- - -) - - -   - -   - -   ">
+				<input id="phone" type="tel" name="phone" placeholder="+7 (- - -) - - -   - -   - -   ">
 				<textarea id="text" name="text" placeholder="Ваш вопрос"></textarea>
 				<span class="form-text">Нажимая "Отправить", вы соглашаетесь на сбор и обработку персональных данных</span>
                 <input type="submit" class="submit" value="Отправить">
@@ -430,7 +548,7 @@
 			<div class="col-lg-4">
 			    <div class="menu-footer">
 			    <a href="/">Часто задаваемые вопросы</a>
-				<a href="/">Договор оферты</a>
+				<a href="oferta">Договор оферты</a>
 			  </div>
 			</div>
 			<div class="col-lg-3">

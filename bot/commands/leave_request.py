@@ -10,8 +10,11 @@ from objects.globals import dp, bot
 from states.states import LeaveRequest, LeaveRequestMetaData
 from config.config import Config
 from log.logger import logger
+from utils.api.requests import Requests
 from . import receive_offer
 
+
+api_requests: Requests = Requests()  # Init Requests object.
 config: Config = Config()
 
 # Init new LeaveRequestMetaData obj
@@ -76,9 +79,14 @@ async def get_phone(message: Message, state: FSMContext) -> Message:
         F"Номер телефона: <code>{_.phone}</code>\n"
         F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>"
     )
-    try:
-        await bot.send_message(config.chat_id, _leave_request_page)
-    except ChatNotFound as e:
-        logger.error(e)
     await state.finish()
-    return await message.answer(leave_request_page.find("end").text)
+    response: dict = api_requests.create_entry(user_id=user_id, username=username, car_id=_.car_id, email=_.email,
+        name=_.full_name, address=_.address, phone=_.phone)
+    if not response.get("response"):
+        return await message.answer("Такая заявка уже существует!")
+    else:
+        try:
+            await bot.send_message(config.chat_id, _leave_request_page)
+        except ChatNotFound as e:
+            logger.error(e)
+        return await message.answer(leave_request_page.find("end").text)

@@ -63,3 +63,12 @@ class Requests:
         path: str = "api/get_car_info/"
         response: dict = make_request(path=path, id=id)
         return response
+
+    def create_entry(self,
+        user_id: int, username: str, car_id: int, email: str,
+        name: str, address: str, phone: str
+    ) -> dict:
+        path: str = "api/create_entry/"
+        response: dict = make_request(path=path, user_id=user_id, username=username, car_id=car_id,
+            email=email, name=name, address=address, phone=phone)
+        return response

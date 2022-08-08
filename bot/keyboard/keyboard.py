@@ -9,7 +9,8 @@ choice_markup: ReplyKeyboardMarkup = ReplyKeyboardMarkup(resize_keyboard=True, k
      KeyboardButton(text="Для инвесторов")],
     [KeyboardButton(text="Контакты"), KeyboardButton(
         text="О проекте"), KeyboardButton(text="Для дистрибьюторов")],
-    [KeyboardButton(text="Как мы работаем")]
+    [KeyboardButton(text="Как мы работаем")],
+    [KeyboardButton(text="Сменить город")]
 ])
 
 choice_price_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[

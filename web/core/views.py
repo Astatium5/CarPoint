@@ -1,7 +1,5 @@
-from distutils.command import check
 import json
 from collections import Counter
-from tkinter import E
 
 from loguru import logger
 from django.shortcuts import render

@@ -1,6 +1,7 @@
-from email import header
+from distutils.command import check
 import json
 from collections import Counter
+from tkinter import E
 
 from loguru import logger
 from django.shortcuts import render
@@ -10,6 +11,29 @@ from django.http import HttpRequest, HttpResponse
 
 from .models import *
 from .converts import str_to_bool
+
+
+PRICE_RANGE: dict = {
+    "500 000₽ - 2 000 000₽": {
+        "min": 500000,
+        "max": 2000000
+    },
+
+    "2 000 000₽ - 4 000 000₽": {
+        "min": 2000000,
+        "max": 4000000
+    },
+
+    "4 000 000₽ - 6 000 000₽": {
+        "min": 4000000,
+        "max": 6000000
+    },
+
+    "более 6 000 000₽": {
+        "min": 6000000,
+        "max": 0
+    },
+}  # Keys is ids price range.
 
 
 class API:
@@ -168,13 +192,79 @@ class API:
             return HttpResponse(json.dumps({"response": True, "car": car.to_dict()}), content_type='application/json')
 
 
+    class CreateEntry(ListAPIView):
+        serializer_class: Entry = Entry
+
+        def get(self,
+            request: HttpRequest, user_id: int, username: str, car_id: int,
+            email: str, name: str, address: str, phone: int
+        ) -> HttpResponse:
+            user = BotUser.objects.get(user_id=user_id)
+            car = Car.objects.get(id=car_id)
+            entry = Entry.objects.filter(user=user, username=username, car=car, email=email,
+                name=name, address=address, phone=phone)
+            if entry.exists():
+                return HttpResponse(json.dumps({"response": False}), content_type='application/json')
+            else:
+                Entry.objects.create(user=user, username=username, car=car, email=email,
+                name=name, address=address, phone=phone)
+                return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+
+
 class Web:
     def index(request) -> HttpResponse:
-        cities = City.objects.all()
-        marks = Mark.objects.all()
-        return render(request, "index.html",
-            {"cities": cities, "marks": marks}
-        )
+        data = selected_data()
+        return render(request, "index.html", data)
 
     def oferta(request):
         return render(request, "oferta.html")
+
+    def find_car(request):
+        city = request.POST.get("city")
+        pricerange = request.POST.get("pricerange")
+        mark = request.POST.get("mark")
+        transmission = request.POST.get("transmission")
+        body = request.POST.get("body")
+        type_fuel = request.POST.get("type_fuel")
+        engine = request.POST.get("engine")
+
+        data = selected_data()
+        data.update({"is_search": True, "car": p_find_car(
+            city, pricerange, mark, transmission, body,  type_fuel, engine),
+            "car": None})
+        return render(request, "index.html", data)
+
+    
+def selected_data() -> dict:
+    cities = City.objects.all()
+    marks = Mark.objects.all()
+    str_engine_obj = [engine.__str__() for engine in Engine.objects.all()]
+    str_model_obj = [model.__str__() for model in Model.objects.all()]
+    type_fuels = [engine.type_fuel for engine in Engine.objects.all()]
+    engine_counter = Counter(str_engine_obj)
+    model_counter = Counter(str_model_obj)
+    type_fuel_counter = Counter(type_fuels)
+    return {"cities": cities, "marks": marks, "engines": engine_counter, "models": model_counter,
+             "type_fuels": type_fuel_counter}
+
+def p_find_car(
+    city: str, pricerange: str, mark: str, transmission: str,
+    body: str, type_fuel: str, engine: str
+) -> bool:
+    price_range = PRICE_RANGE.get(pricerange)
+    if not pricerange:
+        return []
+    else:
+        min_p = int(price_range.get("min"))
+        max_p = int(price_range.get("max"))
+        mark = Mark.objects.filter(title=mark).get()
+        city = City.objects.filter(title=city).get()
+        transmission = Transmission.objects.filter(title=transmission)
+        if max_p == 0:
+            cars = Car.objects.filter(mark=mark, price__gte=min_p, 
+                            city=city).all()
+        else:
+            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p],
+                            city=city).all()
+        print(cars)
+        return cars

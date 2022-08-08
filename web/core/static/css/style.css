@@ -193,8 +193,9 @@ button.close {
     margin-top: 25px;
     display: block;
     height: 40px;
+    width: 250px;
     border-radius: 8px;
-    line-height: 40px;
+    line-height: 20px;
     text-decoration: none;
 }
 .btn-blue:after {

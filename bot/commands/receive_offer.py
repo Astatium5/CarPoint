@@ -317,6 +317,7 @@ async def inline_echo(query: InlineQuery) -> Any:
     transmission: str = query.query
     n: int = 0
     items: dict = []
+    price_arr: dict = []
     for car in globals.cars:
         if car.get("transmission") == transmission:
             id: Any = car.get("id")
@@ -336,8 +337,10 @@ async def inline_echo(query: InlineQuery) -> Any:
                                                                                     F"Тип: {type_fuel},\t"
                                                                                     F"{wd}"),
                                                                         hide_url=True, thumb_url=image)
-            items.append(item)
-            n += 1
+            if not price in price_arr:
+                price_arr.append(price)
+                items.append(item)
+                n += 1
             if n == MAX_SHOW:
                 break
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)

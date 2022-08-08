@@ -182,7 +182,8 @@
        <div class="container">
 	      <h2>Подобрать автомобиль по параметрам</h2>
 	        <div class="podbor-form">
-	        <form>
+	        <form method="post" action="find_car">
+			   {% csrf_token %}
 			   <div class="fields-bl">
 				  <label>Город для доставки автомобиля*</label>
 				  <input type="text" name="city" list="cityname" placeholder="Выберите из списка" class="">
@@ -194,15 +195,17 @@
 				</div>
 				<div class="fields-bl">
 				  <label>Ценовой диапазон, ₽*</label>
-				  <input type="text" name="pricename" list="pricename" placeholder="Выберите из списка">
+				  <input type="text" name="pricerange" list="pricename" placeholder="Выберите из списка">
                    <datalist id="pricename">
-                      <option value="1000">
-                      <option value="2000">
+                      <option value="500 000₽ - 2 000 000₽">
+                      <option value="2 000 000₽ - 4 000 000₽">
+					  <option value="4 000 000₽ - 6 000 000₽">
+					  <option value="более 6 000 000₽">
                    </datalist>
 				</div>
 				<div class="fields-bl">
 				  <label>Марка*</label>
-				  <input type="text" name="marka" list="marka" placeholder="Выберите из списка">
+				  <input type="text" name="mark" list="marka" placeholder="Выберите из списка">
                    <datalist id="marka">
 					{% for mark in marks %}
 						<option value="{{mark.title}}">
@@ -211,38 +214,42 @@
 				</div>
 				<div class="fields-bl">
 				  <label>КПП</label>
-				  <input type="text" name="kpp" list="kpp" placeholder="Выберите из списка">
+				  <input type="text" name="transmission" list="kpp" placeholder="Выберите из списка">
                    <datalist id="kpp">
-                      <option value="Автомат">
-                      <option value="Механика">
+                      <option value="АКПП" label="Автомат">
+                      <option value="МКПП" label="Механика">
                    </datalist>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип кузова</label>
-				  <input type="text" name="tipkuzova" list="tipkuzova" placeholder="Выберите из списка">
+				  <input type="text" name="body" list="tipkuzova" placeholder="Выберите из списка">
                    <datalist id="tipkuzova">
-                      <option value="Sedan">
-                      <option value="Limusine">
+					{% for model in models %}
+						<option value="{{model}}">
+					{% endfor %}
                    </datalist>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип двигателя</label>
-				  <input type="text" name="motor" list="motor" placeholder="Выберите из списка">
+				  <input type="text" name="type_fuel" list="motor" placeholder="Выберите из списка">
                    <datalist id="motor">
-                      <option value="Benzin">
-                      <option value="Diesel">
+					{% for type_fuel in type_fuels %}
+						<option value="{{type_fuel}}">
+					{% endfor %}
                    </datalist>
 				</div>
 				<div class="fields-bl">
 				  <label>Объем или мощность двигателя</label>
-				  <input type="text" name="obem" list="obem" placeholder="Выберите из списка">
+				  <input type="text" name="engine" list="obem" placeholder="Выберите из списка">
                    <datalist id="obem">
-                      <option value="1.6">
-                      <option value="1.9">
+					{% for engine in engines %}
+						<option value="{{engine}}">
+					{% endfor %}
                    </datalist>
 				</div>
 				<div class="fields-bl btn-blue">
-				  <a href="" class="look-btn">Смотреть 245 авто</a>
+				  <button class="look-btn">Смотреть авто</button>
+				  <!--<a type="button" class="look-btn">Смотреть авто</a>-->
 				</div>
 				<div class="fields-bl">
 				  <a href="" class="clean-btn">Сбросить все параметры</a>
@@ -251,48 +258,58 @@
 	        </div>
 			
 	</section>
-	<section class="catalog">
-       <div class="container">
-	    <div class="item-auto item-auto-first">
-	       <div class="item-wrap">
-		       <img src="{% static 'img/car-list.svg' %}" alt="Car">
-			   <div class="item-auto-info">
-			      <h5>HAVAL Jolion</h5>
-				      <span class="count">245</span>
-			          <span>автомобилей от</span>
-			          <span class="red-color">от 2 134 786 ₽</span>
-			   </div>
-			  </div>
-		</div>
-	    <div class="item-auto">
-		  <div class="item-auto-open">
-		    <img src="{% static 'img/plus.svg' %}" alt="Plus">
-		    <div class="item-wrap-open">
-		       <h5>HAVAL Jolion</h5>
-			   <span class="count">12 вариантов</span>
-			   <span class="red-color">от 2 134 786 ₽</span>
-			</div>
-		  </div>
-		 <div class="item-auto-hide">
-		    <div class="item-wrap">
-		       <img src="{% static 'img/car-list.svg' %}" alt="Car">
-			   <div class="item-auto-info">
-			      <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
-			      <!--<div class="variant-color"><span>Выбрать цвет:</span>
-					<img src="{% static 'img/color1.svg' %}" alt="white">
-					<img src="{% static 'img/color2.svg' %}" alt="white">
-					<img src="{% static 'img/color3.svg' %}" alt="white">
-					<img src="{% static 'img/color4.svg' %}" alt="white">
-				  </div>-->
-			   </div>
-			   <div class="item-auto-price">
-			       <span>2 134 786 ₽ </span>
-			       <a hraf="/">Купить</a>
-			   </div>
-			</div>
-		 </div>
-	    </div>	
-	</section>
+	{% if is_search %}
+		{% if not car %}
+		<section class="catalog">
+		<div class="container">
+			<p>Автомобиль не найден</p>
+		</div>	
+		</section>
+		{% else %}
+		<section class="catalog">
+			<div class="container">
+				<div class="item-auto item-auto-first">
+				<div class="item-wrap">
+					<img src="{% static 'img/car-list.svg' %}" alt="Car">
+					<div class="item-auto-info">
+						<h5>HAVAL Jolion</h5>
+							<span class="count">245</span>
+							<span>автомобилей от</span>
+							<span class="red-color">от 2 134 786 ₽</span>
+					</div>
+					</div>
+				</div>
+				<div class="item-auto">
+				<div class="item-auto-open">
+					<img src="{% static 'img/plus.svg' %}" alt="Plus">
+					<div class="item-wrap-open">
+					<h5>HAVAL Jolion</h5>
+					<span class="count">12 вариантов</span>
+					<span class="red-color">от 2 134 786 ₽</span>
+					</div>
+				</div>
+				<div class="item-auto-hide">
+					<div class="item-wrap">
+					<img src="{% static 'img/car-list.svg' %}" alt="Car">
+					<div class="item-auto-info">
+						<strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+						<!--<div class="variant-color"><span>Выбрать цвет:</span>
+							<img src="{% static 'img/color1.svg' %}" alt="white">
+							<img src="{% static 'img/color2.svg' %}" alt="white">
+							<img src="{% static 'img/color3.svg' %}" alt="white">
+							<img src="{% static 'img/color4.svg' %}" alt="white">
+						</div>-->
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a hraf="/">Купить</a>
+					</div>
+					</div>
+				</div>
+				</div>	
+			</section>
+		{% endif %}
+	{% endif %}
 	<section class="slider">
        <div class="container">
 	      <h2>Новинки<span class="new">new</span></h2>

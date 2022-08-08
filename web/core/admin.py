@@ -90,3 +90,12 @@ class Car(admin.ModelAdmin):
             return obj.image
 
     get_image.short_description = "Изображение"
+
+
+@admin.register(Entry)
+class Entry(admin.ModelAdmin):
+    fields = ["user", "username", "car", "email", "name", "address", "phone"]
+    list_display = ["id", "user", "email", "name", "address", "phone"]
+    search_fields = ["phone"]
+    search_help_text = "Для поиска введите номер телефона"
+    list_per_page: int = 15

@@ -39,7 +39,7 @@ class Model(models.Model):
     is_visible = models.BooleanField(verbose_name="Отображается")
 
     def __str__(self):
-        return self.title
+        return self.body
 
     class Meta:
         verbose_name = "Модель"
@@ -66,7 +66,7 @@ class Engine(models.Model):
     type_fuel = models.CharField(max_length=255, verbose_name="Тип топлива", null=True)
 
     def __str__(self):
-        return F"{self.volume} - {self.power} - {self.type_fuel}"
+        return F"{self.volume} - {self.power}"
 
     class Meta:
         verbose_name = "Двигатель"

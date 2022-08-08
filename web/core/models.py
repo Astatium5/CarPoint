@@ -145,6 +145,23 @@ class Color(models.Model):
         verbose_name_plural = "Цвета"
 
 
+class Entry(models.Model):
+    user = models.ForeignKey(BotUser, on_delete=models.PROTECT)
+    username = models.CharField(max_length=255, null=True)
+    car = models.ForeignKey(Car, on_delete=models.PROTECT)
+    email = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    phone = models.BigIntegerField()
+
+    def __str__(self):
+        return self.id
+
+    class Meta:
+        verbose_name = "Заявка"
+        verbose_name_plural = "Заявки"
+
+
 class SetEngine(models.Model):
     set = models.ForeignKey(Set, on_delete=models.PROTECT)
     engine = models.ForeignKey(Engine, on_delete=models.PROTECT)

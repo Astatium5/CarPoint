@@ -146,16 +146,16 @@ class Color(models.Model):
 
 
 class Entry(models.Model):
-    user = models.ForeignKey(BotUser, on_delete=models.PROTECT)
-    username = models.CharField(max_length=255, null=True)
-    car = models.ForeignKey(Car, on_delete=models.PROTECT)
-    email = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    phone = models.BigIntegerField()
+    user = models.ForeignKey(BotUser, on_delete=models.PROTECT, verbose_name="Пользователь")
+    username = models.CharField(max_length=255, null=True, verbose_name="Имя пользователя")
+    car = models.ForeignKey(Car, on_delete=models.PROTECT, verbose_name="Автомобиль")
+    email = models.CharField(max_length=255, verbose_name="Почта")
+    name = models.CharField(max_length=255, verbose_name="Имя")
+    address = models.CharField(max_length=255, verbose_name="Адрес")
+    phone = models.BigIntegerField(verbose_name="Телефон")
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         verbose_name = "Заявка"

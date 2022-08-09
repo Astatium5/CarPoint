@@ -43,7 +43,8 @@ class Requests:
     def get_all_fuel_types(self, mark: str, body: str, user_id: int, min_price: int, max_price: int) -> dict:
         path: str = "api/get_all_fuel_types/"
         response: dict = make_request(
-            path=path, mark=mark, body=body, user_id=user_id, min_price=min_price, max_price=max_price)
+            path=path, mark=mark, body=body, user_id=user_id, min_price=min_price, max_price=max_price,
+            timeout=10)
         return response
 
     def find_car(self,

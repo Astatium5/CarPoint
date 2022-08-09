@@ -271,12 +271,16 @@ async def get_max_volume(message: Message, state: FSMContext) -> Message:
     globals.cars = await find_car(message.from_user.id)
     transmissions = await get_transmission(globals.cars)
     reply_markup = InlineKeyboardMarkup()
-    for transmission in transmissions:
-        reply_markup.add(InlineKeyboardButton(
-            text=transmission, switch_inline_query_current_chat=transmission))
+    if not transmissions:
+        text = "Ничего не найдено!"
+    else:
+        for transmission in transmissions:
+            reply_markup.add(InlineKeyboardButton(
+                text=transmission, switch_inline_query_current_chat=transmission))
+        text = offer_page.find("select_transmission").text
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
-    return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
+    return await message.answer(text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("by_power")))
@@ -304,12 +308,16 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
     globals.cars = await find_car(message.from_user.id)
     transmissions = await get_transmission(globals.cars)
     reply_markup = InlineKeyboardMarkup()
-    for transmission in transmissions:
-        reply_markup.add(InlineKeyboardButton(
-            text=transmission, switch_inline_query_current_chat=transmission))
+    if not transmissions:
+        text = "Ничего не найдено!"
+    else:
+        for transmission in transmissions:
+            reply_markup.add(InlineKeyboardButton(
+                text=transmission, switch_inline_query_current_chat=transmission))
+        text = offer_page.find("select_transmission").text
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
-    return await message.answer(offer_page.find("select_transmission").text, reply_markup=reply_markup)
+    return await message.answer(text, reply_markup=reply_markup)
 
 
 @dp.inline_handler()

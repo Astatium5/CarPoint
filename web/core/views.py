@@ -148,7 +148,7 @@ class API:
                     min_volume = float(headers.get("Min-Volume"))
                     max_volume = float(headers.get("Max-Volume"))
                     if int(max_p) == 0:
-                        cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__volume__range=[min_volume, max_volume],
+                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__volume__range=[min_volume, max_volume],
                             city=user.city).all()
                     else:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume],
@@ -164,7 +164,7 @@ class API:
                     min_power = int(headers.get("Min-Power"))
                     max_power = int(headers.get("Max-Power"))
                     if int(max_p) == 0:
-                        cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__power__range=[min_power, max_power],
+                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__power__range=[min_power, max_power],
                             city=user.city).all()
                     else:
                         cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power],
@@ -227,9 +227,8 @@ class Web:
         engine = request.POST.get("engine")
 
         data = selected_data()
-        data.update({"is_search": True, "car": p_find_car(
-            city, pricerange, mark, transmission, body,  type_fuel, engine),
-            "car": None})
+        data.update({"is_search": True, "cars": p_find_car(
+            city, pricerange, mark, transmission, body,  type_fuel, engine)})
         return render(request, "index.html", data)
 
     
@@ -249,20 +248,22 @@ def p_find_car(
     city: str, pricerange: str, mark: str, transmission: str,
     body: str, type_fuel: str, engine: str
 ) -> bool:
-    price_range = PRICE_RANGE.get(pricerange)
-    if not pricerange:
-        return []
+    if not pricerange or not mark or not transmission or not body \
+        or not type_fuel or not engine:
+            return []
     else:
+        price_range = PRICE_RANGE.get(pricerange)
         min_p = int(price_range.get("min"))
         max_p = int(price_range.get("max"))
         mark = Mark.objects.filter(title=mark).get()
         city = City.objects.filter(title=city).get()
-        transmission = Transmission.objects.filter(title=transmission)
+        transmission = Transmission.objects.filter(title=transmission).get()
         if max_p == 0:
             cars = Car.objects.filter(mark=mark, price__gte=min_p, 
                             city=city).all()
         else:
             cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p],
                             city=city).all()
+        cars = [car for car in cars if car.set.model.body == body]
         print(cars)
         return cars

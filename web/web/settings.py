@@ -74,6 +74,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'web.wsgi.application'
 CSRF_TRUSTED_ORIGINS = [os.getenv('HOST')]
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = (
+    os.getenv('HOST')
+)
 
 
 # Database

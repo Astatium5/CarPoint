@@ -14,9 +14,9 @@ def make_request(path: str, headers=None, timeout=5, **kwargs) -> dict:
     if kwargs:
         values = [str(v) for v in kwargs.values()]
         args_string = "/".join(values)
-        url = (rF"http://{config.host}/{path}{args_string}")
+        url = (rF"{config.host}/{path}{args_string}")
     else:
-        url = (rF"http://{config.host}/{path}")
+        url = (rF"{config.host}/{path}")
     response = requests.get(url, headers=HEADERS, timeout=timeout)
     if response.status_code == 200:
         return serialize_content(response.content)

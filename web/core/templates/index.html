@@ -271,16 +271,16 @@
 			<div class="container">
 				<div class="item-auto item-auto-first">
 				<div class="item-wrap">
-					<img src="{% static 'img/car-list.svg' %}" alt="Car">
+					<img src="{{image}}" alt="Car" width="250" height="150">
 					<div class="item-auto-info">
-						<h5>HAVAL Jolion</h5>
-							<span class="count">245</span>
+						<h5>{{mark}}</h5>
+							<span class="count">{{cars|length}}</span>
 							<span>автомобилей от</span>
-							<span class="red-color">от 2 134 786 ₽</span>
+							<span class="red-color">от {{min_price|floatformat:"0"}} ₽</span>
 					</div>
 					</div>
 				</div>
-				<div class="item-auto">
+				<!--<div class="item-auto">
 				<div class="item-auto-open">
 					<div class="item-wrap-open">
 					<h5>HAVAL Jolion</h5>
@@ -299,14 +299,14 @@
 							<img src="{% static 'img/color3.svg' %}" alt="white">
 							<img src="{% static 'img/color4.svg' %}" alt="white">
 						</div>-->
-					</div>
+					<!--</div>
 					<div class="item-auto-price">
 						<span>2 134 786 ₽ </span>
 						<a hraf="/">Купить</a>
 					</div>
 					</div>
-				</div>
-				</div>	
+				</div>-->
+			</div>
 			</section>
 		{% endif %}
 	{% endif %}

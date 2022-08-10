@@ -12,6 +12,7 @@ class BotUser(admin.ModelAdmin):
     list_display = ["user_id", "first_name", "phone", "get_city"]
     readonly_fields = ("user_id", "first_name", "username",)
     search_fields = ["user_id"]
+    search_help_text = "Для поиска идентификатор пользователя"
 
     def get_city(self, obj) -> Any:
         return obj.city.title
@@ -24,6 +25,7 @@ class Mark(admin.ModelAdmin):
     fields = ["title", "is_visible"]
     list_display = ["title", "is_visible"]
     search_fields = ["title"]
+    search_help_text = "Для поиска название марки"
     list_per_page: int = 15
 
 
@@ -32,6 +34,7 @@ class Model(admin.ModelAdmin):
     fields = ["mark", "title", "price", "body", "is_visible"]
     list_display = ["mark", "title"]
     search_fields = ["title"]
+    search_help_text = "Для поиска название модели"
     list_per_page: int = 15
 
 
@@ -40,6 +43,7 @@ class Set(admin.ModelAdmin):
     fields = ["model", "title", "image", "special"]
     list_display = ["model", "title"]
     search_fields = ["title"]
+    search_help_text = "Для поиска название характеристики"
     list_per_page: int = 15
 
 
@@ -48,6 +52,7 @@ class Engine(admin.ModelAdmin):
     fields = ["volume", "power", "type_fuel"]
     list_display = ["volume", "power", "type_fuel"]
     search_fields = ["volume"]
+    search_help_text = "Для поиска значение объема"
     list_per_page: int = 15
 
 
@@ -56,6 +61,7 @@ class Transmission(admin.ModelAdmin):
     fields = ["title"]
     list_display = ["title"]
     search_fields = ["title"]
+    search_help_text = "Для поиска название коробки передач"
     list_per_page: int = 15
 
 
@@ -64,6 +70,7 @@ class Wd(admin.ModelAdmin):
     fields = ["title"]
     list_display = ["title"]
     search_fields = ["title"]
+    search_help_text = "Для поиска название привода"
     list_per_page: int = 15
 
 
@@ -72,6 +79,7 @@ class City(admin.ModelAdmin):
     fields = ["title", "message"]
     list_display = ["title"]
     search_fields = ["title"]
+    search_help_text = "Для поиска название города"
     list_per_page: int = 10
 
 
@@ -81,6 +89,7 @@ class Car(admin.ModelAdmin):
     list_display = ["title", "price", "get_image"]
     list_filter = ("mark",)
     search_fields = ["title"]
+    search_help_text = "Для поиска введите название автомобиля"
     list_per_page: int = 20
 
     def get_image(self, obj) -> Any:
@@ -99,3 +108,29 @@ class Entry(admin.ModelAdmin):
     search_fields = ["phone"]
     search_help_text = "Для поиска введите номер телефона"
     list_per_page: int = 15
+
+
+@admin.register(Question)
+class Question(admin.ModelAdmin):
+    fields = ["question", "answer"]
+    list_display = ["id", "question", "answer"]
+    search_fields = ["question"]
+    search_help_text = "Для поиска введите вопрос"
+    list_per_page: int = 10
+
+
+@admin.register(NewCar)
+class NewCar(admin.ModelAdmin):
+    fields = ["title", "image", "price"]
+    list_display = ["title", "get_image", "price"]
+    search_fields = ["title"]
+    search_help_text = "Для поиска введите название автомобиля"
+    list_per_page: int = 15
+
+    def get_image(self, obj) -> Any:
+        if obj.image:
+            return mark_safe(f"<img src='{obj.image}' wdith=70 height=70>")
+        else:
+            return obj.image
+
+    get_image.short_description = "Изображение"

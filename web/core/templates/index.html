@@ -304,17 +304,15 @@
 			</section>
 		{% endif %}
 	{% endif %}
+	{% if new_cars %}
 	<section class="slider">
        <div class="container">
 	      <h2>Новинки<span  id="new" class="new">new</span></h2>
 		  <div class="slider-bl">
 		  <div id="owl-demo" class="owl-carousel">
-    <div class="item"><h3 class="">HAVAL F7x Elite, 20221</h3><img src="{% static 'img/car1.svg' %}" alt="Car"><div class="bottom-item"><span class="price">2 654 321 ₽</span><a hraf="/">Купить</a></div></div>
-    <div class="item"><h3 class="">Geely Tugella, 2022</h3><img src="{% static 'img/car2.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 678 123 ₽</span><a hraf="/">Купить</a></div></div>
-    <div class="item"><h3 class="">Exeed TXL, 2022</h3><img src="{% static 'img/car3.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 000 000 ₽</span><a hraf="/">Купить</a></div></div>
-    <div class="item"><h3 class="">HAVAL F7x Elite, 20221</h3><img src="{% static 'img/car1.svg' %}" alt="Car"><div class="bottom-item"><span class="price">2 654 321 ₽</span><a hraf="/">Купить</a></div></div>
-    <div class="item"><h3 class="">Geely Tugella, 2022</h3><img src="{% static 'img/car2.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 678 123 ₽</span><a hraf="/">Купить</a></div></div>
-    <div class="item"><h3 class="">Exeed TXL, 2022</h3><img src="{% static 'img/car3.svg' %}" alt="Car"><div class="bottom-item"><span class="price">3 000 000 ₽</span><a hraf="/">Купить</a></div></div>
+		  {% for car in new_cars %}
+		    <div class="item"><h3 class="">{{car.title}}</h3><img src="{{car.image}}" alt="Car"><div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span><a hraf="/">Купить</a></div></div>
+		  {% endfor %}
 		   </div>
 		   <div class="customNavigation">
                 <a class="btn prev"><img src="{% static 'img/prev.svg' %}" alt="Previous"></a>
@@ -323,6 +321,7 @@
 			</div>
 	   </div>
 	</section>
+	{% endif %}
     <section id="order-work" class="order-work">
        <div class="container">
 	      <h2>Порядок работы</h2>
@@ -393,124 +392,27 @@
 			  </div>
 		   </div>
        </div>
-	</section>  
+	</section>
+	{% if questions %}
 	<section id="faq" class="faq">
-       <div class="container">
+      <div class="container">
 	    <h2>Часто задаваемые вопросы</h2>
+		{% for question in questions %}
 		<div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-        Какие документы я получаю на руки?
-      </button>
-    <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        Перед отгрузкой автомобиля вы принимаете соглашение и мы подписываете электронный договор купли-продажи автомобиля. К договору идет приложение - спецификация на конкретный автомобиль. По факту отгрузки и получения - вы ставите подпись в акте приемки и в сервисной книжке.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item"> 
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-        Можно ли купить автомобиль в кредит?
-      </button>
-    <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        На данный момент возможность покупки автомобиля в кредит отсутствует. Но мы очень скоро это добавим)
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">   
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-        Будет ли расширяться ассортимент марок?
-      </button>
-    <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        Ассортимент марок будет постоянно расширяться, по мере расширения сотрудничества нашей страны с производителями других стран.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-        Как добавить доп опции к комплектации?
-      </button>
-    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        На данный момент возможность добавления дополнительных опций к покупке отсутствует. Но мы очень скоро это добавим)
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">   
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-        В какие города отправляем автомобиль?
-      </button>
-    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        Мы доставляем автомобили практически во все крупные города России. Если вашего города нет в списке, выберите ближайший к нему региональный центр.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
-        Сколько по времени идет доставка?
-      </button>
-    <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        Время доставки зависит от вашего адреса и удаленности от него склада поставщика.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
-        Покупая автомобиль у вас, сохраняются ли гарантии?
-      </button>
-    <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        Сервисное, послепродажное, в том числе, гарантийное обслуживание сохраняется. Гарантийные обязательства на автомобиль несет напрямую производитель. В случае поломки автомобиля, вы можете обратиться в любой дилерский авторизованный центр, как в случае, если бы вы покупали автомобиль в автосалоне.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
-        Как записаться на тест-драйв?
-      </button>
-    <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        На данный момент возможность записи на тест-драйв напрямую через наш сервис отсутствует. Но вы всегда можете познакомиться с автомобилем и провести тест-драйв перед покупкой в любом дилерском центре. 
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">  
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
-        Что делать, если автомобиль пришло с дефектом?
-      </button>
-    <div id="collapse9" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        На период транспортировки автомобиля от склада дистрибьютора и до вашего дома, оформляется специальная страховка, которая защищает автомобиль от любых повреждений и, в случае чего, позволяет произвести замену автомобиля на аналогичный. 
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item"> 
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
-        Если мне не понравился автомобиль?
-      </button>
-    <div id="collapse10" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        У нас не предусмотрена опция возврата автомобиля, если он вам не подошел. Однако вернуть машину без причины все-таки возможно - в таком случае вы оплачиваете компенсацию логистики и фиксированный штраф (в зависимости от типа автомобиля). 
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">   
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse11" aria-expanded="false" aria-controls="collapse11">
-        Здесь нет моего вопроса
-      </button>
-    <div id="collapse11" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-        Вы можете связаться с нашим сотрудником @kolmazz, чтобы задать ваш вопрос.
-      </div>
-    </div>
-  </div>
-</div>
-	   </div>
-	 </section> 
+			<div class="accordion-item">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+				  {{question.question}}
+				</button>
+			  <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+				  {{question.answer}}
+				</div>
+			  </div>
+			</div>
+		{% endfor %}
+	  </div>
+	</section>
+	{% endif %}
 	<section class="question">
        <div class="container">
 	     <div class="wrap">

@@ -225,6 +225,8 @@ class Web:
 
 
 def selected_data() -> dict:
+    new_cars = NewCar.objects.all()
+    questions = Question.objects.all()
     cities = City.objects.all()
     marks = Mark.objects.all()
     str_engine_obj = [engine.__str__() for engine in Engine.objects.all()]
@@ -234,7 +236,7 @@ def selected_data() -> dict:
     model_counter = Counter(str_model_obj)
     type_fuel_counter = Counter(type_fuels)
     return {"cities": cities, "marks": marks, "engines": engine_counter, "models": model_counter,
-             "type_fuels": type_fuel_counter}
+             "type_fuels": type_fuel_counter, "new_cars": new_cars, "questions": questions}
 
 def p_find_car(
     city: str, pricerange: str, mark: str, transmission: str,

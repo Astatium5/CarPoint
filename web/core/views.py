@@ -119,14 +119,13 @@ class API:
     class GetAllFuelTypesView(ListAPIView):
         serializer_class: Engine = Engine
 
-        def get(self, request: HttpRequest, mark: str, body: str, user_id: int, min_price: int, max_price: int):
-            user = BotUser.objects.get(user_id=user_id)
+        def get(self, request: HttpRequest, mark: str, body: str, min_price: int, max_price: int):
             mark: QuerySet = Mark.objects.filter(title=mark).get()
             if max_price == 0:
                 cars: QuerySet = Car.objects.filter(mark=mark, price__gte=min_price).all()
             else:
                 cars: QuerySet = Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all()
-            engines = [car.engine.type_fuel for car in cars if car.set.model.body == body and car.city == user.city]
+            engines = [car.engine.type_fuel for car in cars if car.set.model.body == body]
             counter = Counter(engines)
             fuel_types = list(counter.keys())
             return HttpResponse(json.dumps({"all_fuel_types": fuel_types}), content_type='application/json')
@@ -135,12 +134,9 @@ class API:
     class FindCarView(ListAPIView):
         serializer_class: Car = Car
 
-        def get(self, request: HttpRequest,
-            body: str, fuel_type: str, user_id: int
-        ):
+        def get(self, request: HttpRequest, body: str, fuel_type: str) -> HttpResponse:
             headers = request.headers
             try:
-                user = BotUser.objects.get(user_id=user_id)
                 mark = Mark.objects.filter(title=headers.get("Mark")).get()
                 min_p = headers.get("Min-Price")
                 max_p = headers.get("Max-Price")
@@ -148,11 +144,9 @@ class API:
                     min_volume = float(headers.get("Min-Volume"))
                     max_volume = float(headers.get("Max-Volume"))
                     if int(max_p) == 0:
-                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__volume__range=[min_volume, max_volume],
-                            city=user.city).all()
+                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__volume__range=[min_volume, max_volume]).all()
                     else:
-                        cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume],
-                            city=user.city).all()
+                        cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__volume__range=[min_volume, max_volume]).all()
                     if cars:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             cars = [car.to_dict() for car in cars if car.set.model.body == body]
@@ -164,11 +158,9 @@ class API:
                     min_power = int(headers.get("Min-Power"))
                     max_power = int(headers.get("Max-Power"))
                     if int(max_p) == 0:
-                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__power__range=[min_power, max_power],
-                            city=user.city).all()
+                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__power__range=[min_power, max_power]).all()
                     else:
-                        cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power],
-                            city=user.city).all()
+                        cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__power__range=[min_power, max_power]).all()
                     if cars:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             cars = [car.to_dict() for car in cars if car.set.model.body == body]
@@ -231,7 +223,7 @@ class Web:
             city, pricerange, mark, transmission, body,  type_fuel, engine)})
         return render(request, "index.html", data)
 
-    
+
 def selected_data() -> dict:
     cities = City.objects.all()
     marks = Mark.objects.all()

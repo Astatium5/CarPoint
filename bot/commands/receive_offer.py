@@ -52,14 +52,14 @@ globals.offer_metadata: OfferMetaData = OfferMetaData()
 async def receive_offer(message: Message, state: FSMContext) -> Message:
     await state.finish()
     # Send check user phone request.
-    response: dict = api_requests.check_phone(user_id=message.from_user.id)
+    # response: dict = api_requests.check_phone(user_id=message.from_user.id)
 
-    if not response.get("response"):
-        await message.answer(offer_page.find("is_not_phone").text)
-        return await ReceiveOffer.phone.set()
-    else:
-        globals.offer_metadata = OfferMetaData()
-        return await message.answer(offer_page.find("select_price").text, reply_markup=choice_price_markup)
+    # if not response.get("response"):
+    #     await message.answer(offer_page.find("is_not_phone").text)
+    #     return await ReceiveOffer.phone.set()
+    # else:
+    globals.offer_metadata = OfferMetaData()
+    return await message.answer(offer_page.find("select_price").text, reply_markup=choice_price_markup)
 
 
 @dp.message_handler(state=ReceiveOffer.phone)
@@ -198,7 +198,7 @@ async def get_mark(query: CallbackQuery) -> Union[Message, None]:
 async def get_body(query: CallbackQuery):
     body: str = re.sub("body#", "", query.data)
     globals.offer_metadata.Body = body
-    response: dict = api_requests.get_all_fuel_types(mark=globals.offer_metadata.Mark, body=body, user_id=query.from_user.id,
+    response: dict = api_requests.get_all_fuel_types(mark=globals.offer_metadata.Mark, body=body,
                                                      min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     fuel_types = response.get("all_fuel_types")
 
@@ -337,14 +337,14 @@ async def inline_echo(query: InlineQuery) -> Any:
             type_fuel: Any = car.get("engine_type_fuel")
             wd: Any = car.get("wd")
             item: InlineQueryResultArticle = InlineQueryResultArticle(id=id, title=title,
-                                                                        input_message_content=InputTextMessageContent(
-                                                                            title),
-                                                                        description=(F"Цена: {int(price)}₽\t"
-                                                                                    F"Объем: {engine_volume}\t"
-                                                                                    F"Мощность: {engine_power}\t"
-                                                                                    F"Тип: {type_fuel},\t"
-                                                                                    F"{wd}"),
-                                                                        hide_url=True, thumb_url=image)
+                                                                      input_message_content=InputTextMessageContent(
+                                                                          title),
+                                                                      description=(F"Цена: {int(price)}₽\t"
+                                                                                   F"Объем: {engine_volume}\t"
+                                                                                   F"Мощность: {engine_power}\t"
+                                                                                   F"Тип: {type_fuel},\t"
+                                                                                   F"{wd}"),
+                                                                      hide_url=True, thumb_url=image)
             if not price in price_arr:
                 price_arr.append(price)
                 items.append(item)
@@ -368,14 +368,17 @@ async def new_search(query: CallbackQuery) -> Message:
 
 async def find_car(user_id: int) -> Union[Any, None]:
     _ = globals.offer_metadata
-    response: dict = api_requests.find_car(body=_.Body, fuel_type=_.FuelType, user_id=user_id, **globals.offer_metadata.to_header())
+    response: dict = api_requests.find_car(
+        body=_.Body, fuel_type=_.FuelType, **globals.offer_metadata.to_header())
     cars: Union[Any, None] = response.get("cars")
     return cars
+
 
 async def get_transmission(cars: list) -> list:
     transmission = [car.get("transmission") for car in cars]
     counter = Counter(transmission)
     return list(counter)
+
 
 async def not_found(query: InlineQuery) -> Any:
     thumb: str = "https://raw.githubusercontent.com/amtp1/CarPoint/main/image/thumb.png"

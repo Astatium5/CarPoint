@@ -209,7 +209,7 @@ class Web:
     def oferta(request):
         return render(request, "oferta.html")
 
-    def find_car(request):
+    def find_car(request, image=None, min_price=0.0):
         city = request.POST.get("city")
         pricerange = request.POST.get("pricerange")
         mark = request.POST.get("mark")
@@ -219,8 +219,11 @@ class Web:
         engine = request.POST.get("engine")
 
         data = selected_data()
-        data.update({"is_search": True, "cars": p_find_car(
-            city, pricerange, mark, transmission, body,  type_fuel, engine)})
+        cars = p_find_car(city, pricerange, mark, transmission, body,  type_fuel, engine)
+        if cars:
+            image = cars[0].image
+            min_price = min([car.price for car in cars])
+        data.update({"is_search": True, "cars": cars, "min_price": min_price, "mark": mark, "image": image})
         return render(request, "index.html", data)
 
 
@@ -252,12 +255,12 @@ def p_find_car(
         mark = Mark.objects.filter(title=mark).get()
         city = City.objects.filter(title=city).get()
         transmission = Transmission.objects.filter(title=transmission).get()
+        volume, power = engine.split(" - ")
         if max_p == 0:
-            cars = Car.objects.filter(mark=mark, price__gte=min_p, 
-                            city=city).all()
+            cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
+                transmission=transmission, set__model__body=body, engine__volume__gte=volume).all()
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p],
-                            city=city).all()
+            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
+                transmission=transmission, set__model__body=body, engine__volume__gte=volume).all()
         cars = [car for car in cars if car.set.model.body == body]
-        print(cars)
         return cars

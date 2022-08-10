@@ -40,22 +40,20 @@ class Requests:
         response: dict = make_request(path=path, mark=mark)
         return response
 
-    def get_all_fuel_types(self, mark: str, body: str, user_id: int, min_price: int, max_price: int) -> dict:
+    def get_all_fuel_types(self, mark: str, body: str, min_price: int, max_price: int) -> dict:
         path: str = "api/get_all_fuel_types/"
         response: dict = make_request(
-            path=path, mark=mark, body=body, user_id=user_id, min_price=min_price, max_price=max_price,
+            path=path, mark=mark, body=body, min_price=min_price, max_price=max_price,
             timeout=10)
         return response
 
-    def find_car(self,
-                 body, fuel_type, user_id, **kwargs
-                 ) -> dict:
+    def find_car(self, body, fuel_type, **kwargs) -> dict:
         path: str = "api/find_car/"
         _: dict[str, Any] = kwargs
         if not fuel_type:
             fuel_type = "undefined"
         params: dict[str, Any] = dict(
-            body=body, fuel_type=fuel_type, user_id=user_id)
+            body=body, fuel_type=fuel_type)
         response: dict = make_request(
             path=path, timeout=7, headers=kwargs, **params)
         return response

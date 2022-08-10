@@ -162,6 +162,25 @@ class Entry(models.Model):
         verbose_name_plural = "Заявки"
 
 
+class Question(models.Model):
+    question = models.TextField()
+    answer = models.TextField()
+
+    class Meta:
+        verbose_name = "Вопрос"
+        verbose_name_plural = "Вопросы"
+
+
+class NewCar(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Название")
+    image = models.URLField(verbose_name="Картинка")
+    price = models.FloatField(verbose_name="Цена")
+
+    class Meta:
+        verbose_name = "Новинка"
+        verbose_name_plural = "Новинки"
+
+
 class SetEngine(models.Model):
     set = models.ForeignKey(Set, on_delete=models.PROTECT)
     engine = models.ForeignKey(Engine, on_delete=models.PROTECT)

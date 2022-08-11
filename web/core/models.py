@@ -60,7 +60,7 @@ class Set(models.Model):
     special = models.TextField(verbose_name="Конфигурации")
 
     def __str__(self):
-        return self.title
+        return self.model.body
 
     class Meta:
         verbose_name = "Характеристика"
@@ -118,7 +118,7 @@ class City(models.Model):
 
 class Car(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
-    set = models.ForeignKey(Set, on_delete=models.PROTECT)
+    set = models.ForeignKey(Set, on_delete=models.PROTECT, verbose_name="Тип кузова")
     image = models.URLField(verbose_name="Картинка")
     price = models.FloatField(verbose_name="Цена")
     engine = models.ForeignKey(

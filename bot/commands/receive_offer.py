@@ -173,7 +173,8 @@ async def get_mark(query: CallbackQuery) -> Union[Message, None]:
     else:
         globals.offer_metadata.Mark = mark
 
-    response: dict = api_requests.get_all_bodies(mark=mark)
+    response: dict = api_requests.get_all_bodies(mark=mark,
+        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     bodies: Union[Any, None] = response.get("all_bodies")
 
     reply_markup = InlineKeyboardMarkup()

@@ -35,9 +35,9 @@ class Requests:
         response: dict = make_request(path=path)
         return response
 
-    def get_all_bodies(self, mark: str) -> dict:
+    def get_all_bodies(self, mark: str, min_price: int, max_price: int) -> dict:
         path: str = "api/get_all_bodies/"
-        response: dict = make_request(path=path, mark=mark)
+        response: dict = make_request(path=path, mark=mark, min_price=min_price, max_price=max_price)
         return response
 
     def get_all_fuel_types(self, mark: str, body: str, min_price: int, max_price: int) -> dict:

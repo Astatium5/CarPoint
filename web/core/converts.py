@@ -10,6 +10,7 @@ class FloatUrlParameterConverter:
 
 class BooleanUrlParameterConverter:
     regex = "$"
+
     def to_python(self, value):
         return bool(value)
 

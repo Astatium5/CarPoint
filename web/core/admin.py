@@ -85,7 +85,8 @@ class City(admin.ModelAdmin):
 
 @admin.register(Car)
 class Car(admin.ModelAdmin):
-    fields = ["title", "set", "image", "price", "engine", "transmission", "wd", "expenditure", "city", "mark"]
+    fields = ["title", "set", "image", "price", "engine",
+              "transmission", "wd", "expenditure", "city", "mark"]
     list_display = ["title", "price", "get_image"]
     list_filter = ("mark",)
     search_fields = ["title"]

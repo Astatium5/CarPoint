@@ -3,12 +3,16 @@ from django.db import models
 
 
 class BotUser(models.Model):
-    user_id = models.BigIntegerField(unique=True, verbose_name="Индент. пользователя")
+    user_id = models.BigIntegerField(
+        unique=True, verbose_name="Индент. пользователя")
     first_name = models.CharField(max_length=255, verbose_name="Имя аккаунта")
     phone = models.BigIntegerField(null=True, verbose_name="Телефон")
-    city = models.ForeignKey('City', on_delete=models.PROTECT, null=True, verbose_name="Город")
-    username = models.CharField(max_length=255, null=True, verbose_name="Имя пользователя")
-    name = models.CharField(max_length=255, null=True, verbose_name="Имя пользователя (заполненное)")
+    city = models.ForeignKey(
+        'City', on_delete=models.PROTECT, null=True, verbose_name="Город")
+    username = models.CharField(
+        max_length=255, null=True, verbose_name="Имя пользователя")
+    name = models.CharField(max_length=255, null=True,
+                            verbose_name="Имя пользователя (заполненное)")
 
     def __str__(self):
         return F"Пользователь #{self.id}"
@@ -32,7 +36,8 @@ class Mark(models.Model):
 
 
 class Model(models.Model):
-    mark = models.ForeignKey(Mark, on_delete=models.PROTECT, verbose_name="Идент. марки")
+    mark = models.ForeignKey(
+        Mark, on_delete=models.PROTECT, verbose_name="Идент. марки")
     title = models.CharField(max_length=255, verbose_name="Название")
     price = models.BigIntegerField(verbose_name="Цена")
     body = models.CharField(max_length=255, verbose_name="Тело")
@@ -47,8 +52,10 @@ class Model(models.Model):
 
 
 class Set(models.Model):
-    model = models.ForeignKey(Model, on_delete=models.PROTECT, verbose_name="Модель")
-    title = models.CharField(max_length=255, verbose_name="Название", unique=False)
+    model = models.ForeignKey(
+        Model, on_delete=models.PROTECT, verbose_name="Модель")
+    title = models.CharField(
+        max_length=255, verbose_name="Название", unique=False)
     image = models.URLField(verbose_name="Ссылка на картинку")
     special = models.TextField(verbose_name="Конфигурации")
 
@@ -63,7 +70,8 @@ class Set(models.Model):
 class Engine(models.Model):
     volume = models.FloatField(verbose_name="Значение", null=True)
     power = models.IntegerField(verbose_name="Мощность", null=True)
-    type_fuel = models.CharField(max_length=255, verbose_name="Тип топлива", null=True)
+    type_fuel = models.CharField(
+        max_length=255, verbose_name="Тип топлива", null=True)
 
     def __str__(self):
         return F"{self.volume} - {self.power}"
@@ -100,7 +108,7 @@ class City(models.Model):
     message = models.TextField(verbose_name="Сообщение")
 
     def __str__(self):
-       return self.title
+        return self.title
 
     class Meta:
         verbose_name = "Город"
@@ -113,12 +121,16 @@ class Car(models.Model):
     set = models.ForeignKey(Set, on_delete=models.PROTECT)
     image = models.URLField(verbose_name="Картинка")
     price = models.FloatField(verbose_name="Цена")
-    engine = models.ForeignKey(Engine, on_delete=models.PROTECT, verbose_name="Двигатель")
-    transmission = models.ForeignKey(Transmission, on_delete=models.PROTECT, verbose_name="Трансмиссия")
+    engine = models.ForeignKey(
+        Engine, on_delete=models.PROTECT, verbose_name="Двигатель")
+    transmission = models.ForeignKey(
+        Transmission, on_delete=models.PROTECT, verbose_name="Трансмиссия")
     wd = models.ForeignKey(Wd, on_delete=models.PROTECT, verbose_name="Привод")
     expenditure = models.CharField(max_length=255, verbose_name="Расход")
-    city = models.ForeignKey(City, on_delete=models.PROTECT, verbose_name="Город")
-    mark = models.ForeignKey(Mark, on_delete=models.PROTECT, verbose_name="Марка")
+    city = models.ForeignKey(
+        City, on_delete=models.PROTECT, verbose_name="Город")
+    mark = models.ForeignKey(
+        Mark, on_delete=models.PROTECT, verbose_name="Марка")
 
     def __str__(self):
         return self.title
@@ -135,7 +147,7 @@ class Car(models.Model):
 
 
 class Color(models.Model):
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=128, verbose_name="Цвет")
 
     def __str__(self):
         return self.title
@@ -146,9 +158,12 @@ class Color(models.Model):
 
 
 class Entry(models.Model):
-    user = models.ForeignKey(BotUser, on_delete=models.PROTECT, verbose_name="Пользователь")
-    username = models.CharField(max_length=255, null=True, verbose_name="Имя пользователя")
-    car = models.ForeignKey(Car, on_delete=models.PROTECT, verbose_name="Автомобиль")
+    user = models.ForeignKey(
+        BotUser, on_delete=models.PROTECT, verbose_name="Пользователь")
+    username = models.CharField(
+        max_length=255, null=True, verbose_name="Имя пользователя")
+    car = models.ForeignKey(Car, on_delete=models.PROTECT,
+                            verbose_name="Автомобиль")
     email = models.CharField(max_length=255, verbose_name="Почта")
     name = models.CharField(max_length=255, verbose_name="Имя")
     address = models.CharField(max_length=255, verbose_name="Адрес")
@@ -163,8 +178,8 @@ class Entry(models.Model):
 
 
 class Question(models.Model):
-    question = models.TextField()
-    answer = models.TextField()
+    question = models.TextField(verbose_name="Вопрос")
+    answer = models.TextField(verbose_name="Ответ")
 
     class Meta:
         verbose_name = "Вопрос"

@@ -103,7 +103,7 @@ class API:
         def get(self, request: HttpRequest, mark: str, min_price: int, max_price: int) -> HttpResponse:
             mark = Mark.objects.get(title=mark)
             if max_price == 0:
-                car_filter = Car.objects.filter(mark=mark, price__gte=min_price)
+                car_filter = Car.objects.filter(mark=mark, price__lte=min_price)
             else:
                 car_filter = Car.objects.filter(mark=mark, price__range=[min_price, max_price])
 
@@ -123,7 +123,7 @@ class API:
             mark: QuerySet = Mark.objects.filter(title=mark).get()
             if max_price == 0:
                 cars: QuerySet = Car.objects.filter(
-                    mark=mark, price__gte=min_price).all()
+                    mark=mark, price__lte=min_price).all()
             else:
                 cars: QuerySet = Car.objects.filter(
                     mark=mark, price__range=[min_price, max_price]).all()
@@ -146,7 +146,9 @@ class API:
                     min_volume = float(headers.get("Min-Volume"))
                     max_volume = float(headers.get("Max-Volume"))
                     if int(max_p) == 0:
-                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__volume__range=[
+                        min_price = int(min_p) - 500000
+                        max_price = int(min_p) + 300000
+                        cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price], engine__volume__range=[
                                                   min_volume, max_volume]).all()
                     else:
                         cars = Car.objects.filter(mark=mark, price__range=[
@@ -163,7 +165,9 @@ class API:
                     min_power = int(headers.get("Min-Power"))
                     max_power = int(headers.get("Max-Power"))
                     if int(max_p) == 0:
-                        cars = Car.objects.filter(mark=mark, price__lte=min_p, engine__power__range=[
+                        min_price = int(min_p) - 500000
+                        max_price = int(min_p) + 300000
+                        cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price], engine__power__range=[
                                                   min_power, max_power]).all()
                     else:
                         cars = Car.objects.filter(mark=mark, price__range=[

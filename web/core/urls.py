@@ -37,5 +37,5 @@ urlpatterns = [
     path("api/get_car_info/<int:id>",
          API.GetCarInfoView.as_view(), name="get_car_info"),
     path("api/create_entry/<int:user_id>/<str:username>/<int:car_id>/<str:email>/<str:name>/<str:address>/<str:phone>",
-         API.CreateEntry.as_view(), name="create_entry")
+         API.CreateEntryView.as_view(), name="create_entry")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

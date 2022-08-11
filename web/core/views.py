@@ -51,7 +51,7 @@ class API:
     class SetNameView(ListAPIView):
         serializer_class: BotUser = BotUser
 
-        def get(self, request: HttpRequest, user_id: int, name: str):
+        def get(self, request: HttpRequest, user_id: int, name: str) -> HttpResponse:
             queryset: QuerySet = BotUser.objects.filter(user_id=user_id)
             queryset.update(name=name)
             return HttpResponse(json.dumps({"response": True}), content_type='application/json')
@@ -60,7 +60,7 @@ class API:
     class SetCityView(ListAPIView):
         serializer_class: BotUser = BotUser
 
-        def get(self, request: HttpRequest, user_id: int, city: str):
+        def get(self, request: HttpRequest, user_id: int, city: str) -> HttpResponse:
             queryset: QuerySet = BotUser.objects.filter(user_id=user_id)
             city: QuerySet = City.objects.filter(title=city)
 
@@ -75,7 +75,7 @@ class API:
     class CheckPhoneView(ListAPIView):
         serializer_class: BotUser = BotUser
 
-        def get(self, request: HttpRequest, user_id: int):
+        def get(self, request: HttpRequest, user_id: int) -> HttpResponse:
             queryset: QuerySet = BotUser.objects.get(user_id=user_id)
 
             if queryset.phone:
@@ -87,7 +87,7 @@ class API:
     class SetPhoneView(ListAPIView):
         serializer_class: BotUser = BotUser
 
-        def get(self, request: HttpRequest, user_id: int, phone: int):
+        def get(self, request: HttpRequest, user_id: int, phone: int) -> HttpResponse:
             queryset: QuerySet = BotUser.objects.filter(user_id=user_id)
             queryset.update(phone=phone)
             return HttpResponse(json.dumps({"response": True}), content_type='application/json')
@@ -96,7 +96,7 @@ class API:
     class GetAllMarksView(ListAPIView):
         serializer_class: BotUser = BotUser
 
-        def get(self, request: HttpRequest):
+        def get(self, request: HttpRequest) -> HttpResponse:
             queryset: QuerySet = Mark.objects.filter(is_visible=True).all()
             all_marks = [mark.title for mark in queryset]
             return HttpResponse(json.dumps({"all_marks": all_marks}), content_type='application/json')
@@ -105,7 +105,7 @@ class API:
     class GetAllBodiesView(ListAPIView):
         serializer_class: Model = Model
 
-        def get(self, request: HttpRequest, mark: str):
+        def get(self, request: HttpRequest, mark: str) -> HttpResponse:
             mark = Mark.objects.get(title=mark)
             if Car.objects.filter(mark_id=mark.pk).exists():
                 queryset: QuerySet = Model.objects.filter(mark=mark.pk).all()
@@ -119,7 +119,7 @@ class API:
     class GetAllFuelTypesView(ListAPIView):
         serializer_class: Engine = Engine
 
-        def get(self, request: HttpRequest, mark: str, body: str, min_price: int, max_price: int):
+        def get(self, request: HttpRequest, mark: str, body: str, min_price: int, max_price: int) -> HttpResponse:
             mark: QuerySet = Mark.objects.filter(title=mark).get()
             if max_price == 0:
                 cars: QuerySet = Car.objects.filter(mark=mark, price__gte=min_price).all()
@@ -177,12 +177,12 @@ class API:
     class GetCarInfoView(ListAPIView):
         serializer_class: Car = Car
 
-        def get(self, request: HttpRequest, id: int):
+        def get(self, request: HttpRequest, id: int) -> HttpResponse:
             car = Car.objects.get(id=id)
             return HttpResponse(json.dumps({"response": True, "car": car.to_dict()}), content_type='application/json')
 
 
-    class CreateEntry(ListAPIView):
+    class CreateEntryView(ListAPIView):
         serializer_class: Entry = Entry
 
         def get(self,
@@ -206,10 +206,10 @@ class Web:
         data = selected_data()
         return render(request, "index.html", data)
 
-    def oferta(request):
+    def oferta(request) -> HttpResponse:
         return render(request, "oferta.html")
 
-    def find_car(request, image=None, min_price=0.0):
+    def find_car(request, image=None, min_price=0.0) -> HttpResponse:
         city = request.POST.get("city")
         pricerange = request.POST.get("pricerange")
         mark = request.POST.get("mark")
@@ -244,7 +244,7 @@ def selected_data() -> dict:
 def p_find_car(
     city: str, pricerange: str, mark: str, transmission: str,
     body: str, type_fuel: str, engine: str
-) -> bool:
+) -> list:
     if not pricerange or not mark or not transmission or not body \
         or not type_fuel or not engine:
             return []

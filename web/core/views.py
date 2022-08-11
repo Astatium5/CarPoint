@@ -100,12 +100,17 @@ class API:
     class GetAllBodiesView(ListAPIView):
         serializer_class: Model = Model
 
-        def get(self, request: HttpRequest, mark: str) -> HttpResponse:
+        def get(self, request: HttpRequest, mark: str, min_price: int, max_price: int) -> HttpResponse:
             mark = Mark.objects.get(title=mark)
-            if Car.objects.filter(mark_id=mark.pk).exists():
-                queryset: QuerySet = Model.objects.filter(mark=mark.pk).all()
-                counter = Counter(
-                    [model.body for model in queryset if Set.objects.filter(model=model).exists()])
+            if max_price == 0:
+                car_filter = Car.objects.filter(mark=mark, price__gte=min_price)
+            else:
+                car_filter = Car.objects.filter(mark=mark, price__range=[min_price, max_price])
+
+            if car_filter.exists():
+                cars = car_filter.all()
+                bodies = [car.set.model.body for car in cars]
+                counter = Counter(bodies)
                 bodies = list(counter.keys())
                 return HttpResponse(json.dumps({"all_bodies": bodies}), content_type='application/json')
             else:

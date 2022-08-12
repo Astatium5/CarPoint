@@ -137,7 +137,7 @@ class Car(models.Model):
 
     def to_dict(self):
         return dict(
-            id=self.id, title=self.title, price=self.price, image=self.image,
+            id=self.id, title=self.title, price=self.price, image=self.image, mark_id=self.mark_id,
             engine_volume=self.engine.volume, engine_power=self.engine.power, engine_type_fuel=self.engine.type_fuel,
             wd=self.wd.title, expenditure=self.expenditure, transmission=self.transmission.title)
 

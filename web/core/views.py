@@ -8,7 +8,7 @@ from rest_framework.generics import ListAPIView
 from django.http import HttpRequest, HttpResponse
 
 from .models import *
-from .converts import str_to_bool
+from .converts import str_to_bool, str_to_null
 
 
 PRICE_RANGE: dict = {
@@ -101,11 +101,20 @@ class API:
         serializer_class: Model = Model
 
         def get(self, request: HttpRequest, mark: str, min_price: int, max_price: int) -> HttpResponse:
-            mark = Mark.objects.get(title=mark)
-            if max_price == 0:
-                car_filter = Car.objects.filter(mark=mark, price__lte=min_price)
+            if mark != "any":
+                mark = Mark.objects.get(title=mark)
             else:
-                car_filter = Car.objects.filter(mark=mark, price__range=[min_price, max_price])
+                mark = None
+            if max_price == 0:
+                if not mark:
+                    car_filter = Car.objects.filter(price__lte=min_price)
+                else:
+                    car_filter = Car.objects.filter(mark=mark, price__lte=min_price)
+            else:
+                if not mark:
+                    car_filter = Car.objects.filter(price__lte=min_price)
+                else:
+                    car_filter = Car.objects.filter(mark=mark, price__range=[min_price, max_price])
 
             if car_filter.exists():
                 cars = car_filter.all()
@@ -120,13 +129,20 @@ class API:
         serializer_class: Engine = Engine
 
         def get(self, request: HttpRequest, mark: str, body: str, min_price: int, max_price: int) -> HttpResponse:
-            mark: QuerySet = Mark.objects.filter(title=mark).get()
             if max_price == 0:
-                cars: QuerySet = Car.objects.filter(
-                    mark=mark, price__lte=min_price).all()
+                if mark == "any":
+                    cars: QuerySet = Car.objects.filter(price__lte=min_price).all()
+                else:
+                    mark: QuerySet = Mark.objects.filter(title=mark).get()
+                    cars: QuerySet = Car.objects.filter(
+                        mark=mark, price__lte=min_price).all()
             else:
-                cars: QuerySet = Car.objects.filter(
-                    mark=mark, price__range=[min_price, max_price]).all()
+                if mark == "any":
+                    cars: QuerySet = Car.objects.filter(price__range=[min_price, max_price]).all()
+                else:
+                    mark: QuerySet = Mark.objects.filter(title=mark).get()
+                    cars: QuerySet = Car.objects.filter(
+                        mark=mark, price__range=[min_price, max_price]).all()
             engines = [
                 car.engine.type_fuel for car in cars if car.set.model.body == body]
             counter = Counter(engines)
@@ -139,7 +155,7 @@ class API:
         def get(self, request: HttpRequest, body: str, fuel_type: str) -> HttpResponse:
             headers = request.headers
             try:
-                mark = Mark.objects.filter(title=headers.get("Mark")).get()
+                mark = str_to_null(headers.get("Mark"))
                 min_p = headers.get("Min-Price")
                 max_p = headers.get("Max-Price")
                 if str_to_bool(headers.get("Is-Volume")):
@@ -148,42 +164,64 @@ class API:
                     if int(max_p) == 0:
                         min_price = int(min_p) - 500000
                         max_price = int(min_p) + 300000
-                        cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price], engine__volume__range=[
+                        cars = Car.objects.filter(price__range=[min_price, max_price], engine__volume__range=[
                                                   min_volume, max_volume]).all()
                     else:
-                        cars = Car.objects.filter(mark=mark, price__range=[
-                                                  min_p, max_p], engine__volume__range=[min_volume, max_volume]).all()
+                        cars = Car.objects.filter(price__range=[
+                                                  min_p, max_p], engine__volume__range=[min_volume, max_volume],
+                                                  set__model__body=body).all()
                     if cars:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
-                            cars = [car.to_dict()
-                                    for car in cars if car.set.model.body == body]
+                            if mark:
+                                mark = Mark.objects.filter(title=mark).get()
+                                cars = [car.to_dict() for car in cars if car.mark_id == mark.pk]
+                                is_any = False
+                            else:
+                                cars = [car.to_dict() for car in cars]
+                                is_any = True
                         else:
-                            cars = [car.to_dict() for car in cars
-                                    if car.set.model.body == body and car.engine.type_fuel == fuel_type]
-                        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+                            if mark:
+                                mark = Mark.objects.filter(title=mark).get()
+                                cars = [car.to_dict() for car in cars if car.engine.type_fuel == fuel_type and car.mark_id == mark.pk]
+                                is_any = False
+                            else:
+                                cars = [car.to_dict() for car in cars if car.engine.type_fuel == fuel_type]
+                                is_any = True
+                        return HttpResponse(json.dumps({"response": True, "is_any": is_any, "cars": cars}), content_type='application/json')
                 elif str_to_bool(headers.get("Is-Power")):
                     min_power = int(headers.get("Min-Power"))
                     max_power = int(headers.get("Max-Power"))
                     if int(max_p) == 0:
                         min_price = int(min_p) - 500000
                         max_price = int(min_p) + 300000
-                        cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price], engine__power__range=[
-                                                  min_power, max_power]).all()
+                        cars = Car.objects.filter(price__range=[min_price, max_price], engine__power__range=[
+                                                  min_power, max_power],
+                                                  set__model__body=body).all()
                     else:
-                        cars = Car.objects.filter(mark=mark, price__range=[
-                                                  min_p, max_p], engine__power__range=[min_power, max_power]).all()
+                        cars = Car.objects.filter(price__range=[
+                                                  min_p, max_p], engine__power__range=[min_power, max_power],
+                                                  set__model__body=body).all()
                     if cars:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
-                            cars = [car.to_dict()
-                                    for car in cars if car.set.model.body == body]
+                            if mark:
+                                mark = Mark.objects.filter(title=mark).get()
+                                cars = [car.to_dict() for car in cars if car.mark_id == mark.pk]
+                                is_any = False
+                            else:
+                                cars = [car.to_dict() for car in cars]
+                                is_any = True
                         else:
-                            cars = [car.to_dict() for car in cars
-                                    if car.set.model.body == body and car.engine.type_fuel == fuel_type]
-                        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+                            if mark:
+                                mark = Mark.objects.filter(title=mark).get()
+                                cars = [car.to_dict() for car in cars if car.engine.type_fuel == fuel_type and car.mark_id == mark.pk]
+                                is_any = False
+                            else:
+                                cars = [car.to_dict() for car in cars if car.engine.type_fuel == fuel_type]
+                                is_any = True
+                        return HttpResponse(json.dumps({"response": True, "is_any": is_any, "cars": cars}), content_type='application/json')
             except Exception as e:
                 logger.error(e)
                 return HttpResponse(json.dumps({"response": True, "cars": []}), content_type='application/json')
-            return HttpResponse(json.dumps({"response": True, "cars": []}), content_type='application/json')
 
     class GetCarInfoView(ListAPIView):
         serializer_class: Car = Car

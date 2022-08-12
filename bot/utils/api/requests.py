@@ -1,5 +1,4 @@
 from typing import Any
-from urllib import response
 from .execute import make_request
 
 
@@ -49,7 +48,6 @@ class Requests:
 
     def find_car(self, body, fuel_type, **kwargs) -> dict:
         path: str = "api/find_car/"
-        _: dict[str, Any] = kwargs
         if not fuel_type:
             fuel_type = "undefined"
         params: dict[str, Any] = dict(

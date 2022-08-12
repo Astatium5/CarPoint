@@ -1462,7 +1462,7 @@ if (typeof Object.create !== "function") {
         itemsDesktopSmall : [979, 3],
         itemsTablet : [768, 2],
         itemsTabletSmall : false,
-        itemsMobile : [479, 1],
+        itemsMobile : [479, 2],
         singleItem : false,
         itemsScaleUp : false,
 
@@ -1470,7 +1470,7 @@ if (typeof Object.create !== "function") {
         paginationSpeed : 800,
         rewindSpeed : 1000,
 
-        autoPlay : false,
+        autoPlay : true,
         stopOnHover : false,
 
         navigation : false,
@@ -1478,7 +1478,7 @@ if (typeof Object.create !== "function") {
         rewindNav : true,
         scrollPerPage : false,
 
-        pagination : true,
+        pagination : false,
         paginationNumbers : false,
 
         responsive : true,

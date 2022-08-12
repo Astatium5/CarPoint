@@ -351,15 +351,15 @@ async def inline_echo(query: InlineQuery) -> Any:
                                                                                    F"Тип: {type_fuel},\t"
                                                                                    F"{wd}"),
                                                                       hide_url=True, thumb_url=image)
-
             if is_any:
                 if not price in price_arr and not mark_id in mark_ids:
                     mark_ids.append(mark_id)
                     items.append(item)
+                    n += 1
             else:
                 if not price in price_arr:
                     items.append(item)
-            n += 1
+                    n += 1
             if n == MAX_SHOW:
                 break
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)

@@ -23,3 +23,10 @@ def str_to_bool(value):
         return True
     elif value == "False":
         return False
+
+
+def str_to_null(value):
+    if value == 'None':
+        return None
+    else:
+        return value

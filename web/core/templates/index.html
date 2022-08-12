@@ -53,11 +53,7 @@
 			<div class="col-lg-2"><div class="bot"><a href="/"><img src="{% static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div></div>
 			<div class="col-lg-2">
 			   <div class="soc-icon">
-			      <img src="{% static 'img/Facebook_white_1.svg' %}" alt="Facebook">
-			      <img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram">
-			      <img src="{% static 'img/Telegram_white_1.svg' %}" alt="Telegram">
-			      <img src="{% static 'img/Tiktok_white_1.svg' %}" alt="Tiktok_white">
-			      <img src="{% static 'img/Youtube_white_1.svg' %}" alt="Youtube_white">
+			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
 			   </div>
 			</div>
 		  </div>
@@ -167,93 +163,120 @@
 	</header>
 	<section class="logo-brand">
        <div class="container">
-	        <div class="logo-img">
-			    <div class="img"></div>
-				<div class="img"></div>
-				<div class="img"></div>
-				<div class="img"></div>
-				<div class="img"></div>
-				<div class="img"></div>
-				<div class="img"></div>
-				<div class="img"></div>
-	        </div>
+<div id="owl-carousel" class="owl-carousel owl-theme logo-img">
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+	<div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+    <div class="item img"></div>
+	<div class="item img"></div>
+</div>
 	   </div>
 	</section>
 	<section id="podbor" class="podbor">
        <div class="container">
 	      <h2>Подобрать автомобиль по параметрам</h2>
 	        <div class="podbor-form">
-	        <form method="post" action="find_car">
-			   {% csrf_token %}
-			   <div class="fields-bl">
-				  <label>Город для доставки автомобиля*</label>
-				  <input type="text" name="city" list="cityname" placeholder="Выберите из списка" class="">
-                   <datalist id="cityname">
-						{% for city in cities %}
-							<option value="{{city.title}}">
+	        <form class="needs-validation" novalidate>
+				<div class="fields-bl">
+				  <label>Ценовой диапазон, ₽<span class="red-color">*</span></label>
+                   <select class="form-select" name="pricerange" list="pricerange" required>
+                      <datalist id="pricerange">
+    					<option value="">Выберите из списка</option>
+    					<option value="1">500 000₽ - 2 000 000₽</option>
+    					<option value="2">2 000 000₽ - 4 000 000₽</option>
+    					<option value="3">4 000 000₽ - 6 000 000₽</option>
+    					<option value="4">более 6 000 000₽</option>
+                       </datalist>
+		            </select>
+				   <div class="invalid-feedback">
+                        Это поле обязательно для заполнения
+                   </div>
+				</div>
+				<div class="fields-bl">
+				  <label>Марка<span class="red-color">*</span></label>
+				  <select class="form-select" name="mark" list="mark" required>
+                      <datalist id="mark">
+						<option value="">Выберите из списка</option>
+						{% for mark in marks %}
+							<option value="{{mark.title}}">{{mark.title}}</option>
 						{% endfor %}
-                   </datalist>
-				</div>
-				<div class="fields-bl">
-				  <label>Ценовой диапазон, ₽*</label>
-				  <input type="text" name="pricerange" list="pricename" placeholder="Выберите из списка">
-                   <datalist id="pricename">
-                      <option value="500 000₽ - 2 000 000₽">
-                      <option value="2 000 000₽ - 4 000 000₽">
-					  <option value="4 000 000₽ - 6 000 000₽">
-					  <option value="более 6 000 000₽">
-                   </datalist>
-				</div>
-				<div class="fields-bl">
-				  <label>Марка*</label>
-				  <input type="text" name="mark" list="marka" placeholder="Выберите из списка">
-                   <datalist id="marka">
-					{% for mark in marks %}
-						<option value="{{mark.title}}">
-					{% endfor %}
-                   </datalist>
+                       </datalist>
+		            </select>
+				   <div class="invalid-feedback">
+                        Это поле обязательно для заполнения
+                   </div>
 				</div>
 				<div class="fields-bl">
 				  <label>КПП</label>
-				  <input type="text" name="transmission" list="kpp" placeholder="Выберите из списка">
-                   <datalist id="kpp">
-                      <option value="АКПП" label="Автомат">
-                      <option value="МКПП" label="Механика">
-                   </datalist>
+				  <select class="form-select" name="transmission" list="transmission">
+                      <datalist id="transmission">
+    					<option value="">Выберите из списка</option>
+    					<option value="1">Автомат</option>
+    					<option value="2">Механика</option>
+                       </datalist>
+		            </select>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип кузова</label>
-				  <input type="text" name="body" list="tipkuzova" placeholder="Выберите из списка">
-                   <datalist id="tipkuzova">
-					{% for model in models %}
-						<option value="{{model}}">
-					{% endfor %}
-                   </datalist>
+				  <select class="form-select" name="body" list="body">
+                      <datalist id="body">
+						<option value="">Выберите из списка</option>
+						{% for model in models %}
+    						<option value="{{model}}">{{model}}</option>
+						{% endfor %}
+                       </datalist>
+		            </select>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип двигателя</label>
-				  <input type="text" name="type_fuel" list="motor" placeholder="Выберите из списка">
-                   <datalist id="motor">
-					{% for type_fuel in type_fuels %}
-						<option value="{{type_fuel}}">
-					{% endfor %}
-                   </datalist>
+				  <select class="form-select" name="type_fuel" list="type_fuel">
+                      <datalist id="type_fuel">
+						<option value="">Выберите из списка</option>
+    					{% for type_fuel in type_fuels %}
+							<option value="{{type_fuel}}">{{type_fuel}}</option>
+						{% endfor %}
+                       </datalist>
+		            </select>
 				</div>
 				<div class="fields-bl">
-				  <label>Объем или мощность двигателя</label>
-				  <input type="text" name="engine" list="obem" placeholder="Выберите из списка">
-                   <datalist id="obem">
-					{% for engine in engines %}
-						<option value="{{engine}}">
-					{% endfor %}
-                   </datalist>
+				  <label>Объем</label>
+				  <select class="form-select" name="volume" list="volume" >
+                      <datalist id="volume">
+						<option value="">Выберите из списка</option>
+						<option value="1">1.6</option>
+						<option value="2">1.9</option>
+                       </datalist>
+		            </select>
+				</div>
+				<div class="fields-bl">
+				  <label>Мощность двигателя</label>
+				  <select class="form-select" name="power" list="power" >
+                      <datalist id="power">
+						<option value="">Выберите из списка</option>
+						<option value="1">100кВт</option>
+						<option value="2">140кВт</option>
+						<option value="3">180кВт</option>
+						<option value="4">190кВт</option>
+                       </datalist>
+		            </select>
 				</div>
 				<div class="fields-bl btn-blue">
-				  <button class="look-btn">Смотреть авто</button>
-				  <!--<a type="button" class="look-btn">Смотреть авто</a>-->
+				  <button class="look-btn" type="submit">Смотреть 245 авто</button>
 				</div>
 				<div class="fields-bl">
-				  <a href="" class="clean-btn">Сбросить все параметры</a>
+				  <input class="clean-btn" type="reset" value="Сбросить все параметры">
 				</div>
 			</form>
 	        </div>
@@ -311,9 +334,9 @@
 		{% endif %}
 	{% endif %}
 	{% if new_cars %}
-	<section class="slider">
+	<section id="new" class="slider">
        <div class="container">
-	      <h2>Новинки<span  id="new" class="new">new</span></h2>
+	      <h2>Новинки<span class="new">new</span></h2>
 		  <div class="slider-bl">
 		  <div id="owl-demo" class="owl-carousel">
 		  {% for car in new_cars %}
@@ -335,22 +358,22 @@
 		    <div class="block-1">
 			   <span>Выбираете</br> автомобиль</span>
 			   <span>Мы отправляем вам</br> электронный договор</span>
-			   <span>Производитель в течение</br>3-ех дней отгружает</br>автомобиль</span>
+			   <span>Производитель в течение</br> 3-ех дней отгружает</br> автомобиль</span>
 			   <span>Автомобиль прибывает к вам, вы</br> проводите осмотр и</br> подписываете акт приемки</span>
 			</div>
 		    <div class="block-2">
 			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span>Наслаждайтесь!</span>
 			</div>
 			<div class="block-3">
-			   <span>Оставляете заявку</br>на бронирование</span>
-			   <span>После подписания договора</br> вы вносите предоплату 100%</br>напрямую производителю</span>
+			   <span>Оставляете заявку</br> на бронирование</span>
+			   <span>После подписания договора</br> вы вносите предоплату 100%</br> напрямую производителю</span>
 			   <span>Доставка автомобиля до</br> вашего адреса</span>
 			</div>
 		  </div>
 	   </div>
 	 </section>    
     <section id="about" class="about">
-       <div class="container">
+       <div class="container table-grid-container">
           <h2>Кто такие OneTwoCar?</h2>
 	      <span class="subtitle">
 	       Онлайн-покупки стали неотъемлемой частью нашей жизни. Все больше сфер переходят в online. OneTwoCar - это первый полностью дистанционный сервис покупки автомобилей напрямую у производителя, без накруток и переплат. 
@@ -376,7 +399,7 @@
 				<span><p><b>Доставка</b> автомобиля прямо <b>к дому</b></p></span>
 				<span><p><b>Огромный выбор</b> автомобилей. Возможность сравнить</br> актуальные цены и комплектации сразу по всем производителям</p></span>
 				<span><p>Все марки и модели <b>в вашем смартфоне</b> - </br>выбирайте, не выходя из дома</p></span>
-				<span><p>Возможность найти <b>эксклюзивные марки,</b> модели и</br> комплектации, не представленные в вашем городе</p></span>
+				<span><p>Возможность найти <b>эксклюзивные</b> марки, модели и</br> комплектации, не представленные в вашем городе</p></span>
 				<span><p>Опции и финансовые услуги <b>только по запросу</b> клиента</p></span>
 				<span><p><b>Не нужно</b> общаться с навязчивыми менеджерами</p></span>
 				<span><p>Максимальная <b>простота и скорость</b> покупки - вы выбираете</br> автомобиль, все остальные вопросы мы решаем за вас</p></span>
@@ -425,28 +448,27 @@
 	        <div class="form">
 		      <h2>Есть вопрос?</h2>
 			  <span class="subtitle">Задайте его через форму ниже, мы ответим вам в ближайшее время</span>
-			  <form action="" method="post">
-                <input id="name" type="text" name="name" placeholder="Ваше имя">
-				<input id="tel" type="tel" name="tel" placeholder="+7 (- - -) - - -   - -   - -   ">
+			  <form action="" method="post" class="needs-validation" novalidate>
+                <input id="name" type="text" name="name" placeholder="Ваше имя" required>
+				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
+				<input id="tel" type="tel" name="tel" placeholder="+7 (- - -) - - -   - -   - -   " required>
+				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
 				<textarea id="text" name="text" placeholder="Ваш вопрос"></textarea>
+				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
 				<span class="form-text">Нажимая "Отправить", вы соглашаетесь на сбор и обработку персональных данных</span>
-                <input type="submit" class="submit" value="Отправить">
+				<button class="submit" type="submit">Отправить</button>
               </form>
 		    </div>
 		 </div>
 	   </div>
 	</section>  
-	<section id="contact" class="contact">
+	<section  class="contact" style="display:none;">
        <div class="container">
 		    <h2>Контакты</h2>
             <div class="soc-icon">
-			   <img src="{% static 'img/Facebook_white.svg' %}" alt="Facebook">
-			   <img src="{% static 'img/Instagram_white.svg' %}" alt="Instagram">
-			   <img src="{% static 'img/Telegram_white.svg' %}" alt="Telegram">
-			   <img src="{% static 'img/Tiktok_white.svg' %}" alt="Tiktok_white">
-			   <img src="{% static 'img/Youtube_white.svg' %}" alt="Youtube_white">
+			   <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
 			</div>
-			<span class="bot"><a href="https://t.me/One_Two_Car_bot"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
+			<span class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
 			<a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
 	   </div>
 	</section>
@@ -455,7 +477,7 @@
         <div class="container">
 		  <div class="row">
 		    <div class="col-lg-2">
-			    <a href="/"><img src="{% static 'img/logo_footer.svg' %}" alt="OneTwoCar"></a>
+			    <a href="/" target="_blank"><img src="{% static 'img/logo_footer.svg' %}" alt="OneTwoCar"></a>
 			</div>
 			<div class="col-lg-3">
 			  <div class="menu-footer">
@@ -474,11 +496,7 @@
 			</div>
 			<div class="col-lg-3">
                 <div class="soc-icon">
-			      <img src="{% static 'img/Facebook_white_1.svg' %}" alt="Facebook">
-			      <img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram">
-			      <img src="{% static 'img/Telegram_white_1.svg' %}" alt="Telegram">
-			      <img src="{% static 'img/Tiktok_white_1.svg' %}" alt="Tiktok_white">
-			      <img src="{% static 'img/Youtube_white_1.svg' %}" alt="Youtube_white">
+			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
 			    </div>  
 			   <span class="bot"><a href="https://t.me/One_Two_Car_bot"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
 			   <a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
@@ -498,8 +516,52 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-	
+	<script src="{% static 'owl-carousel/jquery.min.js' %}"></script>
     <script src="{% static 'owl-carousel/owl.carousel.js' %}"></script>
+	<script>
+            $(document).ready(function() {
+              var owl = $('#owl-carousel');
+              owl.owlCarousel({
+                items: 8,
+                loop: true,
+                margin: 10,
+                autoplay: true,
+                autoplayTimeout: 1000,
+                autoplayHoverPause: true,
+				responsive : true,
+    responsive:{
+        0:{
+            items:3,
+            nav:true
+        },
+        600:{
+            items:3,
+            nav:false
+        },
+        1000:{
+            items:5,
+            nav:true,
+            loop:false
+        }
+    }
+              });
+              $('.play').on('click', function() {
+                owl.trigger('play.owl.autoplay', [1000])
+              })
+              $('.stop').on('click', function() {
+                owl.trigger('stop.owl.autoplay')
+              })
+            })
+          </script>
+	
+	<script src="{% static 'js/maskinput.js' %}"></script>
+<script type="text/javascript">
+   jQuery(function(jQuery){
+   jQuery("#tel").mask("+7(999) 999-9999");
+   jQuery("#tel1").mask("+7(999) 999-9999");
+   });
+</script>
+	
 <script>
 var x, i, j, l, ll, selElmnt, a, b, c;
 /* Look for any elements with the class "custom-select": */
@@ -602,19 +664,21 @@ document.addEventListener("click", closeAllSelect);
       }, false)
     })
 })()</script>
-
+          
     <script>
     $(document).ready(function() {
 
       var owl = $("#owl-demo");
+	  
 
       owl.owlCarousel({
 
       items : 3, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
+      itemsDesktop : [1000,3], //5 items between 1000px and 901px
       itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0;
-      itemsMobile : false, // itemsMobile disabled - inherit from itemsTablet option
+      itemsTablet: [600,1], //2 items between 600 and 0;
+      itemsMobile : true, // itemsMobile disabled - inherit from itemsTablet option
+	  navigation : false,
       dots : false
       });
 
@@ -635,5 +699,26 @@ document.addEventListener("click", closeAllSelect);
 
     });
     </script>
+	<script>
+ $(document).ready(function(){
+	$('.item-auto-open').click(function () {
+		$('.item-auto').toggleClass('item-auto-plus');
+		});
+	});
+</script>
+<script>
+ $(document).ready(function(){
+	$('select').click(function () {
+		$(this).toggleClass('form-select-open');
+		});
+	});
+</script>
+<script>
+ $(document).ready(function(){
+	$('.burger').click(function () {
+		$('.menu-mobile').toggleClass('mobile-open');
+		});
+	});
+</script>
   </body>
 </html>

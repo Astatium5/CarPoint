@@ -17,7 +17,7 @@ from log.logger import logger
 from utils.converter import *
 from keyboard.keyboard import *
 
-MAX_SHOW: int = 50
+MAX_SHOW: int = 20
 
 PRICE_RANGE: dict = {
     "87506fd2b91be8b7ab7b59d069c42d40": {
@@ -105,6 +105,7 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(
+        InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
         InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
 
     try:
@@ -198,8 +199,9 @@ async def get_mark(query: CallbackQuery) -> Union[Message, None]:
 @dp.callback_query_handler(lambda query: query.data.startswith(("body#")))
 async def get_body(query: CallbackQuery):
     body: str = re.sub("body#", "", query.data)
+    mark = globals.offer_metadata.Mark
     globals.offer_metadata.Body = body
-    response: dict = api_requests.get_all_fuel_types(mark=globals.offer_metadata.Mark, body=body,
+    response: dict = api_requests.get_all_fuel_types(mark=mark if mark else "any", body=body,
                                                      min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     fuel_types = response.get("all_fuel_types")
 
@@ -269,7 +271,7 @@ async def get_max_volume(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MaxVolume = message.text
 
     await state.finish()
-    globals.cars = await find_car(message.from_user.id)
+    globals.cars = await find_car()
     transmissions = await get_transmission(globals.cars)
     reply_markup = InlineKeyboardMarkup()
     if not transmissions:
@@ -306,7 +308,7 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
         return await message.answer("Некорректный формат ввода!")
     globals.offer_metadata.MaxPower = message.text
     await state.finish()
-    globals.cars = await find_car(message.from_user.id)
+    globals.cars = await find_car()
     transmissions = await get_transmission(globals.cars)
     reply_markup = InlineKeyboardMarkup()
     if not transmissions:
@@ -325,14 +327,17 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
 async def inline_echo(query: InlineQuery) -> Any:
     transmission: str = query.query
     n: int = 0
-    items: dict = []
+    items: list = []
     price_arr: dict = []
+    mark_ids: list = []
+    is_any = globals.response.get("is_any")
     for car in globals.cars:
         if car.get("transmission") == transmission:
             id: Any = car.get("id")
             title: Any = car.get("title")
             price: Any = car.get("price")
             image: Any = car.get("image")
+            mark_id = car.get("mark_id")
             engine_volume: Any = car.get("engine_volume")
             engine_power: Any = car.get("engine_power")
             type_fuel: Any = car.get("engine_type_fuel")
@@ -346,10 +351,15 @@ async def inline_echo(query: InlineQuery) -> Any:
                                                                                    F"Тип: {type_fuel},\t"
                                                                                    F"{wd}"),
                                                                       hide_url=True, thumb_url=image)
-            if not price in price_arr:
-                price_arr.append(price)
-                items.append(item)
-                n += 1
+
+            if is_any:
+                if not price in price_arr and not mark_id in mark_ids:
+                    mark_ids.append(mark_id)
+                    items.append(item)
+            else:
+                if not price in price_arr:
+                    items.append(item)
+            n += 1
             if n == MAX_SHOW:
                 break
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)
@@ -367,11 +377,11 @@ async def new_search(query: CallbackQuery) -> Message:
         return await bot.send_message(chat_id=query.message.chat.id, text=offer_page.find("select_price").text, reply_markup=choice_price_markup)
 
 
-async def find_car(user_id: int) -> Union[Any, None]:
+async def find_car() -> Union[Any, None]:
     _ = globals.offer_metadata
-    response: dict = api_requests.find_car(
+    globals.response: dict = api_requests.find_car(
         body=_.Body, fuel_type=_.FuelType, **globals.offer_metadata.to_header())
-    cars: Union[Any, None] = response.get("cars")
+    cars: Union[Any, None] = globals.response.get("cars")
     return cars
 
 

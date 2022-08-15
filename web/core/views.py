@@ -92,9 +92,12 @@ class API:
     class GetAllMarksView(ListAPIView):
         serializer_class: BotUser = BotUser
 
-        def get(self, request: HttpRequest) -> HttpResponse:
-            queryset: QuerySet = Mark.objects.filter(is_visible=True).all()
-            all_marks = [mark.title for mark in queryset]
+        def get(self, request: HttpRequest, min_price: int, max_price: int) -> HttpResponse:
+            if max_price == 0:
+                marks = Car.objects.filter(price__lte=min_price).values("mark__title").distinct()
+            else:
+                marks = Car.objects.filter(price__range=[min_price, max_price]).values("mark__title").distinct()
+            all_marks = [mark.get("mark__title") for mark in marks]
             return HttpResponse(json.dumps({"all_marks": all_marks}), content_type='application/json')
 
     class GetAllBodiesView(ListAPIView):

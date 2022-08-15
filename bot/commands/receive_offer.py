@@ -100,7 +100,7 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
     globals.offer_metadata.MinPrice = price_range.get("min")
     globals.offer_metadata.MaxPrice = price_range.get("max")
 
-    response: dict = api_requests.get_all_marks()
+    response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     all_marks: Union[Any, None] = response.get("all_marks")
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")

@@ -156,7 +156,7 @@ async def get_specific_amount(message: Message, state: FSMContext) -> Message:
         return await message.answer("Некорректный формат ввода!")
     await state.finish()
     globals.offer_metadata.MinPrice = message.text
-    response: dict = api_requests.get_all_marks()
+    response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     all_marks: Union[Any, None] = response.get("all_marks")
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")

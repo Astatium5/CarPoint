@@ -27,7 +27,7 @@ urlpatterns = [
          API.CheckPhoneView.as_view(), name="check_phone"),
     path("api/set_phone/<int:user_id>/<int:phone>",
          API.SetPhoneView.as_view(), name="set_phone"),
-    path("api/get_all_marks", API.GetAllMarksView.as_view(), name="get_all_marks"),
+    path("api/get_all_marks/<int:min_price>/<int:max_price>", API.GetAllMarksView.as_view(), name="get_all_marks"),
     path("api/get_all_bodies/<str:mark>/<int:min_price>/<int:max_price>",
          API.GetAllBodiesView.as_view(), name="get_all_bodies"),
     path("api/get_all_fuel_types/<str:mark>/<str:body>/<int:min_price>/<int:max_price>",

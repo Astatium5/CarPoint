@@ -29,9 +29,9 @@ class Requests:
         response: dict = make_request(path=path, user_id=user_id, phone=phone)
         return response
 
-    def get_all_marks(self) -> dict:
-        path: str = "api/get_all_marks"
-        response: dict = make_request(path=path)
+    def get_all_marks(self, min_price: int, max_price: int) -> dict:
+        path: str = "api/get_all_marks/"
+        response: dict = make_request(path=path, min_price=min_price, max_price=max_price)
         return response
 
     def get_all_bodies(self, mark: str, min_price: int, max_price: int) -> dict:

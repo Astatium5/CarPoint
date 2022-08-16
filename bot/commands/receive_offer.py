@@ -102,6 +102,7 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
 
     response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     all_marks: Union[Any, None] = response.get("all_marks")
+    all_marks.sort()
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(
@@ -135,8 +136,9 @@ async def get_max_price(message: Message, state: FSMContext) -> Message:
         return await message.answer("Некорректный формат ввода!")
     await state.finish()
     globals.offer_metadata.MaxPrice = message.text
-    response: dict = api_requests.get_all_marks()
+    response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     all_marks: Union[Any, None] = response.get("all_marks")
+    all_marks.sort()
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(
@@ -158,6 +160,7 @@ async def get_specific_amount(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MinPrice = message.text
     response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     all_marks: Union[Any, None] = response.get("all_marks")
+    all_marks.sort()
 
     reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
     reply_markup.add(
@@ -342,6 +345,8 @@ async def inline_echo(query: InlineQuery) -> Any:
             engine_power: Any = car.get("engine_power")
             type_fuel: Any = car.get("engine_type_fuel")
             wd: Any = car.get("wd")
+            special = car.get("special")
+            print(special)
             item: InlineQueryResultArticle = InlineQueryResultArticle(id=id, title=title,
                                                                       input_message_content=InputTextMessageContent(
                                                                           title),

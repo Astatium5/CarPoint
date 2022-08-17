@@ -373,6 +373,7 @@ async def inline_echo(query: InlineQuery) -> Any:
                 if not price in price_arr:
                     items.append(item)
                     n += 1
+            price_arr.append(price)
             if n == MAX_SHOW:
                 break
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)

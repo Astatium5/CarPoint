@@ -254,67 +254,122 @@ class API:
 
 class Web:
     def index(request) -> HttpResponse:
-        data = selected_data()
-        return render(request, "index.html", data)
+        is_search = False
+        image = None
+        min_price = 0
+        cars = None
+        pricerange = request.GET.get("pricerange")
+        mark = request.GET.get("mark")
+        transmission = request.GET.get("transmission")
+        body = request.GET.get("body")
+        type_fuel = request.GET.get("type_fuel")
+        volume = request.GET.get("volume")
+        power = request.GET.get("power")
+        """
+        cars = p_find_car(pricerange, mark, transmission, body, type_fuel, volume, power)
+
+        if cars:
+            cars_values = list(cars.values())
+            is_search = True
+            image = cars_values[0][0]["image"]
+            min_price = min([car["price"] for car in cars_values[0]])
+        """
+
+        return render(request, "index.html", dict(is_search=is_search, cars=cars, image=image, min_price=min_price))
 
     def oferta(request) -> HttpResponse:
         return render(request, "oferta.html")
 
-    def find_car(request, image=None, min_price=0.0) -> HttpResponse:
-        city = request.POST.get("city")
-        pricerange = request.POST.get("pricerange")
-        mark = request.POST.get("mark")
-        transmission = request.POST.get("transmission")
-        body = request.POST.get("body")
-        type_fuel = request.POST.get("type_fuel")
-        engine = request.POST.get("engine")
+    def get_cars(request, min_price: int, max_price: int, mark: str):
+        mark = Mark.objects.get(title=mark)
+        if max_price == 0:
+            min_price = min_price - 500000
+            max_price = min_price + 300000
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all()
+        else:
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all()
+        cars = [car.to_dict() for car in cars]
+        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
-        data = selected_data()
-        cars = p_find_car(city, pricerange, mark,
-                          transmission, body,  type_fuel, engine)
-        if cars:
-            image = cars[0].image
-            min_price = min([car.price for car in cars])
-        data.update({"is_search": True, "cars": cars,
-                    "min_price": min_price, "mark": mark, "image": image})
-        return render(request, "index.html", data)
+    def get_cars_by_body(request, min_price: int, max_price: int, mark: str, body: str):
+        mark = Mark.objects.get(title=mark)
+        if max_price == 0:
+            min_price = min_price - 500000
+            max_price = min_price + 300000
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all()
+        else:
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all()
+        cars = [car.to_dict() for car in cars]
+        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
-
-def selected_data() -> dict:
-    new_cars = NewCar.objects.all()
-    questions = Question.objects.all()
-    cities = City.objects.all()
-    marks = Mark.objects.all()
-    str_engine_obj = [engine.__str__() for engine in Engine.objects.all()]
-    str_model_obj = [model.__str__() for model in Model.objects.all()]
-    type_fuels = [engine.type_fuel for engine in Engine.objects.all()]
-    engine_counter = Counter(str_engine_obj)
-    model_counter = Counter(str_model_obj)
-    type_fuel_counter = Counter(type_fuels)
-    return {"cities": cities, "marks": marks, "engines": engine_counter, "models": model_counter,
-            "type_fuels": type_fuel_counter, "new_cars": new_cars, "questions": questions}
+    def get_cars_by_type_fuel(request, min_price: int, max_price: int, mark: str, body: str, type_fuel: str):
+        mark = Mark.objects.get(title=mark)
+        if max_price == 0:
+            min_price = min_price - 500000
+            max_price = min_price + 300000
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all()
+        else:
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all()
+        cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
+        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
 
 def p_find_car(
-    city: str, pricerange: str, mark: str, transmission: str,
-    body: str, type_fuel: str, engine: str
+    pricerange: str, mark: str, transmission: str,
+    body: str, type_fuel: str, volume: str, power: str
 ) -> list:
-    if not pricerange or not mark or not transmission or not body \
-            or not type_fuel or not engine:
+    if not pricerange or not mark or not transmission or not body or not type_fuel:
         return []
     else:
         price_range = PRICE_RANGE.get(pricerange)
         min_p = int(price_range.get("min"))
         max_p = int(price_range.get("max"))
         mark = Mark.objects.filter(title=mark).get()
-        city = City.objects.filter(title=city).get()
         transmission = Transmission.objects.filter(title=transmission).get()
-        volume, power = engine.split(" - ")
-        if max_p == 0:
-            cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
-                                      transmission=transmission, set__model__body=body, engine__volume__gte=volume).all()
+        if not volume and not power:
+            return []
+        elif volume:
+            if max_p == 0:
+                cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
+                                        transmission=transmission, set__model__body=body, engine__volume__lte=volume).all()
+            else:
+                cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
+                                        transmission=transmission, set__model__body=body, engine__volume__lte=volume).all()
+            cars = [car for car in cars if car.set.model.body == body]
+        elif power:
+            if max_p == 0:
+                cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
+                                        transmission=transmission, set__model__body=body, engine__power__lte=power).all()
+            else:
+                cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
+                                        transmission=transmission, set__model__body=body, engine__power__lte=power).all()
+            cars = [car for car in cars if car.set.model.body == body]
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
-                                      transmission=transmission, set__model__body=body, engine__volume__gte=volume).all()
-        cars = [car for car in cars if car.set.model.body == body]
-        return cars
+            if max_p == 0:
+                cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
+                                        transmission=transmission, set__model__body=body, engine__power__lte=power,
+                                        engine__volume__gte=volume).all()
+            else:
+                cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
+                                        transmission=transmission, set__model__body=body, engine__power__lte=power,
+                                        engine__volume__gte=volume).all()
+            cars = [car for car in cars if car.set.model.body == body]
+        cars = [car.to_dict() for car in cars]
+        if cars:
+            dct_cars = {}
+            for car in cars:
+                pattern = {"price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
+                    "engine_power": car["engine_power"], "engine_type_fuel": car["engine_type_fuel"],
+                    "wd": car["wd"], "transmission": car["transmission"], "body": car["body"]}
+                if not car["title"] in dct_cars:
+                    dct_cars[car["title"]] = [pattern]
+                    # dct_cars[car["title"]]["count"] = 1
+                else:
+                    dct_cars[car["title"]].append(pattern)
+                    # dct_cars[car["title"]]["count"] += 1
+        print(dct_cars)
+        return dct_cars

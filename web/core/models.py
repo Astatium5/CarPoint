@@ -139,7 +139,8 @@ class Car(models.Model):
         return dict(
             id=self.id, title=self.title, price=self.price, image=self.image, mark_id=self.mark_id,
             engine_volume=self.engine.volume, engine_power=self.engine.power, engine_type_fuel=self.engine.type_fuel,
-            wd=self.wd.title, expenditure=self.expenditure, transmission=self.transmission.title)
+            wd=self.wd.title, expenditure=self.expenditure, transmission=self.transmission.title, special=self.set.special,
+            body=self.set.model.body)
 
     class Meta:
         verbose_name = "Автомобиль"

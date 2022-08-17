@@ -1,3 +1,4 @@
+from email import message
 import re
 from collections import Counter
 from typing import Any, Dict, Union
@@ -102,16 +103,22 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
     globals.offer_metadata.MaxPrice = price_range.get("max")
 
     response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
-    all_marks: Union[Any, None] = response.get("all_marks")
-    all_marks.sort()
-
-    reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
-    reply_markup.add(
-        InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
-        InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+    marks: Union[Any, None] = response.get("all_marks")
+    if not marks:
+        reply_markup = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search")]
+        ])
+        text = "Ничего не найдено."
+    else:
+        marks.sort()
+        reply_markup = marks_markup(marks=marks, callback_data="mark#")
+        reply_markup.add(
+            InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+            InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+        text = offer_page.find("select_mark").text
 
     try:
-        return await query.message.edit_text(offer_page.find("select_mark").text, reply_markup=reply_markup)
+        return await query.message.edit_text(text, reply_markup=reply_markup)
     except MessageNotModified as e:
         logger.error(e)
 
@@ -138,13 +145,21 @@ async def get_max_price(message: Message, state: FSMContext) -> Message:
     await state.finish()
     globals.offer_metadata.MaxPrice = message.text
     response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
-    all_marks: Union[Any, None] = response.get("all_marks")
-    all_marks.sort()
+    marks: Union[Any, None] = response.get("all_marks")
+    if not marks:
+        reply_markup = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search")]
+        ])
+        text = "Ничего не найдено."
+    else:
+        marks.sort()
+        reply_markup = marks_markup(marks=marks, callback_data="mark#")
+        reply_markup.add(
+            InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+            InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+        text = offer_page.find("select_mark").text
 
-    reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
-    reply_markup.add(
-        InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
-    return await message.answer(offer_page.find("select_mark").text, reply_markup=reply_markup)
+    return await message.answer(text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("specific_amount")))
@@ -160,14 +175,21 @@ async def get_specific_amount(message: Message, state: FSMContext) -> Message:
     await state.finish()
     globals.offer_metadata.MinPrice = message.text
     response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
-    all_marks: Union[Any, None] = response.get("all_marks")
-    all_marks.sort()
+    marks: Union[Any, None] = response.get("all_marks")
+    if not marks:
+        reply_markup = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search")]
+        ])
+        text = "Ничего не найдено."
+    else:
+        marks.sort()
+        reply_markup = marks_markup(marks=marks, callback_data="mark#")
+        reply_markup.add(
+            InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+            InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
+        text = offer_page.find("select_mark").text
 
-    reply_markup = marks_markup(marks=all_marks, callback_data="mark#")
-    reply_markup.add(
-        InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
-
-    return await message.answer(offer_page.find("select_mark").text, reply_markup=reply_markup)
+    return await message.answer(text, reply_markup=reply_markup)
 
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("mark#")))
@@ -280,11 +302,11 @@ async def get_max_volume(message: Message, state: FSMContext) -> Message:
     globals.cars = await find_car()
     reply_markup = InlineKeyboardMarkup()
     if not globals.cars:
-        text = "Ничего не найдено!"
+        text = "Ничего не найдено."
     else:
         transmissions = await get_transmission(globals.cars)
         if not transmissions:
-            text = "Ничего не найдено!"
+            text = "Ничего не найдено."
         else:
             for transmission in transmissions:
                 reply_markup.add(InlineKeyboardButton(
@@ -322,11 +344,11 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
     globals.cars = await find_car()
     reply_markup = InlineKeyboardMarkup()
     if not globals.cars:
-        text = "Ничего не найдено!"
+        text = "Ничего не найдено."
     else:
         transmissions = await get_transmission(globals.cars)
         if not transmissions:
-            text = "Ничего не найдено!"
+            text = "Ничего не найдено."
         else:
             reply_markup = InlineKeyboardMarkup()
             for transmission in transmissions:

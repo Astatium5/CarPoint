@@ -275,15 +275,18 @@ async def get_max_volume(message: Message, state: FSMContext) -> Message:
 
     await state.finish()
     globals.cars = await find_car()
-    transmissions = await get_transmission(globals.cars)
     reply_markup = InlineKeyboardMarkup()
-    if not transmissions:
+    if not globals.cars:
         text = "Ничего не найдено!"
     else:
-        for transmission in transmissions:
-            reply_markup.add(InlineKeyboardButton(
-                text=transmission, switch_inline_query_current_chat=transmission))
-        text = offer_page.find("select_transmission").text
+        transmissions = await get_transmission(globals.cars)
+        if not transmissions:
+            text = "Ничего не найдено!"
+        else:
+            for transmission in transmissions:
+                reply_markup.add(InlineKeyboardButton(
+                    text=transmission, switch_inline_query_current_chat=transmission))
+            text = offer_page.find("select_transmission").text
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(text, reply_markup=reply_markup)
@@ -312,15 +315,19 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MaxPower = message.text
     await state.finish()
     globals.cars = await find_car()
-    if not transmissions or not globals.cars:
+    reply_markup = InlineKeyboardMarkup()
+    if not globals.cars:
         text = "Ничего не найдено!"
     else:
         transmissions = await get_transmission(globals.cars)
-        reply_markup = InlineKeyboardMarkup()
-        for transmission in transmissions:
-            reply_markup.add(InlineKeyboardButton(
-                text=transmission, switch_inline_query_current_chat=transmission))
-        text = offer_page.find("select_transmission").text
+        if not transmissions:
+            text = "Ничего не найдено!"
+        else:
+            reply_markup = InlineKeyboardMarkup()
+            for transmission in transmissions:
+                reply_markup.add(InlineKeyboardButton(
+                    text=transmission, switch_inline_query_current_chat=transmission))
+            text = offer_page.find("select_transmission").text
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(text, reply_markup=reply_markup)

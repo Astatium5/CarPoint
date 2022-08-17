@@ -446,7 +446,8 @@
 	        <div class="form">
 		      <h2>Есть вопрос?</h2>
 			  <span class="subtitle">Задайте его через форму ниже, мы ответим вам в ближайшее время</span>
-			  <form action="" method="post" class="needs-validation" novalidate>
+			  <form action="send_question" method="post" class="needs-validation" novalidate>
+				{% csrf_token %}
                 <input id="name" type="text" name="name" placeholder="Ваше имя" required>
 				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
 				<input id="tel" type="tel" name="tel" placeholder="+7 (- - -) - - -   - -   - -   " required>

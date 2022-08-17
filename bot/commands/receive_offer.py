@@ -16,6 +16,7 @@ from states.states import *
 from log.logger import logger
 from utils.converter import *
 from keyboard.keyboard import *
+from . import start
 
 MAX_SHOW: int = 20
 
@@ -271,6 +272,8 @@ async def get_min_volume(message: Message) -> Union[Message, None]:
 async def get_max_volume(message: Message, state: FSMContext) -> Message:
     if not is_float(message.text):
         return await message.answer("Некорректный формат ввода!")
+    elif float(message.text) < float(globals.offer_metadata.MinVolume):
+        return await message.answer("Значение не должно быть меньше предыдущего!")
     globals.offer_metadata.MaxVolume = message.text
 
     await state.finish()
@@ -312,6 +315,8 @@ async def get_min_power(message: Message) -> Union[Message, None]:
 async def get_max_power(message: Message, state: FSMContext) -> Message:
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
+    elif int(message.text) < int(globals.offer_metadata.MinPower):
+        return await message.answer("Значение не должно быть меньше предыдущего!")
     globals.offer_metadata.MaxPower = message.text
     await state.finish()
     globals.cars = await find_car()

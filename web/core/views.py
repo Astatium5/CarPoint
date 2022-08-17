@@ -341,7 +341,6 @@ def p_find_car(
             else:
                 cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
                                         transmission=transmission, set__model__body=body, engine__volume__lte=volume).all()
-            cars = [car for car in cars if car.set.model.body == body]
         elif power:
             if max_p == 0:
                 cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
@@ -349,7 +348,6 @@ def p_find_car(
             else:
                 cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
                                         transmission=transmission, set__model__body=body, engine__power__lte=power).all()
-            cars = [car for car in cars if car.set.model.body == body]
         else:
             if max_p == 0:
                 cars = Car.objects.filter(mark=mark, price__gte=min_p, engine__type_fuel=type_fuel,
@@ -359,16 +357,22 @@ def p_find_car(
                 cars = Car.objects.filter(mark=mark, price__range=[min_p, max_p], engine__type_fuel=type_fuel,
                                         transmission=transmission, set__model__body=body, engine__power__lte=power,
                                         engine__volume__gte=volume).all()
-            cars = [car for car in cars if car.set.model.body == body]
-        cars = [car.to_dict() for car in cars]
         if cars:
+            cars = [car.to_dict() for car in cars if car.set.model.body == body]
             dct_cars = {}
+            price_arr = []
             for car in cars:
                 pattern = {"price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
                     "engine_power": car["engine_power"], "engine_type_fuel": car["engine_type_fuel"],
-                    "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"]}
+                    "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"],
+                    "special": car["special"]}
                 if not car["title"] in dct_cars:
                     dct_cars[car["title"]] = [pattern]
+                    price_arr.append(car["price"])
                 else:
-                    dct_cars[car["title"]].append(pattern)
-        return dct_cars
+                    if not car["price"] in price_arr:
+                        dct_cars[car["title"]].append(pattern)
+                        price_arr.append(car["price"])
+            return dct_cars
+        else:
+            return []

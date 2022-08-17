@@ -269,11 +269,11 @@ class Web:
         cars = p_find_car(pricerange, mark, transmission, body, type_fuel, volume, power)
 
         if cars:
-            main_length = sum([len(v) for v in cars.values()])
-            cars_values = list(cars.values())
             is_search = True
-            image = cars_values[0][0]["image"]
-            min_price = min([car["price"] for car in cars_values[0]])
+            cars_values = list(cars.values())
+            main_length = sum([len(v["pattern"]) for v in cars.values()])
+            image = cars_values[0]["pattern"][0]["image"]
+            min_price = min([car["pattern"][0]["price"] for car in cars_values])
 
         return render(request, "index.html", dict(
                 is_search=is_search, cars=cars, image=image, min_price=min_price,
@@ -367,12 +367,19 @@ def p_find_car(
                     "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"],
                     "special": car["special"]}
                 if not car["title"] in dct_cars:
-                    dct_cars[car["title"]] = [pattern]
+                    dct_cars[car["title"]] = {"pattern": [pattern]}
                     price_arr.append(car["price"])
                 else:
                     if not car["price"] in price_arr:
-                        dct_cars[car["title"]].append(pattern)
+                        dct_cars[car["title"]]["pattern"].append(pattern)
                         price_arr.append(car["price"])
+            dct_cars = set_min_price_value(dct_cars)
             return dct_cars
         else:
             return []
+
+def set_min_price_value(dct_cars):
+    for k, v in dct_cars.items():
+        min_price = min([k["price"] for k in v["pattern"]])
+        dct_cars[k]["min_price"] = min_price
+    return dct_cars

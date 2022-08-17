@@ -301,11 +301,11 @@
 				 <div class="item-wrap-open">
 					<h5>{{k|safe}}</h5>
 					<span class="count">&nbsp; {{v|length}} вариантов</span>
-					<!--<span class="red-color">от 2 134 786 ₽</span>-->
+					<span class="red-color">от {{v.min_price|add:"0"}} ₽</span>
 				 </div>
 			   </div>
 			  <div class="item-auto-hide">
-				{% for w_car in v %}
+				{% for w_car in v.pattern %}
 				 <div class="item-wrap">
 					<img src="{{w_car.image}}" alt="Car"  width="170" height="100">
 					<div class="item-auto-info">

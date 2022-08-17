@@ -10,7 +10,6 @@
 		<meta name="keywords" content="">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
@@ -23,13 +22,6 @@
     <!-- Bootstrap JS -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function(){
-		   $('.item-auto').click(function () {
-			   $(this).toggleClass('item-auto-plus');
-			   });
-		   });
-	</script>
 
   </head>
   <body>
@@ -50,7 +42,7 @@
 				<a href="#contact">Контакты</a>
 			  </div>
 			</div>
-			<div class="col-lg-2"><div class="bot"><a href="/"><img src="{% static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div></div>
+			<div class="col-lg-2"><div class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{% static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div></div>
 			<div class="col-lg-2">
 			   <div class="soc-icon">
 			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
@@ -62,7 +54,7 @@
 		    <div class="col-lg-7">
 			   <h1>Автомобили от производителя</br>с доставкой и <span class="red">экономией</br>до 20%</span> от цены салона</h1>
 			   <span class="subtitle">OneTwoCar - первый мультибрендовый официальный online дилер в России с</br> честными ценами от производителя</span>
-               <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Подобрать автомобиль</button>
+               <a class="button" href="#podbor">Подобрать автомобиль</a>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -191,7 +183,7 @@
 	        <form class="needs-validation" novalidate>
 				<div class="fields-bl">
 				  <label>Ценовой диапазон, ₽<span class="red-color">*</span></label>
-                   <select class="form-select" name="pricerange" list="pricerange" required>
+                   <select id="sb-pricerange" class="form-select" name="pricerange" list="pricerange" onchange="get_marks();" required>
                       <datalist id="pricerange">
     					<option value="">Выберите из списка</option>
     					<option value="1">500 000₽ - 2 000 000₽</option>
@@ -206,12 +198,12 @@
 				</div>
 				<div class="fields-bl">
 				  <label>Марка<span class="red-color">*</span></label>
-				  <select class="form-select" name="mark" list="mark" required>
+				  <select id="sb-mark" class="form-select" name="mark" list="mark" onchange="get_cars();" required>
                       <datalist id="mark">
 						<option value="">Выберите из списка</option>
-						{% for mark in marks %}
+						<!--{% for mark in marks %}
 							<option value="{{mark.title}}">{{mark.title}}</option>
-						{% endfor %}
+						{% endfor %}-->
                        </datalist>
 		            </select>
 				   <div class="invalid-feedback">
@@ -220,39 +212,39 @@
 				</div>
 				<div class="fields-bl">
 				  <label>КПП</label>
-				  <select class="form-select" name="transmission" list="transmission">
+				  <select id="sb-transmission" class="form-select" name="transmission" list="transmission">
+					  <option value="">Выберите из списка</option>
                       <datalist id="transmission">
-    					<option value="">Выберите из списка</option>
     					<option value="1">Автомат</option>
     					<option value="2">Механика</option>
-                       </datalist>
+                       </datalist>-->
 		            </select>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип кузова</label>
-				  <select class="form-select" name="body" list="body">
+				  <select id="sb-body" class="form-select" name="body" list="body" onchange="get_cars_by_body();">
                       <datalist id="body">
 						<option value="">Выберите из списка</option>
-						{% for model in models %}
+						<!--{% for model in models %}
     						<option value="{{model}}">{{model}}</option>
-						{% endfor %}
+						{% endfor %}-->
                        </datalist>
 		            </select>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип двигателя</label>
-				  <select class="form-select" name="type_fuel" list="type_fuel">
+				  <select id="sb-type-fuel" class="form-select" name="type_fuel" list="type_fuel" onchange="get_cars_by_type_fuel();">
                       <datalist id="type_fuel">
 						<option value="">Выберите из списка</option>
-    					{% for type_fuel in type_fuels %}
+    					<!--{% for type_fuel in type_fuels %}
 							<option value="{{type_fuel}}">{{type_fuel}}</option>
-						{% endfor %}
+						{% endfor %}-->
                        </datalist>
 		            </select>
 				</div>
 				<div class="fields-bl">
 				  <label>Объем</label>
-				  <select class="form-select" name="volume" list="volume" >
+				  <select id="sb-volume" class="form-select" name="volume" list="volume" >
                       <datalist id="volume">
 						<option value="">Выберите из списка</option>
 						<option value="1">1.6</option>
@@ -262,18 +254,18 @@
 				</div>
 				<div class="fields-bl">
 				  <label>Мощность двигателя</label>
-				  <select class="form-select" name="power" list="power" >
+				  <select id="sb-power" class="form-select" name="power" list="power" >
                       <datalist id="power">
 						<option value="">Выберите из списка</option>
-						<option value="1">100кВт</option>
-						<option value="2">140кВт</option>
-						<option value="3">180кВт</option>
-						<option value="4">190кВт</option>
+						<option value="1">100</option>
+						<option value="2">140</option>
+						<option value="3">180</option>
+						<option value="4">190</option>
                        </datalist>
 		            </select>
 				</div>
 				<div class="fields-bl btn-blue">
-				  <button class="look-btn" type="submit">Смотреть 245 авто</button>
+				  <button id="search-car-btn" class="look-btn" type="submit">Смотреть авто</button>
 				</div>
 				<div class="fields-bl">
 				  <input class="clean-btn" type="reset" value="Сбросить все параметры">
@@ -292,45 +284,322 @@
 		{% else %}
 		<section class="catalog">
 			<div class="container">
-				<div class="item-auto item-auto-first">
+			 <div class="item-auto item-auto-first">
 				<div class="item-wrap">
 					<img src="{{image}}" alt="Car" width="250" height="150">
 					<div class="item-auto-info">
-						<h5>{{mark}}</h5>
-							<span class="count">{{cars|length}}</span>
-							<span>автомобилей от</span>
-							<span class="red-color">от {{min_price|floatformat:"0"}} ₽</span>
+					   <h5>HAVAL Jolion</h5>
+						   <span class="count">245</span>
+						   <span>автомобилей</span>
+						   <span class="red-color">от 2 134 786 ₽</span>
 					</div>
-					</div>
-				</div>
-				<!--<div class="item-auto">
-				<div class="item-auto-open">
-					<div class="item-wrap-open">
+				   </div>
+			 </div>
+			 
+			 
+			 
+	 <div class="item-auto">
+			   <div class="item-auto-open">
+				 <div class="item-wrap-open">
 					<h5>HAVAL Jolion</h5>
 					<span class="count">12 вариантов</span>
 					<span class="red-color">от 2 134 786 ₽</span>
-					</div>
-				</div>
-				<div class="item-auto-hide">
-					<div class="item-wrap">
-					<img src="{% static 'img/car-list.svg' %}" alt="Car">
+				 </div>
+			   </div>
+			  <div class="item-auto-hide">
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
 					<div class="item-auto-info">
-						<strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
-						<!--<div class="variant-color"><span>Выбрать цвет:</span>
-							<img src="{% static 'img/color1.svg' %}" alt="white">
-							<img src="{% static 'img/color2.svg' %}" alt="white">
-							<img src="{% static 'img/color3.svg' %}" alt="white">
-							<img src="{% static 'img/color4.svg' %}" alt="white">
-						</div>-->
-					<!--</div>
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
 					<div class="item-auto-price">
 						<span>2 134 786 ₽ </span>
-						<a hraf="/">Купить</a>
+						<a href="/" target="_blank">Купить</a>
 					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
 					</div>
-				</div>-->
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+			  </div>
+			 </div>	
+			 <div class="item-auto">
+			   <div class="item-auto-open">
+				 <div class="item-wrap-open">
+					<h5>HAVAL Jolion</h5>
+					<span class="count">12 вариантов</span>
+					<span class="red-color">от 2 134 786 ₽</span>
+				 </div>
+			   </div>
+			  <div class="item-auto-hide">
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+			  </div>
+			 </div>
+			 <div class="item-auto">
+			   <div class="item-auto-open">
+				 <div class="item-wrap-open">
+					<h5>HAVAL Jolion</h5>
+					<span class="count">12 вариантов</span>
+					<span class="red-color">от 2 134 786 ₽</span>
+				 </div>
+			   </div>
+			  <div class="item-auto-hide">
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+			  </div>
+			 </div>
+			 <div class="item-auto">
+			   <div class="item-auto-open">
+				 <div class="item-wrap-open">
+					<h5>HAVAL Jolion</h5>
+					<span class="count">12 вариантов</span>
+					<span class="red-color">от 2 134 786 ₽</span>
+				 </div>
+			   </div>
+			  <div class="item-auto-hide">
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+				 <div class="item-wrap">
+					<img src="./img/car-list.svg" alt="Car">
+					<div class="item-auto-info">
+					   <strong>Elite 1.5</strong> <span>4x2, 2022 г.в. Универсал, АКПП, 5 дверей, бензин, 1.5, передний 2WD</span>
+					   <div class="variant-color"><span>Выбрать цвет:</span>
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+					 </div>
+					</div>
+					<div class="item-auto-price">
+						<span>2 134 786 ₽ </span>
+						<a href="/" target="_blank">Купить</a>
+					</div>
+				 </div>
+			  </div>
+			 </div>
 			</div>
-			</section>
+		 </section>
 		{% endif %}
 	{% endif %}
 	{% if new_cars %}
@@ -516,7 +785,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'owl-carousel/jquery.min.js' %}"></script>
+	<!--<script src="{% static 'owl-carousel/jquery.min.js' %}"></script>-->
     <script src="{% static 'owl-carousel/owl.carousel.js' %}"></script>
 	<script>
             $(document).ready(function() {
@@ -555,6 +824,8 @@
           </script>
 	
 	<script src="{% static 'js/maskinput.js' %}"></script>
+	<script src="{% static 'js/search.js' %}"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script type="text/javascript">
    jQuery(function(jQuery){
    jQuery("#tel").mask("+7(999) 999-9999");
@@ -707,12 +978,22 @@ document.addEventListener("click", closeAllSelect);
 	});
 </script>
 <script>
- $(document).ready(function(){
-	$('select').click(function () {
-		$(this).toggleClass('form-select-open');
-		});
-	});
+$("#obem").change(function(){
+    if($(this).val() == "0") {
+	   $('#mochnost').removeClass('disabled');
+    } else {
+       $('#mochnost').addClass('disabled');
+    }
+});
+$("#mochnost").change(function(){
+    if($(this).val() == "0") {
+	   $('#obem').removeClass('disabled');
+    } else {
+       $('#obem').addClass('disabled');
+    }
+});
 </script>
+
 <script>
  $(document).ready(function(){
 	$('.burger').click(function () {

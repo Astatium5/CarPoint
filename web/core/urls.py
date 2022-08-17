@@ -14,7 +14,6 @@ urlpatterns = [
     # Main urls.
     path("", Web.index, name="index"),
     path("oferta", Web.oferta, name="oferta"),
-    path("find_car", Web.find_car, name="find_car"),
 
     # ===API urls===
     path("api/create_user/<int:user_id>/<str:first_name>/<str:username>",
@@ -27,7 +26,8 @@ urlpatterns = [
          API.CheckPhoneView.as_view(), name="check_phone"),
     path("api/set_phone/<int:user_id>/<int:phone>",
          API.SetPhoneView.as_view(), name="set_phone"),
-    path("api/get_all_marks/<int:min_price>/<int:max_price>", API.GetAllMarksView.as_view(), name="get_all_marks"),
+    path("api/get_all_marks/<int:min_price>/<int:max_price>",
+         API.GetAllMarksView.as_view(), name="get_all_marks"),
     path("api/get_all_bodies/<str:mark>/<int:min_price>/<int:max_price>",
          API.GetAllBodiesView.as_view(), name="get_all_bodies"),
     path("api/get_all_fuel_types/<str:mark>/<str:body>/<int:min_price>/<int:max_price>",
@@ -37,5 +37,13 @@ urlpatterns = [
     path("api/get_car_info/<int:id>",
          API.GetCarInfoView.as_view(), name="get_car_info"),
     path("api/create_entry/<int:user_id>/<str:username>/<int:car_id>/<str:email>/<str:name>/<str:address>/<str:phone>",
-         API.CreateEntryView.as_view(), name="create_entry")
+         API.CreateEntryView.as_view(), name="create_entry"),
+
+    # ===Counts===
+    path("get_cars/<int:min_price>/<int:max_price>/<str:mark>",
+         Web.get_cars, name="get_cars"),
+    path("get_cars_by_body/<int:min_price>/<int:max_price>/<str:mark>/<str:body>",
+         Web.get_cars_by_body, name="get_cars_by_body"),
+    path("get_cars_by_type_fuel/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>",
+         Web.get_cars_by_type_fuel, name="get_cars_by_type_fuel")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

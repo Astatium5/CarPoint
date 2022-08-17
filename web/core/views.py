@@ -256,6 +256,7 @@ class Web:
     def index(request) -> HttpResponse:
         is_search = False
         image = None
+        main_length = 0
         min_price = 0
         cars = None
         pricerange = request.GET.get("pricerange")
@@ -265,17 +266,18 @@ class Web:
         type_fuel = request.GET.get("type_fuel")
         volume = request.GET.get("volume")
         power = request.GET.get("power")
-        """
         cars = p_find_car(pricerange, mark, transmission, body, type_fuel, volume, power)
 
         if cars:
+            main_length = sum([len(v) for v in cars.values()])
             cars_values = list(cars.values())
             is_search = True
             image = cars_values[0][0]["image"]
             min_price = min([car["price"] for car in cars_values[0]])
-        """
 
-        return render(request, "index.html", dict(is_search=is_search, cars=cars, image=image, min_price=min_price))
+        return render(request, "index.html", dict(
+                is_search=is_search, cars=cars, image=image, min_price=min_price,
+                main_length=main_length, mark=mark))
 
     def oferta(request) -> HttpResponse:
         return render(request, "oferta.html")
@@ -364,12 +366,9 @@ def p_find_car(
             for car in cars:
                 pattern = {"price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
                     "engine_power": car["engine_power"], "engine_type_fuel": car["engine_type_fuel"],
-                    "wd": car["wd"], "transmission": car["transmission"], "body": car["body"]}
+                    "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"]}
                 if not car["title"] in dct_cars:
                     dct_cars[car["title"]] = [pattern]
-                    # dct_cars[car["title"]]["count"] = 1
                 else:
                     dct_cars[car["title"]].append(pattern)
-                    # dct_cars[car["title"]]["count"] += 1
-        print(dct_cars)
         return dct_cars

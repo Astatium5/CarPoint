@@ -1,8 +1,10 @@
+import os
 import json
 from collections import Counter
 
+import requests
 from loguru import logger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models.query import QuerySet
 from rest_framework.generics import ListAPIView
 from django.http import HttpRequest, HttpResponse
@@ -319,6 +321,13 @@ class Web:
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
+    def send_question(request):
+        name = request.POST.get("name")
+        tel = request.POST.get("tel")
+        text = request.POST.get("text")
+        response = sendQuestion(name, tel, text)
+        return redirect("/")
+
 
 def p_find_car(
     pricerange: str, mark: str, transmission: str,
@@ -383,3 +392,17 @@ def set_min_price_value(dct_cars):
         min_price = min([k["price"] for k in v["pattern"]])
         dct_cars[k]["min_price"] = min_price
     return dct_cars
+
+def sendQuestion(name, tel, text):
+    text = (
+        F"<b>Новый вопрос!</b>\n"
+        F"Имя: {name}\n"
+        F"Телефон: {tel}\n"
+        F"Вопрос: {text}"
+    )
+    bot_token = os.getenv("BOT_TOKEN")
+    chat_id = os.getenv("CHAT_ID")
+    url = F"https://api.telegram.org/bot{bot_token}/sendMessage?parse_mode=HTML"
+    data = {'chat_id' : chat_id, 'text': text}
+    response = requests.post(url, data=data)
+    return response

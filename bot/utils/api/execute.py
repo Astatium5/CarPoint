@@ -1,5 +1,5 @@
 import requests
-from requests.exceptions import ReadTimeout
+from requests.exceptions import ReadTimeout, HTTPError
 
 from log.logger import logger
 from config.config import Config
@@ -23,6 +23,10 @@ def make_request(path: str, headers=None, timeout=7, **kwargs) -> dict:
         if response.status_code == 200:
             return serialize_content(response.content)
         else:
-            return logger.error(response.content)
+            response.raise_for_status()
+    except HTTPError as e:
+        return logger.error(e)
     except ReadTimeout as e:
+        return logger.error(e)
+    except AssertionError as e:
         return logger.error(e)

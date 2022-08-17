@@ -14,6 +14,7 @@ urlpatterns = [
     # Main urls.
     path("", Web.index, name="index"),
     path("oferta", Web.oferta, name="oferta"),
+    path("send_question", Web.send_question, name="send_question"),
 
     # ===API urls===
     path("api/create_user/<int:user_id>/<str:first_name>/<str:username>",

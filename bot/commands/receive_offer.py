@@ -333,6 +333,8 @@ async def inline_echo(query: InlineQuery) -> Any:
     items: list = []
     price_arr: dict = []
     mark_ids: list = []
+    if not globals.response:
+        return not_found(query)
     is_any = globals.response.get("is_any")
     for car in globals.cars:
         if car.get("transmission") == transmission:
@@ -346,16 +348,15 @@ async def inline_echo(query: InlineQuery) -> Any:
             type_fuel: Any = car.get("engine_type_fuel")
             wd: Any = car.get("wd")
             special = car.get("special")
-            print(special)
             item: InlineQueryResultArticle = InlineQueryResultArticle(id=id, title=title,
-                                                                      input_message_content=InputTextMessageContent(
-                                                                          title),
-                                                                      description=(F"Цена: {int(price)}₽\t"
-                                                                                   F"Объем: {engine_volume}\t"
-                                                                                   F"Мощность: {engine_power}\t"
-                                                                                   F"Тип: {type_fuel},\t"
-                                                                                   F"{wd}"),
-                                                                      hide_url=True, thumb_url=image)
+                                                                    input_message_content=InputTextMessageContent(
+                                                                        title),
+                                                                    description=(F"Цена: {int(price)}₽\t"
+                                                                                F"Объем: {engine_volume}\t"
+                                                                                F"Мощность: {engine_power}\t"
+                                                                                F"Тип: {type_fuel},\t"
+                                                                                F"{wd}"),
+                                                                    hide_url=True, thumb_url=image)
             if is_any:
                 if not price in price_arr and not mark_id in mark_ids:
                     mark_ids.append(mark_id)

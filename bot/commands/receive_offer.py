@@ -312,11 +312,11 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MaxPower = message.text
     await state.finish()
     globals.cars = await find_car()
-    transmissions = await get_transmission(globals.cars)
-    reply_markup = InlineKeyboardMarkup()
-    if not transmissions:
+    if not transmissions or not globals.cars:
         text = "Ничего не найдено!"
     else:
+        transmissions = await get_transmission(globals.cars)
+        reply_markup = InlineKeyboardMarkup()
         for transmission in transmissions:
             reply_markup.add(InlineKeyboardButton(
                 text=transmission, switch_inline_query_current_chat=transmission))
@@ -387,8 +387,11 @@ async def find_car() -> Union[Any, None]:
     _ = globals.offer_metadata
     globals.response: dict = api_requests.find_car(
         body=_.Body, fuel_type=_.FuelType, **globals.offer_metadata.to_header())
-    cars: Union[Any, None] = globals.response.get("cars")
-    return cars
+    if not globals.response:
+        return None
+    else:
+        cars: Union[Any, None] = globals.response.get("cars")
+        return cars
 
 
 async def get_transmission(cars: list) -> list:

@@ -78,6 +78,7 @@
 				<input id="city" type="text" name="city" placeholder="Город">
 				<input id="tel1" type="tel1" name="tel1" placeholder="+7 (- - -) - - -   - -   - -   ">
                 <input id="email" type="email" name="email" placeholder="E-mail">
+				<input id="address" type="text" name="address" placeholder="Адрес доставки">
 				<button id="leave-request-btn" type="button" class="button">Купить</button>
 				<button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>
         </form>
@@ -211,16 +212,6 @@
                    </div>
 				</div>
 				<div class="fields-bl">
-				  <label>КПП</label>
-				  <select id="sb-transmission" class="form-select" name="transmission" list="transmission">
-					  <option value="">Выберите из списка</option>
-                      <datalist id="transmission">
-    					<option value="1">Автомат</option>
-    					<option value="2">Механика</option>
-                       </datalist>-->
-		            </select>
-				</div>
-				<div class="fields-bl">
 				  <label>Тип кузова</label>
 				  <select id="sb-body" class="form-select" name="body" list="body" onchange="get_cars_by_body();">
                       <datalist id="body">
@@ -243,6 +234,16 @@
 		            </select>
 				</div>
 				<div class="fields-bl">
+					<label>КПП</label>
+					<select id="sb-transmission" class="form-select" name="transmission" list="transmission">
+						<option value="">Выберите из списка</option>
+						<datalist id="transmission">
+						  <option value="1">Автомат</option>
+						  <option value="2">Механика</option>
+						 </datalist>-->
+					  </select>
+				  </div>
+				<div class="fields-bl">
 				  <label>Объем</label>
 				  <select id="sb-volume" class="form-select" name="volume" list="volume" >
                       <datalist id="volume">
@@ -252,7 +253,7 @@
                        </datalist>
 		            </select>
 				</div>
-				<div class="fields-bl">
+				<!--<div class="fields-bl">
 				  <label>Мощность двигателя</label>
 				  <select id="sb-power" class="form-select" name="power" list="power" >
                       <datalist id="power">
@@ -263,7 +264,7 @@
 						<option value="4">190</option>
                        </datalist>
 		            </select>
-				</div>
+				</div>-->
 				<div class="fields-bl btn-blue">
 				  <button id="search-car-btn" class="look-btn" type="submit">Смотреть авто</button>
 				</div>
@@ -310,7 +311,7 @@
 					<img src="{{w_car.image}}" alt="Car"  width="170" height="100">
 					<div class="item-auto-info">
 					   <strong>{{w_car.set_title}}</strong>
-					   <span>{{w_car.body}}, {{w_car.transmission}}, {{w_car.engine_type_fuel}}, {{w_car.engine_volume}}, {{w_car.wd}}, {{w_car.special}}</span>
+					   <span>{{w_car.body}}, {{w_car.transmission}}, {{w_car.engine_type_fuel}}, {{w_car.engine_volume}}, {{w_car.engine_power}}, {{w_car.wd}}, {{w_car.special}}</span>
 					   <!--<div class="variant-color"><span>Выбрать цвет:</span>
 					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">

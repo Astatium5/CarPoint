@@ -328,6 +328,15 @@ class Web:
         response = sendQuestion(name, tel, text)
         return redirect("/")
 
+    def leave_request(request):
+        car_id = request.POST.get("car_id")
+        name = request.POST.get("name")
+        city = request.POST.get("city")
+        tel = request.POST.get("tel")
+        email = request.POST.get("email")
+        response = leaveRequest(car_id, name, city, tel, email)
+        return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+
 
 def p_find_car(
     pricerange: str, mark: str, transmission: str,
@@ -371,7 +380,7 @@ def p_find_car(
             dct_cars = {}
             price_arr = []
             for car in cars:
-                pattern = {"price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
+                pattern = {"id": car["id"], "price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
                     "engine_power": car["engine_power"], "engine_type_fuel": car["engine_type_fuel"],
                     "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"],
                     "special": car["special"]}
@@ -399,6 +408,24 @@ def sendQuestion(name, tel, text):
         F"Имя: {name}\n"
         F"Телефон: {tel}\n"
         F"Вопрос: {text}"
+    )
+    bot_token = os.getenv("BOT_TOKEN")
+    chat_id = os.getenv("CHAT_ID")
+    url = F"https://api.telegram.org/bot{bot_token}/sendMessage?parse_mode=HTML"
+    data = {'chat_id' : chat_id, 'text': text}
+    response = requests.post(url, data=data)
+    return response
+
+def leaveRequest(car_id, name, city, tel, email):
+    host = os.getenv("HOST")
+    text = (
+        F"<b>Новая заявка!</b>\n"
+        F"ID автомобиля: <code>{car_id}</code>\n"
+        F"Эл. почта: <code>{email}</code>\n"
+        F"Полное имя: <code>{name}</code>\n"
+        F"Город: <code>{city}</code>\n"
+        F"Номер телефона: <code>{tel}</code>\n"
+        F"Подробная информация об автомобиле: <code>{host}/admin/core/car/{car_id}/change</code>"
     )
     bot_token = os.getenv("BOT_TOKEN")
     chat_id = os.getenv("CHAT_ID")

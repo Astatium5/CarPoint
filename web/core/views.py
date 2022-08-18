@@ -113,13 +113,15 @@ class API:
             else:
                 mark = None
             if max_price == 0:
+                min_price = int(min_price) - 500000
+                max_price = int(min_price) + 300000
                 if not mark:
-                    car_filter = Car.objects.filter(price__lte=min_price)
+                    car_filter = Car.objects.filter(price__range=[min_price, max_price])
                 else:
                     car_filter = Car.objects.filter(mark=mark, price__lte=min_price)
             else:
                 if not mark:
-                    car_filter = Car.objects.filter(price__lte=min_price)
+                    car_filter = Car.objects.filter(price__range=[min_price, max_price])
                 else:
                     car_filter = Car.objects.filter(mark=mark, price__range=[min_price, max_price])
 

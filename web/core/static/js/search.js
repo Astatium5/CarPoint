@@ -85,14 +85,14 @@ function get_cars(){
                     var bodies = [];
                     var type_fuel = [];
                     var engine_volume = [];
-                    var engine_power = [];
+                    // var engine_power = [];
                     var transmission = [];
 
                     for (i = 0; i < cars.length; i++){
                         bodies.push(cars[i]['body']);
                         type_fuel.push(cars[i]['engine_type_fuel']);
                         engine_volume.push(cars[i]['engine_volume']);
-                        engine_power.push(cars[i]['engine_power']);
+                        // engine_power.push(cars[i]['engine_power']);
                         transmission.push(cars[i]['transmission']);
                     }
 
@@ -100,11 +100,11 @@ function get_cars(){
                     bodies = bodies.filter(uniqueArray);
                     type_fuel = type_fuel.filter(uniqueArray);
                     engine_volume = engine_volume.filter(uniqueArray);
-                    engine_power = engine_power.filter(uniqueArray);
+                    // engine_power = engine_power.filter(uniqueArray);
                     transmission = transmission.filter(uniqueArray);
                     type_fuel.sort()
                     engine_volume.sort()
-                    engine_power.sort()
+                    // engine_power.sort()
 
                     // Remove old options.
                     var i, L = BodyList.options.length - 1;
@@ -122,10 +122,10 @@ function get_cars(){
                         EngineVolumeList.remove(i);
                     }
 
-                    var i, L = EnginePowerList.options.length - 1;
+                    /* var i, L = EnginePowerList.options.length - 1;
                     for(i = L; i >= 1; i--) {
                         EnginePowerList.remove(i);
-                    }
+                    } */
 
                     var i, L = TransmissionList.options.length - 1;
                     for(i = L; i >= 1; i--) {
@@ -154,12 +154,12 @@ function get_cars(){
                         EngineVolumeList.appendChild(opt);
                     }
 
-                    for (var i = 0; i < engine_power.length; i++){
+                    /* for (var i = 0; i < engine_power.length; i++){
                         var opt = document.createElement('option');
                         opt.value = engine_power[i];
                         opt.innerHTML = engine_power[i];
                         EnginePowerList.appendChild(opt);
-                    }
+                    } */
 
                     for (var i = 0; i < transmission.length; i++){
                         var opt = document.createElement('option');
@@ -216,24 +216,24 @@ function get_cars_by_body(){
 
                     var type_fuel = [];
                     var engine_volume = [];
-                    var engine_power = [];
+                    // var engine_power = [];
                     var transmission = [];
 
                     for (i = 0; i < cars.length; i++){
                         type_fuel.push(cars[i]['engine_type_fuel']);
                         engine_volume.push(cars[i]['engine_volume']);
-                        engine_power.push(cars[i]['engine_power']);
+                        // engine_power.push(cars[i]['engine_power']);
                         transmission.push(cars[i]['transmission']);
                     }
 
                     // Filter unique values.
                     type_fuel = type_fuel.filter(uniqueArray);
                     engine_volume = engine_volume.filter(uniqueArray);
-                    engine_power = engine_power.filter(uniqueArray);
+                    // engine_power = engine_power.filter(uniqueArray);
                     transmission = transmission.filter(uniqueArray);
                     type_fuel.sort()
                     engine_volume.sort()
-                    engine_power.sort()
+                    // engine_power.sort()
 
                     // Remove old options.
 
@@ -247,10 +247,10 @@ function get_cars_by_body(){
                         EngineVolumeList.remove(i);
                     }
 
-                    var i, L = EnginePowerList.options.length - 1;
+                    /* var i, L = EnginePowerList.options.length - 1;
                     for(i = L; i >= 1; i--) {
                         EnginePowerList.remove(i);
-                    }
+                    } */
 
                     var i, L = TransmissionList.options.length - 1;
                     for(i = L; i >= 1; i--) {
@@ -273,12 +273,12 @@ function get_cars_by_body(){
                         EngineVolumeList.appendChild(opt);
                     }
 
-                    for (var i = 0; i < engine_power.length; i++){
+                    /* for (var i = 0; i < engine_power.length; i++){
                         var opt = document.createElement('option');
                         opt.value = engine_power[i];
                         opt.innerHTML = engine_power[i];
                         EnginePowerList.appendChild(opt);
-                    }
+                    } */
 
                     for (var i = 0; i < transmission.length; i++){
                         var opt = document.createElement('option');
@@ -335,21 +335,21 @@ function get_cars_by_type_fuel(){
                     SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
 
                     var engine_volume = [];
-                    var engine_power = [];
+                    // var engine_power = [];
                     var transmission = [];
 
                     for (i = 0; i < cars.length; i++){
                         engine_volume.push(cars[i]['engine_volume']);
-                        engine_power.push(cars[i]['engine_power']);
+                        // engine_power.push(cars[i]['engine_power']);
                         transmission.push(cars[i]['transmission']);
                     }
 
                     // Filter unique values.
                     engine_volume = engine_volume.filter(uniqueArray);
-                    engine_power = engine_power.filter(uniqueArray);
+                    // engine_power = engine_power.filter(uniqueArray);
                     transmission = transmission.filter(uniqueArray);
                     engine_volume.sort()
-                    engine_power.sort()
+                    // engine_power.sort()
 
                     // Remove old options.
                     var i, L = EngineVolumeList.options.length - 1;
@@ -357,10 +357,10 @@ function get_cars_by_type_fuel(){
                         EngineVolumeList.remove(i);
                     }
 
-                    var i, L = EnginePowerList.options.length - 1;
+                    /* var i, L = EnginePowerList.options.length - 1;
                     for(i = L; i >= 1; i--) {
                         EnginePowerList.remove(i);
-                    }
+                    } */
 
                     var i, L = TransmissionList.options.length - 1;
                     for(i = L; i >= 1; i--) {
@@ -375,12 +375,12 @@ function get_cars_by_type_fuel(){
                         EngineVolumeList.appendChild(opt);
                     }
 
-                    for (var i = 0; i < engine_power.length; i++){
+                    /* for (var i = 0; i < engine_power.length; i++){
                         var opt = document.createElement('option');
                         opt.value = engine_power[i];
                         opt.innerHTML = engine_power[i];
                         EnginePowerList.appendChild(opt);
-                    }
+                    } */
 
                     for (var i = 0; i < transmission.length; i++){
                         var opt = document.createElement('option');

@@ -142,6 +142,8 @@ async def get_min_price(message: Message) -> Union[Message, None]:
 async def get_max_price(message: Message, state: FSMContext) -> Message:
     if not is_int(message.text):
         return await message.answer("Некорректный формат ввода!")
+    elif int(message.text) < int(globals.offer_metadata.MinPrice):
+        return await message.answer("Значение не должно быть меньше предыдущего!")
     await state.finish()
     globals.offer_metadata.MaxPrice = message.text
     response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)

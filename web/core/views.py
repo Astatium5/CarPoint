@@ -334,7 +334,8 @@ class Web:
         city = request.POST.get("city")
         tel = request.POST.get("tel")
         email = request.POST.get("email")
-        response = leaveRequest(car_id, name, city, tel, email)
+        address = request.POST.get("address")
+        response = leaveRequest(car_id, name, city, tel, email, address)
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
@@ -416,7 +417,7 @@ def sendQuestion(name, tel, text):
     response = requests.post(url, data=data)
     return response
 
-def leaveRequest(car_id, name, city, tel, email):
+def leaveRequest(car_id, name, city, tel, email, address):
     host = os.getenv("HOST")
     text = (
         F"<b>Новая заявка!</b>\n"
@@ -425,6 +426,7 @@ def leaveRequest(car_id, name, city, tel, email):
         F"Полное имя: <code>{name}</code>\n"
         F"Город: <code>{city}</code>\n"
         F"Номер телефона: <code>{tel}</code>\n"
+        F"Адрес: <code>{address}</code>\n"
         F"Подробная информация об автомобиле: <code>{host}/admin/core/car/{car_id}/change</code>"
     )
     bot_token = os.getenv("BOT_TOKEN")

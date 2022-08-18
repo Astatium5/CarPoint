@@ -10,7 +10,8 @@ function leaveRequest(car_id){
     var city = $("#city").val();
     var tel = $("#tel1").val();
     var email = $("#email").val();
-    if (!name || !city || !tel || !email){
+    var address = $("#address").val();
+    if (!name || !city || !tel || !email || !address){
         return alert("Нужно заполнить все поля!");
     }
     var data = new FormData(); // Init new FormData object.
@@ -19,6 +20,7 @@ function leaveRequest(car_id){
     data.append("city", city);
     data.append("tel", tel);
     data.append("email", email);
+    data.append("address", address);
     fetch("leave_request", {
         method: "POST",
         body: data,

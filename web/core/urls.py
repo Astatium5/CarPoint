@@ -15,6 +15,7 @@ urlpatterns = [
     path("", Web.index, name="index"),
     path("oferta", Web.oferta, name="oferta"),
     path("send_question", Web.send_question, name="send_question"),
+    path("leave_request", Web.leave_request, name="leave_request"),
 
     # ===API urls===
     path("api/create_user/<int:user_id>/<str:first_name>/<str:username>",

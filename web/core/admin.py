@@ -1,9 +1,20 @@
+import copy
 from typing import Literal, Any
 
+from django.forms import model_to_dict
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from .models import *
+
+
+@admin.action(description='Клонировать')
+def clone_object(modeladmin, request, queryset):
+    obj = queryset.get()
+    car = copy.copy(obj)
+    car.pk = None
+    car.save()
+    return car
 
 
 @admin.register(BotUser)
@@ -90,6 +101,7 @@ class Car(admin.ModelAdmin):
     list_display = ["title", "price", "get_image"]
     list_filter = ("mark",)
     search_fields = ["title"]
+    actions = [clone_object]
     search_help_text = "Для поиска введите название автомобиля"
     list_per_page: int = 20
 

@@ -328,6 +328,32 @@ class Web:
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
+    def get_cars_by_transmission(request, min_price: int, max_price: int, mark: str, body: str, type_fuel: str, transmission: str):
+        mark = Mark.objects.get(title=mark)
+        if max_price == 0:
+            min_price = min_price - 500000
+            max_price = min_price + 300000
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all()
+        else:
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body, transmission__title=transmission).all()
+        cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
+        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+    
+    def get_cars_by_engine_volume(request, min_price: int, max_price: int, mark: str, body: str, type_fuel: str, transmission: str, engine_volume: str):
+        mark = Mark.objects.get(title=mark)
+        if max_price == 0:
+            min_price = min_price - 500000
+            max_price = min_price + 300000
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body, transmission__title=transmission, engine__volume__lte=engine_volume).all()
+        else:
+            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body, transmission__title=transmission, engine__volume__lte=engine_volume).all()
+        cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
+        return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
+
     def send_question(request):
         name = request.POST.get("name")
         tel = request.POST.get("tel")

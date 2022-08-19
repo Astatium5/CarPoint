@@ -260,6 +260,7 @@ class API:
 
 class Web:
     def index(request) -> HttpResponse:
+        cities = City.objects.all()
         is_search = False
         image = None
         main_length = 0
@@ -281,7 +282,7 @@ class Web:
             image = cars_values[0]["pattern"][0]["image"]
             min_price = min([car["pattern"][0]["price"] for car in cars_values])
 
-        return render(request, "index.html", dict(
+        return render(request, "index.html", dict(cities=cities,
                 is_search=is_search, cars=cars, image=image, min_price=min_price,
                 main_length=main_length, mark=mark))
 

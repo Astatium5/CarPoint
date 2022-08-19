@@ -4,6 +4,7 @@ from collections import Counter
 
 import requests
 from loguru import logger
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.db.models.query import QuerySet
 from rest_framework.generics import ListAPIView
@@ -260,6 +261,7 @@ class API:
 
 class Web:
     def index(request) -> HttpResponse:
+        CAPTCHA_PUBLIC_KEY = settings.CAPTCHA_PUBLIC_KEY
         cities = City.objects.all()
         is_search = False
         image = None
@@ -282,7 +284,7 @@ class Web:
             image = cars_values[0]["pattern"][0]["image"]
             min_price = min([car["pattern"][0]["price"] for car in cars_values])
 
-        return render(request, "index.html", dict(cities=cities,
+        return render(request, "index.html", dict(cities=cities, CAPTCHA_PUBLIC_KEY=CAPTCHA_PUBLIC_KEY,
                 is_search=is_search, cars=cars, image=image, min_price=min_price,
                 main_length=main_length, mark=mark))
 

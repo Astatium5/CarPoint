@@ -263,6 +263,8 @@ class Web:
     def index(request) -> HttpResponse:
         CAPTCHA_PUBLIC_KEY = settings.CAPTCHA_PUBLIC_KEY
         cities = City.objects.all()
+        new_cars = NewCar.objects.all()
+        questions = Question.objects.all()
         is_search = False
         image = None
         main_length = 0
@@ -285,6 +287,7 @@ class Web:
             min_price = min([car["pattern"][0]["price"] for car in cars_values])
 
         return render(request, "index.html", dict(cities=cities, CAPTCHA_PUBLIC_KEY=CAPTCHA_PUBLIC_KEY,
+                new_cars=new_cars, questions=questions,
                 is_search=is_search, cars=cars, image=image, min_price=min_price,
                 main_length=main_length, mark=mark))
 

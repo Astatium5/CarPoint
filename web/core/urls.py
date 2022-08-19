@@ -47,5 +47,9 @@ urlpatterns = [
     path("get_cars_by_body/<int:min_price>/<int:max_price>/<str:mark>/<str:body>",
          Web.get_cars_by_body, name="get_cars_by_body"),
     path("get_cars_by_type_fuel/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>",
-         Web.get_cars_by_type_fuel, name="get_cars_by_type_fuel")
+         Web.get_cars_by_type_fuel, name="get_cars_by_type_fuel"),
+    path("get_cars_by_transmission/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>/<str:transmission>",
+          Web.get_cars_by_transmission, name="get_cars_by_transmission"),
+    path("get_cars_by_engine_volume/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>/<str:transmission>/<str:engine_volume>",
+          Web.get_cars_by_engine_volume, name="get_cars_engine_volume")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

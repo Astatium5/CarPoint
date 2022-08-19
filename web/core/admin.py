@@ -117,7 +117,7 @@ class Question(admin.ModelAdmin):
     list_display = ["id", "question", "answer"]
     search_fields = ["question"]
     search_help_text = "Для поиска введите вопрос"
-    list_per_page: int = 10
+    list_per_page: int = 15
 
 
 @admin.register(NewCar)

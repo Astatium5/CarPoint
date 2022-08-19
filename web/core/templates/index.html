@@ -241,17 +241,17 @@
 				</div>
 				<div class="fields-bl">
 					<label>КПП</label>
-					<select id="sb-transmission" class="form-select" name="transmission" list="transmission">
+					<select id="sb-transmission" class="form-select" name="transmission" list="transmission" onchange="get_cars_by_transmission();">
 						<option value="">Выберите из списка</option>
 						<datalist id="transmission">
 						  <option value="1">Автомат</option>
 						  <option value="2">Механика</option>
-						 </datalist>-->
+						 </datalist>
 					  </select>
 				  </div>
 				<div class="fields-bl">
 				  <label>Объем</label>
-				  <select id="sb-volume" class="form-select" name="volume" list="volume" >
+				  <select id="sb-volume" class="form-select" name="volume" list="volume" onchange="get_cars_by_engine_volume();">
                       <datalist id="volume">
 						<option value="">Выберите из списка</option>
 						<option value="1">1.6</option>

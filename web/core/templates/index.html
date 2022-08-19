@@ -76,7 +76,7 @@
         <form class="modal-form" action="" method="post">
                 <input id="name" type="text" name="name" placeholder="Ваше имя">
 				<!--<input id="city" type="text" name="city" placeholder="Город">-->
-				<input list="datalistOptions" id="exampleDataList" placeholder="Город">
+				<input id="city" list="datalistOptions" id="exampleDataList" placeholder="Город">
 				  <datalist id="datalistOptions">
 					{% for city in cities %}
 					  <option>{{city}}</option>

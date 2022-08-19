@@ -431,10 +431,10 @@
 	<section id="faq" class="faq">
       <div class="container">
 	    <h2>Часто задаваемые вопросы</h2>
+		{% for question in questions %}
 		<div class="accordion" id="accordionExample{{question.pk}}">
-			{% for question in questions %}
 			<div class="accordion-item">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{question.pk}}" aria-expanded="false" aria-controls="collapse1">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{question.pk}}" aria-expanded="false" aria-controls="collapse{{question.pk}}">
 				  {{question.question}}
 				</button>
 			  <div id="collapse{{question.pk}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample{{question.pk}}">
@@ -443,8 +443,8 @@
 				</div>
 			  </div>
 			</div>
-			{% endfor %}
 		</div>
+		{% endfor %}
 	  </div>
 	</section>
 	{% endif %}

@@ -44,13 +44,12 @@ function get_marks(){
 }
 
 function get_cars(){
-
     var PriceList = document.getElementById("sb-pricerange");
     var MarkList = document.getElementById("sb-mark");
     var BodyList = document.getElementById("sb-body");
     var TypeFuelList = document.getElementById("sb-type-fuel");
     var EngineVolumeList = document.getElementById("sb-volume");
-    var EnginePowerList = document.getElementById("sb-power");
+    // var EnginePowerList = document.getElementById("sb-power");
     var TransmissionList = document.getElementById("sb-transmission");
 
     var PriceValue = PriceList.value;
@@ -179,7 +178,7 @@ function get_cars_by_body(){
     var BodyList = document.getElementById("sb-body");
     var TypeFuelList = document.getElementById("sb-type-fuel");
     var EngineVolumeList = document.getElementById("sb-volume");
-    var EnginePowerList = document.getElementById("sb-power");
+    // var EnginePowerList = document.getElementById("sb-power");
     var TransmissionList = document.getElementById("sb-transmission");
 
     var PriceValue = PriceList.value;
@@ -298,7 +297,7 @@ function get_cars_by_type_fuel(){
     var BodyList = document.getElementById("sb-body");
     var TypeFuelList = document.getElementById("sb-type-fuel");
     var EngineVolumeList = document.getElementById("sb-volume");
-    var EnginePowerList = document.getElementById("sb-power");
+    // var EnginePowerList = document.getElementById("sb-power");
     var TransmissionList = document.getElementById("sb-transmission");
 
     var PriceValue = PriceList.value;
@@ -388,6 +387,150 @@ function get_cars_by_type_fuel(){
                         opt.innerHTML = transmission[i];
                         TransmissionList.appendChild(opt);
                     }
+                }
+            )
+        })
+    }
+}
+
+function get_cars_by_transmission(){
+    var PriceList = document.getElementById("sb-pricerange");
+    var MarkList = document.getElementById("sb-mark");
+    var BodyList = document.getElementById("sb-body");
+    var TypeFuelList = document.getElementById("sb-type-fuel");
+    var EngineVolumeList = document.getElementById("sb-volume");
+    // var EnginePowerList = document.getElementById("sb-power");
+    var TransmissionList = document.getElementById("sb-transmission");
+
+    var PriceValue = PriceList.value;
+    var MarkValue = MarkList.value;
+    var BodyValue = BodyList.value;
+    var TypeFuelValue = TypeFuelList.value;
+    var TransmissionValue = TransmissionList.value;
+    var PriceRange = PRICE_RANGE[PriceValue];
+
+    if (!MarkValue){
+        alert("Нужно выбрать марку");
+    }
+    else if (!PriceValue){
+        alert("Нужно выбрать ценовой диапазон!");
+    }else if(!BodyValue){
+        alert("Нужно выбрать тип кузова!");
+    }else if(!TypeFuelValue){
+        alert("Нужно выбрать тип двигателя!");
+    }
+    else{
+        var MinPrice = PriceRange['min'];
+        var MaxPrice = PriceRange['max'];
+
+        fetch(`get_cars_by_transmission/${MinPrice}/${MaxPrice}/${MarkValue}/${BodyValue}/${TypeFuelValue}/${TransmissionValue}`, {
+            method: "GET",
+            contentType: 'application/json',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": $.cookie("csrftoken")
+            },
+        }).then(function (response) {
+            response.json().then(
+                function (data) {
+                    var cars = data["cars"];
+
+                    var SearchCarBtn = document.getElementById("search-car-btn");
+                    SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
+
+                    var engine_volume = [];
+                    // var engine_power = [];
+
+                    for (i = 0; i < cars.length; i++){
+                        engine_volume.push(cars[i]['engine_volume']);
+                        // engine_power.push(cars[i]['engine_power']);
+                    }
+
+                    // Filter unique values.
+                    engine_volume = engine_volume.filter(uniqueArray);
+                    // engine_power = engine_power.filter(uniqueArray);
+                    engine_volume.sort()
+                    // engine_power.sort()
+
+                    // Remove old options.
+                    var i, L = EngineVolumeList.options.length - 1;
+                    for(i = L; i >= 1; i--) {
+                        EngineVolumeList.remove(i);
+                    }
+
+                    /* var i, L = EnginePowerList.options.length - 1;
+                    for(i = L; i >= 1; i--) {
+                        EnginePowerList.remove(i);
+                    } */
+
+                    // Add new options.
+                    for (var i = 0; i < engine_volume.length; i++){
+                        var opt = document.createElement('option');
+                        opt.value = engine_volume[i];
+                        opt.innerHTML = engine_volume[i];
+                        EngineVolumeList.appendChild(opt);
+                    }
+
+                    /* for (var i = 0; i < engine_power.length; i++){
+                        var opt = document.createElement('option');
+                        opt.value = engine_power[i];
+                        opt.innerHTML = engine_power[i];
+                        EnginePowerList.appendChild(opt);
+                    } */
+                }
+            )
+        })
+    }
+}
+
+function get_cars_by_engine_volume(){
+    var PriceList = document.getElementById("sb-pricerange");
+    var MarkList = document.getElementById("sb-mark");
+    var BodyList = document.getElementById("sb-body");
+    var TypeFuelList = document.getElementById("sb-type-fuel");
+    var EngineVolumeList = document.getElementById("sb-volume");
+    // var EnginePowerList = document.getElementById("sb-power");
+    var TransmissionList = document.getElementById("sb-transmission");
+
+    var PriceValue = PriceList.value;
+    var MarkValue = MarkList.value;
+    var BodyValue = BodyList.value;
+    var TypeFuelValue = TypeFuelList.value;
+    var EngineVolumeValue = EngineVolumeList.value;
+    var TransmissionValue = TransmissionList.value;
+    var PriceRange = PRICE_RANGE[PriceValue];
+
+    if (!MarkValue){
+        alert("Нужно выбрать марку");
+    }
+    else if (!PriceValue){
+        alert("Нужно выбрать ценовой диапазон!");
+    }else if(!BodyValue){
+        alert("Нужно выбрать тип кузова!");
+    }else if(!TypeFuelValue){
+        alert("Нужно выбрать тип двигателя!");
+    }
+    else if(!TypeFuelValue){
+        alert("Нужно выбрать коробку передач!");
+    }
+    else{
+        var MinPrice = PriceRange['min'];
+        var MaxPrice = PriceRange['max'];
+
+        fetch(`get_cars_by_engine_volume/${MinPrice}/${MaxPrice}/${MarkValue}/${BodyValue}/${TypeFuelValue}/${TransmissionValue}/${EngineVolumeValue}`, {
+            method: "GET",
+            contentType: 'application/json',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": $.cookie("csrftoken")
+            },
+        }).then(function (response) {
+            response.json().then(
+                function (data) {
+                    var cars = data["cars"];
+
+                    var SearchCarBtn = document.getElementById("search-car-btn");
+                    SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
                 }
             )
         })

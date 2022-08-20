@@ -282,7 +282,7 @@ class Web:
         if cars:
             is_search = True
             cars_values = list(cars.values())
-            main_length = sum([len(v["pattern"]) for v in cars.values()])
+            main_length = sum([len(v["pattern"]) for v in cars_values])
             image = cars_values[0]["pattern"][0]["image"]
             min_price = min([car["pattern"][0]["price"] for car in cars_values])
 
@@ -343,7 +343,7 @@ class Web:
                 set__model__body=body, transmission__title=transmission).all()
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
-    
+
     def get_cars_by_engine_volume(request, min_price: int, max_price: int, mark: str, body: str, type_fuel: str, transmission: str, engine_volume: str):
         mark = Mark.objects.get(title=mark)
         if max_price == 0:

@@ -441,7 +441,7 @@ def set_min_price_value(dct_cars):
 
 def sendQuestion(name, tel, text):
     text = (
-        F"<b>Новый вопрос!</b>\n"
+        F"<b>Новый вопрос. (WEB)</b>\n"
         F"Имя: {name}\n"
         F"Телефон: {tel}\n"
         F"Вопрос: {text}"
@@ -456,7 +456,7 @@ def sendQuestion(name, tel, text):
 def leaveRequest(car_id, name, city, tel, email, address):
     host = os.getenv("HOST")
     text = (
-        F"<b>Новая заявка!</b>\n"
+        F"<b>Новая заявка. (WEB)</b>\n"
         F"ID автомобиля: <code>{car_id}</code>\n"
         F"Эл. почта: <code>{email}</code>\n"
         F"Полное имя: <code>{name}</code>\n"

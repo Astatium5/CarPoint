@@ -22,6 +22,11 @@ class BotUser(models.Model):
         verbose_name_plural = "Пользователи бота"
 
 
+class WebUser(models.Model):
+    ip_address = models.GenericIPAddressField()
+    is_blocked = models.BooleanField(default=False)
+
+
 class Mark(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     is_visible = models.BooleanField(verbose_name="Отображается")

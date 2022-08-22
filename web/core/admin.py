@@ -132,6 +132,15 @@ class Entry(admin.ModelAdmin):
     list_per_page: int = 15
 
 
+@admin.register(UserQuestion)
+class UserQuestion(admin.ModelAdmin):
+    fields = ["user", "username", "ip_address", "name", "phone", "question"]
+    list_display = ["ip_address", "name", "phone", "question"]
+    search_fields = ["name"]
+    search_help_text = "Для поиска введите имя пользователя"
+    list_per_page: int = 15
+
+
 @admin.register(Question)
 class Question(admin.ModelAdmin):
     fields = ["question", "answer"]

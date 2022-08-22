@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from collections import Counter
 
@@ -366,9 +367,9 @@ class Web:
             client = client.get()
             if not client.is_blocked:
                 name = request.POST.get("name")
-                tel = request.POST.get("tel")
+                tel = re.sub("[^0-9]", "", request.POST.get("tel"))
                 text = request.POST.get("text")
-                Question.objects.create(ip_address=client_ip, name=name, phone=tel, question=text)
+                UserQuestion.objects.create(ip_address=client_ip, name=name, phone=tel, question=text)
                 response = sendQuestion(name, tel, text)
         return redirect("/")
 

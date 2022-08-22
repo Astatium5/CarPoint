@@ -59,7 +59,7 @@ async def get_question(message: Message, state: FSMContext):
     user_id = message.from_user.id
     username = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
     _support_page = (
-        F"<b>Новый вопрос!</b>\n"
+        F"<b>Новый вопрос. (BOT)</b>\n"
         F"ID пользователя: <code>{user_id}</code>\n"
         F"Имя пользователя: {username}\n"
         F"Имя: <code>{_.name}</code>\n"

@@ -359,11 +359,17 @@ class Web:
 
     def send_question(request):
         client_ip = get_client_ip(request)
-        logger.info(client_ip)
-        name = request.POST.get("name")
-        tel = request.POST.get("tel")
-        text = request.POST.get("text")
-        response = sendQuestion(name, tel, text)
+        client = WebUser.objects.filter(ip_address=client_ip)
+        if not client.exists():
+            WebUser.objects.create(ip_address=client_ip)
+        else:
+            client = client.get()
+            if not client.is_blocked:
+                name = request.POST.get("name")
+                tel = request.POST.get("tel")
+                text = request.POST.get("text")
+                Question.objects.create(ip_address=client_ip, name=name, phone=tel, question=text)
+                response = sendQuestion(name, tel, text)
         return redirect("/")
 
     def leave_request(request):

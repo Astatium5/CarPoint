@@ -417,16 +417,16 @@ def p_find_car(
             dct_cars = {}
             price_arr = []
             for car in cars:
-                pattern = {"id": car["id"], "price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
+                pattern = {"id": car["id"], "title": car["title"], "price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
                     "engine_power": car["engine_power"], "engine_type_fuel": car["engine_type_fuel"],
                     "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"],
                     "special": car["special"]}
-                if not car["title"] in dct_cars:
-                    dct_cars[car["title"]] = {"pattern": [pattern]}
+                if not car["model_title"] in dct_cars:
+                    dct_cars[car["model_title"]] = {"pattern": [pattern]}
                     price_arr.append(car["price"])
                 else:
                     if not car["price"] in price_arr:
-                        dct_cars[car["title"]]["pattern"].append(pattern)
+                        dct_cars[car["model_title"]]["pattern"].append(pattern)
                         price_arr.append(car["price"])
             dct_cars = set_min_price_value(dct_cars)
             return dct_cars

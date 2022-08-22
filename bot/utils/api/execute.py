@@ -19,7 +19,7 @@ def make_request(path: str, headers=None, timeout=7, **kwargs) -> dict:
     else:
         url = (rF"{config.host}/{path}")
     try:
-        response = requests.get(url, headers=HEADERS, timeout=timeout)
+        response = requests.get(url, headers=HEADERS, timeout=timeout, verify=False)
         if response.status_code == 200:
             return serialize_content(response.content)
         else:

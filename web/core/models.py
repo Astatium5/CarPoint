@@ -23,8 +23,12 @@ class BotUser(models.Model):
 
 
 class WebUser(models.Model):
-    ip_address = models.GenericIPAddressField()
-    is_blocked = models.BooleanField(default=False)
+    ip_address = models.GenericIPAddressField(verbose_name="IP адрес")
+    is_blocked = models.BooleanField(default=False, verbose_name="Блокировка")
+
+    class Meta:
+        verbose_name = "Пользователь сайта"
+        verbose_name_plural = "Пользователи сайта"
 
 
 class Mark(models.Model):
@@ -181,6 +185,18 @@ class Entry(models.Model):
     class Meta:
         verbose_name = "Заявка"
         verbose_name_plural = "Заявки"
+
+
+class Question(models.Model):
+    user = models.ForeignKey(
+        BotUser, null=True, on_delete=models.PROTECT, verbose_name="Пользователь сайта"
+    )
+    username = models.CharField(
+        max_length=255, null=True, verbose_name="Имя пользователя")
+    ip_address = models.GenericIPAddressField(null=True, verbose_name="IP адрес")
+    name = models.CharField(max_length=255, verbose_name="Имя")
+    phone = models.BigIntegerField(verbose_name="Телефон")
+    question = models.TextField(verbose_name="Вопрос")
 
 
 class Question(models.Model):

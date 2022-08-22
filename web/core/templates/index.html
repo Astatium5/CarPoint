@@ -272,7 +272,7 @@
 		            </select>
 				</div>-->
 				<div class="fields-bl btn-blue">
-				  <button id="search-car-btn" class="look-btn" type="submit">Смотреть авто</button>
+				  <button id="search-car-btn" class="look-btn" type="submit" onclick="window.location.href='#catalog'">Смотреть авто</button>
 				</div>
 				<div class="fields-bl">
 				  <input class="clean-btn" type="reset" value="Сбросить все параметры">
@@ -283,13 +283,13 @@
 	</section>
 	{% if is_search %}
 		{% if not cars %}
-		<section class="catalog">
+		<section id="catalog" class="catalog">
 		<div class="container">
 			<p>Автомобиль не найден</p>
 		</div>	
 		</section>
 		{% else %}
-		<section class="catalog">
+		<section id="catalog" class="catalog">
 			<div class="container">
 			  <div class="item-auto item-auto-first">
 				<div class="item-wrap">

@@ -23,12 +23,21 @@ class BotUser(admin.ModelAdmin):
     list_display = ["user_id", "first_name", "phone", "get_city"]
     readonly_fields = ("user_id", "first_name", "username",)
     search_fields = ["user_id"]
-    search_help_text = "Для поиска идентификатор пользователя"
+    search_help_text = "Для поиска введите идентификатор пользователя"
 
     def get_city(self, obj) -> Any:
         return obj.city.title
 
     get_city.short_description = 'Город'
+
+
+@admin.register(WebUser)
+class WebUser(admin.ModelAdmin):
+    fields = ["ip_address", "is_blocked"]
+    list_display = ["ip_address", "is_blocked"]
+    readonly_fields = ("ip_address",)
+    search_fields = ["ip_address"]
+    search_help_text = "Для поиска введите ip адрес"
 
 
 @admin.register(Mark)

@@ -187,7 +187,7 @@ class Entry(models.Model):
         verbose_name_plural = "Заявки"
 
 
-class Question(models.Model):
+class UserQuestion(models.Model):
     user = models.ForeignKey(
         BotUser, null=True, on_delete=models.PROTECT, verbose_name="Пользователь сайта"
     )
@@ -197,6 +197,10 @@ class Question(models.Model):
     name = models.CharField(max_length=255, verbose_name="Имя")
     phone = models.BigIntegerField(verbose_name="Телефон")
     question = models.TextField(verbose_name="Вопрос")
+
+    class Meta:
+        verbose_name = "Вопрос пользователя"
+        verbose_name_plural = "Вопросы пользователей"
 
 
 class Question(models.Model):

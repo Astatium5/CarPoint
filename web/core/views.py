@@ -359,7 +359,7 @@ class Web:
 
     def send_question(request):
         client_ip = get_client_ip(request)
-        print(client_ip)
+        logger.info(client_ip)
         name = request.POST.get("name")
         tel = request.POST.get("tel")
         text = request.POST.get("text")

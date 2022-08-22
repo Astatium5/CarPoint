@@ -358,6 +358,8 @@ class Web:
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
     def send_question(request):
+        client_ip = get_client_ip(request)
+        print(client_ip)
         name = request.POST.get("name")
         tel = request.POST.get("tel")
         text = request.POST.get("text")
@@ -372,6 +374,8 @@ class Web:
         email = request.POST.get("email")
         address = request.POST.get("address")
         response = leaveRequest(car_id, name, city, tel, email, address)
+        car = Car.objects.get(id=car_id)
+        Entry.objects.create(car=car, email=email, name=name, address=address, phone=tel)
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
@@ -471,3 +475,7 @@ def leaveRequest(car_id, name, city, tel, email, address):
     data = {'chat_id' : chat_id, 'text': text}
     response = requests.post(url, data=data)
     return response
+
+def get_client_ip(request):
+    ip = request.META.get('REMOTE_ADDR')
+    return ip

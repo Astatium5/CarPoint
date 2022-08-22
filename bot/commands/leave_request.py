@@ -69,7 +69,7 @@ async def get_phone(message: Message, state: FSMContext) -> Message:
     user_id = message.from_user.id
     username = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
     _leave_request_page: str = (
-        F"<b>Новая заявка!</b>\n"
+        F"<b>Новая заявка. (BOT)</b>\n"
         F"ID пользователя: <code>{user_id}</code>\n"
         F"Имя пользователя: {username}\n"
         F"ID автомобиля: <code>{_.car_id}</code>\n"

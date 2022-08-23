@@ -75,16 +75,12 @@
         </div>-->
         <form class="modal-form" action="" method="post">
                 <input id="name" type="text" name="name" placeholder="Ваше имя">
-				<!--<input id="city" type="text" name="city" placeholder="Город">-->
-				<input id="city" list="datalistOptions" id="exampleDataList" placeholder="Город">
-				  <datalist id="datalistOptions">
+				<select list="datalistOptions" id="exampleDataList" placeholder="Город">
 					{% for city in cities %}
-					  <option>{{city}}</option>
+						<option>{{city}}</option>
 					{% endfor %}
-				  </datalist>
+ 				</select>
 				<input id="tel1" type="tel1" name="tel1" placeholder="+7 (- - -) - - -   - -   - -   ">
-                <input id="email" type="email" name="email" placeholder="E-mail">
-				<input id="city" type="text" name="city" placeholder="Город">
 				<input id="address" type="text" name="address" placeholder="Адрес доставки">
 				<button id="leave-request-btn" type="button" class="button">Купить</button>
 				<button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>

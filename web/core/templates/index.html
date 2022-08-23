@@ -343,7 +343,12 @@
 		  <div class="slider-bl">
 		  <div id="owl-demo" class="owl-carousel">
 		  {% for car in new_cars %}
-		    <div class="item"><h3 class="">{{car.title}}</h3><img src="{{car.image}}" alt="Car"><div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span><a hraf="/">Купить</a></div></div>
+		    <div class="item"><h3 class="">{{car.title}}</h3><img src="{{car.image.url}}" alt="Car">
+				<div class="bottom-item">
+					<span class="price">{{car.price|floatformat:"0"}} ₽</span>
+					<a onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
+				</div>
+			</div>
 		  {% endfor %}
 		   </div>
 		   <div class="customNavigation">

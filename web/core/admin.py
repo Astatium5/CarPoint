@@ -1,7 +1,6 @@
 import copy
 from typing import Literal, Any
 
-from django.forms import model_to_dict
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
@@ -160,7 +159,7 @@ class NewCar(admin.ModelAdmin):
 
     def get_image(self, obj) -> Any:
         if obj.image:
-            return mark_safe(f"<img src='{obj.image}' wdith=70 height=70>")
+            return mark_safe(f"<img src='{obj.image.url}' wdith=70 height=70>")
         else:
             return obj.image
 

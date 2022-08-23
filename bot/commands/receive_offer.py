@@ -17,6 +17,7 @@ from states.states import *
 from log.logger import logger
 from utils.converter import *
 from keyboard.keyboard import *
+from config.config import Config
 from . import start
 
 MAX_SHOW: int = 20
@@ -48,6 +49,7 @@ api_requests: Requests = Requests()  # Init Requests object.
 offer_page: Any = globals.root.find("receive_offer")
 # Init OfferMetaData and set to vatiable
 globals.offer_metadata: OfferMetaData = OfferMetaData()
+config: Config = Config()
 
 
 @dp.message_handler(lambda message: message.text == "Получить предложение", state="*")
@@ -438,7 +440,7 @@ async def get_transmission(cars: list) -> list:
 
 
 async def not_found(query: InlineQuery) -> Any:
-    thumb: str = "https://raw.githubusercontent.com/amtp1/CarPoint/main/image/thumb.png"
+    thumb: str = F"{config.host}/media/image/thumb.png"
     not_found_item: InlineQueryResultArticle = InlineQueryResultArticle(
         id=-1, title="Автомобиль не найден!", input_message_content=InputTextMessageContent("Auto not found"),
         description="Нам не удалось найти автомобиль по данным параметрам.", hide_url=True, thumb_url=thumb)

@@ -213,7 +213,7 @@ class Question(models.Model):
 
 class NewCar(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
-    image = models.URLField(verbose_name="Картинка")
+    image = models.ImageField(verbose_name="Картинка")
     price = models.FloatField(verbose_name="Цена")
 
     class Meta:

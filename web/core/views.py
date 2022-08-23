@@ -377,7 +377,7 @@ class Web:
         car_id = request.POST.get("car_id")
         name = request.POST.get("name")
         city = request.POST.get("city")
-        tel = request.POST.get("tel")
+        tel = re.sub("[^0-9]", "", request.POST.get("tel"))
         email = request.POST.get("email")
         address = request.POST.get("address")
         response = leaveRequest(car_id, name, city, tel, email, address)

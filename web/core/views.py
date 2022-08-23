@@ -300,9 +300,9 @@ class Web:
         if max_price == 0:
             min_price = min_price - 500000
             max_price = min_price + 300000
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all(), is_price=True)
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price]).all(), is_price=True)
         cars = [car.to_dict() for car in cars]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
@@ -311,11 +311,11 @@ class Web:
         if max_price == 0:
             min_price = min_price - 500000
             max_price = min_price + 300000
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all(), is_price=True)
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all(), is_price=True)
         cars = [car.to_dict() for car in cars]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
@@ -324,11 +324,11 @@ class Web:
         if max_price == 0:
             min_price = min_price - 500000
             max_price = min_price + 300000
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all(), is_price=True)
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all(), is_price=True)
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
@@ -337,11 +337,11 @@ class Web:
         if max_price == 0:
             min_price = min_price - 500000
             max_price = min_price + 300000
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body).all(), is_price=True)
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body, transmission__title=transmission).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body, transmission__title=transmission).all(), is_price=True)
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
@@ -350,11 +350,11 @@ class Web:
         if max_price == 0:
             min_price = min_price - 500000
             max_price = min_price + 300000
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body, transmission__title=transmission, engine__volume__lte=engine_volume).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body, transmission__title=transmission, engine__volume__lte=engine_volume).all(), is_price=True)
         else:
-            cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
-                set__model__body=body, transmission__title=transmission, engine__volume__lte=engine_volume).all()
+            cars = sort_cars(Car.objects.filter(mark=mark, price__range=[min_price, max_price],
+                set__model__body=body, transmission__title=transmission, engine__volume__lte=engine_volume).all(), is_price=True)
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return HttpResponse(json.dumps({"response": True, "cars": cars}), content_type='application/json')
 
@@ -490,3 +490,15 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def sort_cars(cars, is_price=False):
+    cars_arr = []
+    price_arr = []
+    if is_price:
+        for car in cars:
+            if not car.price in price_arr:
+                cars_arr.append(car)
+                price_arr.append(car.price)
+        return cars_arr
+    else:
+        return cars

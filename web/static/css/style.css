@@ -319,6 +319,12 @@ button.close {
 	background: url(../img/arrow_up.png) #fff no-repeat right 0.75rem center;
 }
 */
+select.disabled {
+    z-index: 1000;
+    background-color: lightgrey;
+    opacity: 0.6;
+    pointer-events: none;
+}
 .form-select:focus {
     border-color: transparent;
     outline: 0;
@@ -798,6 +804,7 @@ h3 {
     display: flex;
     justify-content: flex-end;
 	padding-bottom: 12px;
+	background-size: cover;
 }
 .question h2 {
     color: #fff;
@@ -1051,6 +1058,22 @@ footer {
     line-height: 22px;
     color: #9DA8B7;
 }
+.modal-form select {
+	display: block;
+    width: 100%;
+    max-width: 312px;
+    border: 1px solid #CFD9E3;
+    border-radius: 8px;
+    margin: 0 auto 20px;
+    height: 40px;
+    padding: 8px 20px;
+	font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #9DA8B7;
+}
 .modal-form .button {
     border: 0;
     background: #092449;
@@ -1230,6 +1253,7 @@ footer {
     border-radius: 8px;
     margin-top: 10px;
 	cursor:pointer;
+	text-decoration: none;
 }
 .item-auto-price a:hover {
     background: #092449;
@@ -1366,6 +1390,10 @@ h5 {
 .order-work .block-1 span:nth-child(4n) {
     margin-left: 50px;
 }
+footer .bot a {
+    font-size: 16px;
+}
+
 }
 .menu-mobile {
 	display:none;
@@ -1401,7 +1429,10 @@ h5 {
 	height: 100vh;
 }
 @media (max-width: 576px) {
-	.header {
+footer .bot a {
+    font-size: 16px;
+}	
+.header {
   padding: 20px 0;
 }
 .logo {

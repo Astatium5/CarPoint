@@ -168,7 +168,7 @@ class Color(models.Model):
 
 class Entry(models.Model):
     user = models.ForeignKey(
-        BotUser, on_delete=models.PROTECT, verbose_name="Пользователь")
+        BotUser, null=True, on_delete=models.PROTECT, verbose_name="Пользователь")
     username = models.CharField(
         max_length=255, null=True, verbose_name="Имя пользователя")
     car = models.ForeignKey(Car, on_delete=models.PROTECT,

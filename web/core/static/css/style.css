@@ -1750,6 +1750,22 @@ footer .bot a {
 .slider-bl {
     padding-bottom: 80px;
 }
+.table-grid .col-one span {
+    font-size: 12px;
+    padding: 18px;
+}
+.table-grid .col-two span {
+    font-size: 12px;
+}
+.table-grid .head-title {
+    font-size: 12px;
+}
+.table-grid .col-three span {
+    font-size: 12px;
+}
+.table-grid span {
+    height: 50px;
+}
 }
 /* The container must be positioned relative: */
 .custom-select {

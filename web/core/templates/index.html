@@ -39,10 +39,9 @@
 				<a href="#order-work">Порядок работы</a>
 				<a href="#about">О компании</a>
 				<a href="#faq">FAQ</a>
-				<a href="#contact">Контакты</a>
 			  </div>
 			</div>
-			<div class="col-lg-2"><div class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{% static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div></div>
+			<span class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
 			<div class="col-lg-2">
 			   <div class="soc-icon">
 			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
@@ -217,7 +216,7 @@
 				</div>
 				<div class="fields-bl">
 				  <label>Тип кузова</label>
-				  <select id="sb-body" class="form-select" name="body" list="body" onchange="get_cars_by_body();">
+				  <select id="sb-body" class="form-select" name="body" list="body" onchange="get_cars_by_body();" required>
                       <datalist id="body">
 						<option value="">Выберите из списка</option>
 						<!--{% for model in models %}
@@ -225,10 +224,13 @@
 						{% endfor %}-->
                        </datalist>
 		            </select>
+					<div class="invalid-feedback">
+                        Это поле обязательно для заполнения
+                   </div>
 				</div>
 				<div class="fields-bl">
 				  <label>Тип двигателя</label>
-				  <select id="sb-type-fuel" class="form-select" name="type_fuel" list="type_fuel" onchange="get_cars_by_type_fuel();">
+				  <select id="sb-type-fuel" class="form-select" name="type_fuel" list="type_fuel" onchange="get_cars_by_type_fuel();" required>
                       <datalist id="type_fuel">
 						<option value="">Выберите из списка</option>
     					<!--{% for type_fuel in type_fuels %}
@@ -236,26 +238,35 @@
 						{% endfor %}-->
                        </datalist>
 		            </select>
+					<div class="invalid-feedback">
+                        Это поле обязательно для заполнения
+                   </div>
 				</div>
 				<div class="fields-bl">
 					<label>КПП</label>
-					<select id="sb-transmission" class="form-select" name="transmission" list="transmission" onchange="get_cars_by_transmission();">
+					<select id="sb-transmission" class="form-select" name="transmission" list="transmission" onchange="get_cars_by_transmission();" required>
 						<option value="">Выберите из списка</option>
 						<datalist id="transmission">
 						  <option value="1">Автомат</option>
 						  <option value="2">Механика</option>
 						 </datalist>
 					  </select>
+					  <div class="invalid-feedback">
+                        Это поле обязательно для заполнения
+                   </div>
 				  </div>
 				<div class="fields-bl">
 				  <label>Объем</label>
-				  <select id="sb-volume" class="form-select" name="volume" list="volume" onchange="get_cars_by_engine_volume();">
+				  <select id="sb-volume" class="form-select" name="volume" list="volume" onchange="get_cars_by_engine_volume();" required>
                       <datalist id="volume">
 						<option value="">Выберите из списка</option>
 						<option value="1">1.6</option>
 						<option value="2">1.9</option>
                        </datalist>
 		            </select>
+					<div class="invalid-feedback">
+                        Это поле обязательно для заполнения
+                   </div>
 				</div>
 				<!--<div class="fields-bl">
 				  <label>Мощность двигателя</label>
@@ -337,28 +348,25 @@
 		{% endif %}
 	{% endif %}
 	{% if new_cars %}
-	<section id="new" class="slider">
-       <div class="container">
-	      <h2>Новинки<span class="new">new</span></h2>
-		  <div class="slider-bl">
-		  <div id="owl-demo" class="owl-carousel">
-		  {% for car in new_cars %}
-		    <div class="item"><h3 class="">{{car.title}}</h3>
-				<div class="item-img"><img src="{{car.image.url}}" alt="Car"></div>
-				<div class="bottom-item">
-					<span class="price">{{car.price|floatformat:"0"}} ₽</span>
-					<a onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
-				</div>
-			</div>
-		  {% endfor %}
-		   </div>
-		   <div class="customNavigation">
-                <a class="btn prev"><img src="{% static 'img/prev.svg' %}" alt="Previous"></a>
+	 <section id="new" class="slider">
+		<div class="container">
+		   <h2>Новинки<span class="new">new</span></h2>
+		   <div class="slider-bl">
+		   <div id="owl-demo" class="owl-carousel">
+			{% for car in new_cars %}
+	 			<div class="item"><h3 class="">{{car.title}}</h3>
+					<div class="item-img"><img src="{{car.image.url}}" alt="Car"></div>
+					<div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span>
+					<a  onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a></div></div>
+			{% endfor %}
+		</div>
+			<div class="customNavigation">
+				<a class="btn prev"><img src="{% static 'img/prev.svg' %}" alt="Previous"></a>
                 <a class="btn next"><img src="{% static 'img/next.svg' %}" alt="Next"></a>
-            </div>
-			</div>
-	   </div>
-	</section>
+			 </div>
+			 </div>
+		</div>
+	 </section>
 	{% endif %}
     <section id="order-work" class="order-work">
        <div class="container">
@@ -475,7 +483,7 @@
 		 </div>
 	   </div>
 	</section>  
-	<section id="contact" class="contact">
+	<section id="contact" class="contact" style="display:none">
        <div class="container">
 		    <h2>Контакты</h2>
             <div class="soc-icon">
@@ -498,13 +506,12 @@
 				<a href="#new">Новинки</a>
 				<a href="#order-work">Порядок работы</a>
 				<a href="#about">О компании</a>
-				<a href="#contact">Контакты</a>
 			  </div>
 			</div>
 			<div class="col-lg-4">
 			    <div class="menu-footer">
 			    <a href="#faq">Часто задаваемые вопросы</a>
-				<a href="oferta">Договор оферты</a>
+				<a href="oferta" target="_blank">Договор оферты</a>
 			  </div>
 			</div>
 			<div class="col-lg-3">

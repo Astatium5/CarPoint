@@ -1118,11 +1118,6 @@ footer {
 .catalog {
     margin-top: 30px;
 }
-
-.catalog .item-wrap img {
-    width: auto;
-}
-
 .item-auto {
     margin-bottom: 20px;
 }
@@ -1817,4 +1812,14 @@ footer .bot a {
 
 .select-items div:hover, .same-as-selected {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.item-img {
+    height: 160px;
+    display: flex;
+    align-items: center;
+}
+
+.catalog .item-wrap img {
+    width: auto;
 }

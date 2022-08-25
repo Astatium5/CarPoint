@@ -418,7 +418,10 @@ async def new_search(query: CallbackQuery) -> Message:
     try:
         return await query.message.edit_text(offer_page.find("select_price").text, reply_markup=choice_price_markup)
     except BadRequest:
-        await bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
+        try:
+            await bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
+        except Exception as e:
+            logger.error(e)
         return await bot.send_message(chat_id=query.message.chat.id, text=offer_page.find("select_price").text, reply_markup=choice_price_markup)
 
 

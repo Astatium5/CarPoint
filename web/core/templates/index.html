@@ -1,84 +1,101 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OneTwoCar</title>
-		<meta name="description" content="">
-		<meta name="keywords" content="">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>OneTwoCar</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Bootstrap -->
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+	<!-- Bootstrap -->
+	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 
 	<!-- Style -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
 	<!-- Owl Carousel Assets -->
-    <link href="{% static 'owl-carousel/owl.carousel.css' %}" rel="stylesheet">
-    <link href="{% static 'owl-carousel/owl.theme.css' %}" rel="stylesheet">
-    <!-- Bootstrap JS -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<link href="{% static 'owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+	<link href="{% static 'owl-carousel/owl.theme.css' %}" rel="stylesheet">
+	<!-- Bootstrap JS -->
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"
+		crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-  </head>
-  <body>
-    <header>
-	 <section class="header">
-       <div class="container">
-	   <div class="menu-mobile">
-	        <div class="burger"></div>
-			   <div class="menu-bl">
-			    <a href="#podbor">Подобрать авто</a>
-				<a href="#new">Новинки</a>
-				<a href="#order-work">Порядок работы</a>
-				<a href="#about">О компании</a>
-				<a href="#faq">FAQ</a>
-				<div class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{$ static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></div>
-			  <div class="soc-icon">
-			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
-			   </div>
-			 </div>  
-		</div>
-	      <div class="row">
-		    <div class="col-lg-2 col-12">
-			   <div class="logo"><a href="/"><img src="{% static 'img/logo.svg' %}" alt="OneTwoCar"></a></div>
-			</div>
-			<div class="col-lg-6">
-			   <div class="menu">
-			    <a href="#podbor">Подобрать авто</a>
-				<a href="#new">Новинки</a>
-				<a href="#order-work">Порядок работы</a>
-				<a href="#about">О компании</a>
-				<a href="#faq">FAQ</a>
-			  </div>
-			</div>
-			<div class="col-lg-2"><div class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{% static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div></div>
-			<div class="col-lg-2">
-			   <div class="soc-icon">
-			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
-			   </div>
-			</div>
-		  </div>
-		  <div class="header-baner">
-		  <div class="row">
-		    <div class="col-lg-7">
-			   <h1>Автомобили от производителя</br>с доставкой и <span class="red">экономией</br>до 20%</span> от цены салона</h1>
-			   <span class="subtitle">OneTwoCar - первый мультибрендовый официальный online дилер в России с</br> честными ценами от производителя</span>
-               <a class="button" href="#podbor">Подобрать автомобиль</a>
+</head>
 
-<!-- Modal -->
-<div id="lr-modal" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Купить автомобиль</h5>
-      </div>
-      <div class="modal-body">
-	    <!--<div class="auto-form">
+<body>
+	<header>
+		<section class="header">
+			<div class="container">
+				<div class="menu-mobile">
+					<div class="burger"></div>
+					<div class="menu-bl">
+						<a href="#podbor">Подобрать авто</a>
+						<a href="#new">Новинки</a>
+						<a href="#order-work">Порядок работы</a>
+						<a href="#about">О компании</a>
+						<a href="#faq">FAQ</a>
+						<div class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img
+									src="{$ static 'img/bot.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор
+								в Telegram</a></div>
+						<div class="soc-icon">
+							<a href="https://instagram.com/carpoint_russia" target="_blank"><img
+									src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-12">
+						<div class="logo"><a href="/"><img src="{% static 'img/logo.svg' %}" alt="OneTwoCar"></a></div>
+					</div>
+					<div class="col-lg-6">
+						<div class="menu">
+							<a href="#podbor">Подобрать авто</a>
+							<a href="#new">Новинки</a>
+							<a href="#order-work">Порядок работы</a>
+							<a href="#about">О компании</a>
+							<a href="#faq">FAQ</a>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img
+									src="{% static 'img/bot.svg' %}"
+									alt="Бот-конфигуратор в Telegram">Бот-конфигуратор</a></div>
+					</div>
+					<div class="col-lg-2">
+						<div class="soc-icon">
+							<a href="https://instagram.com/carpoint_russia" target="_blank"><img
+									src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
+						</div>
+					</div>
+				</div>
+				<div class="header-baner">
+					<div class="row">
+						<div class="col-lg-7">
+							<h1>Автомобили от производителя</br>с доставкой и <span class="red">экономией</br>до
+									20%</span> от цены салона</h1>
+							<span class="subtitle">OneTwoCar - первый мультибрендовый официальный online дилер в России
+								с</br> честными ценами от производителя</span>
+							<a class="button" href="#podbor">Подобрать автомобиль</a>
+
+							<!-- Modal -->
+							<div id="lr-modal" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<button type="button" class="close" data-bs-dismiss="modal"
+											aria-label="Close"><img src="{% static 'img/close.svg' %}"
+												alt="Close"></button>
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle">Купить автомобиль</h5>
+										</div>
+										<div class="modal-body">
+											<!--<div class="auto-form">
             <div class="auto-img"><img src="{% static 'img/auto.svg' %}" alt="Auto"></div>
 			<div class="auto-info">
 			    <h5 class="auto-title">HAVAL F7x  Универсал 5 дверей</h5>
@@ -86,25 +103,30 @@
 				<span>АКПП,</span><span> бензин,</span><span>передний 2WD,</span><span> ДВС 1.5</span>
 			</div>
         </div>-->
-        <form class="modal-form" action="" method="post">
-                <input id="name" type="text" name="name" placeholder="Ваше имя">
-				<select id="city" list="datalistOptions" id="exampleDataList" placeholder="Город">
-					{% for city in cities %}
-						<option>{{city}}</option>
-					{% endfor %}
- 				</select>
-				<input id="tel1" type="tel1" name="tel1" placeholder="+7 (- - -) - - -   - -   - -   ">
-				<input id="email" type="email" name="email" placeholder="E-mail">
-				<input id="address" type="text" name="address" placeholder="Адрес доставки">
-				<button id="leave-request-btn" type="button" class="button">Купить</button>
-				<button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal -->
-<!--<div class="modal fade modal-success" id="exampleModalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+											<form class="modal-form" action="" method="post">
+												<input id="name" type="text" name="name" placeholder="Ваше имя">
+												<select id="city" list="datalistOptions" id="exampleDataList"
+													placeholder="Город">
+													{% for city in cities %}
+													<option>{{city}}</option>
+													{% endfor %}
+												</select>
+												<input id="tel1" type="tel1" name="tel1"
+													placeholder="+7 (- - -) - - -   - -   - -   ">
+												<input id="email" type="email" name="email" placeholder="E-mail">
+												<input id="address" type="text" name="address"
+													placeholder="Адрес доставки">
+												<button id="leave-request-btn" type="button"
+													class="button">Купить</button>
+												<button type="button" class="btn-otmena"
+													data-bs-dismiss="modal">Отмена</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Modal -->
+							<!--<div class="modal fade modal-success" id="exampleModalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
@@ -121,8 +143,8 @@
     </div>
   </div>
 </div>-->
-<!-- Modal -->
-<!--<div class="modal fade modal-success" id="exampleModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<!-- Modal -->
+							<!--<div class="modal fade modal-success" id="exampleModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
@@ -138,151 +160,158 @@
     </div>
   </div>
 </div>-->
+						</div>
+						<div class="col-lg-5">
+							<div class="baner-img"><a href="/"><img src="{% static 'img/car.svg' %}" alt="Car"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="header-info">
+					<div class="row">
+						<div class="col-lg-3">
+							<img src="{% static 'img/img1.svg' %}" alt="WOW Цена">
+							<h4>WOW Цена</h4>
+							<span>Честная цена от производителя, без накруток и навязанных услуг</span>
+						</div>
+						<div class="col-lg-3">
+							<img src="{% static 'img/img2.svg' %}" alt="Car">
+							<h4>Доставка на дом</h4>
+							<span>Мы привезем автомобиль и полный пакет документов прямо к вашему дому</span>
+						</div>
+						<div class="col-lg-3">
+							<img src="{% static 'img/img3.svg' %}" alt="Car">
+							<h4>Огромнейший выбор</h4>
+							<span>Большой выбор производителей и комплектаций и все в одном месте</span>
+						</div>
+						<div class="col-lg-3">
+							<img src="{% static 'img/img4.svg' %}" alt="Car">
+							<h4>Быстро. Просто. Безопасно</h4>
+							<span>Прозрачный цикл приобретения автомобиля. Покупка в 3 клика.</span>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-lg-5">
-			   <div class="baner-img"><a href="/"><img src="{% static 'img/car.svg' %}" alt="Car"></a></div>
-			</div>
-		   </div>
-		 </div>
-		 <div class="header-info">
-		  <div class="row">
-		    <div class="col-lg-3">
-			  <img src="{% static 'img/img1.svg' %}" alt="WOW Цена">
-              <h4>WOW Цена</h4>
-			  <span>Честная цена от производителя, без накруток и навязанных услуг</span>
-			</div>
-			<div class="col-lg-3">
-			  <img src="{% static 'img/img2.svg' %}" alt="Car">
-              <h4>Доставка на дом</h4>
-			  <span>Мы привезем автомобиль и полный пакет документов прямо к вашему дому</span>
-			</div>
-			<div class="col-lg-3">
-			  <img src="{% static 'img/img3.svg' %}" alt="Car">
-              <h4>Огромнейший выбор</h4>
-			  <span>Большой выбор производителей и комплектаций и все в одном месте</span>
-			</div>
-			<div class="col-lg-3">
-			  <img src="{% static 'img/img4.svg' %}" alt="Car">
-              <h4>Быстро. Просто. Безопасно</h4>
-			  <span>Прозрачный цикл приобретения автомобиля. Покупка в 3 клика.</span>
-			</div>
-		   </div>
-		 </div>
-	   </div>
-	 </section>
+		</section>
 	</header>
 	<section class="logo-brand">
-       <div class="container">
-<div id="owl-carousel" class="owl-carousel owl-theme logo-img">
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-	<div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-    <div class="item img"></div>
-	<div class="item img"></div>
-</div>
-	   </div>
+		<div class="container">
+			<div id="owl-carousel" class="owl-carousel owl-theme logo-img">
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+				<div class="item img"></div>
+			</div>
+		</div>
 	</section>
 	<section id="podbor" class="podbor">
-       <div class="container">
-	      <h2>Подобрать автомобиль по параметрам</h2>
-	        <div class="podbor-form">
-	        <form class="needs-validation" novalidate>
-				<div class="fields-bl">
-				  <label>Ценовой диапазон, ₽</label>
-                   <select id="sb-pricerange" class="form-select" name="pricerange" list="pricerange" onchange="get_marks();" required>
-                      <datalist id="pricerange">
-    					<option value="">Выберите из списка</option>
-    					<option value="1">500 000₽ - 2 000 000₽</option>
-    					<option value="2">2 000 000₽ - 4 000 000₽</option>
-    					<option value="3">4 000 000₽ - 6 000 000₽</option>
-    					<option value="4">более 6 000 000₽</option>
-                       </datalist>
-		            </select>
-				   <div class="invalid-feedback">
-                        Это поле обязательно для заполнения
-                   </div>
-				</div>
-				<div class="fields-bl">
-				  <label>Марка</label>
-				  <select id="sb-mark" class="form-select" name="mark" list="mark" onchange="get_cars();" required>
-                      <datalist id="mark">
-						<option value="">Выберите из списка</option>
-						<!--{% for mark in marks %}
+		<div class="container">
+			<h2>Подобрать автомобиль по параметрам</h2>
+			<div class="podbor-form">
+				<form class="needs-validation" novalidate>
+					<div class="fields-bl">
+						<label>Ценовой диапазон, ₽</label>
+						<select id="sb-pricerange" class="form-select" name="pricerange" list="pricerange"
+							onchange="get_marks();" required>
+							<datalist id="pricerange">
+								<option value="">Выберите из списка</option>
+								<option value="1">500 000₽ - 2 000 000₽</option>
+								<option value="2">2 000 000₽ - 4 000 000₽</option>
+								<option value="3">4 000 000₽ - 6 000 000₽</option>
+								<option value="4">более 6 000 000₽</option>
+							</datalist>
+						</select>
+						<div class="invalid-feedback">
+							Это поле обязательно для заполнения
+						</div>
+					</div>
+					<div class="fields-bl">
+						<label>Марка</label>
+						<select id="sb-mark" class="form-select" name="mark" list="mark" onchange="get_cars();"
+							required>
+							<datalist id="mark">
+								<option value="">Выберите из списка</option>
+								<!--{% for mark in marks %}
 							<option value="{{mark.title}}">{{mark.title}}</option>
 						{% endfor %}-->
-                       </datalist>
-		            </select>
-				   <div class="invalid-feedback">
-                        Это поле обязательно для заполнения
-                   </div>
-				</div>
-				<div class="fields-bl">
-				  <label>Тип кузова</label>
-				  <select id="sb-body" class="form-select" name="body" list="body" onchange="get_cars_by_body();" required>
-                      <datalist id="body">
-						<option value="">Выберите из списка</option>
-						<!--{% for model in models %}
+							</datalist>
+						</select>
+						<div class="invalid-feedback">
+							Это поле обязательно для заполнения
+						</div>
+					</div>
+					<div class="fields-bl">
+						<label>Тип кузова</label>
+						<select id="sb-body" class="form-select" name="body" list="body" onchange="get_cars_by_body();"
+							required>
+							<datalist id="body">
+								<option value="">Выберите из списка</option>
+								<!--{% for model in models %}
     						<option value="{{model}}">{{model}}</option>
 						{% endfor %}-->
-                       </datalist>
-		            </select>
-					<div class="invalid-feedback">
-                        Это поле обязательно для заполнения
-                   </div>
-				</div>
-				<div class="fields-bl">
-				  <label>Тип двигателя</label>
-				  <select id="sb-type-fuel" class="form-select" name="type_fuel" list="type_fuel" onchange="get_cars_by_type_fuel();" required>
-                      <datalist id="type_fuel">
-						<option value="">Выберите из списка</option>
-    					<!--{% for type_fuel in type_fuels %}
+							</datalist>
+						</select>
+						<div class="invalid-feedback">
+							Это поле обязательно для заполнения
+						</div>
+					</div>
+					<div class="fields-bl">
+						<label>Тип двигателя</label>
+						<select id="sb-type-fuel" class="form-select" name="type_fuel" list="type_fuel"
+							onchange="get_cars_by_type_fuel();" required>
+							<datalist id="type_fuel">
+								<option value="">Выберите из списка</option>
+								<!--{% for type_fuel in type_fuels %}
 							<option value="{{type_fuel}}">{{type_fuel}}</option>
 						{% endfor %}-->
-                       </datalist>
-		            </select>
-					<div class="invalid-feedback">
-                        Это поле обязательно для заполнения
-                   </div>
-				</div>
-				<div class="fields-bl">
-					<label>КПП</label>
-					<select id="sb-transmission" class="form-select" name="transmission" list="transmission" onchange="get_cars_by_transmission();" required>
-						<option value="">Выберите из списка</option>
-						<datalist id="transmission">
-						  <option value="1">Автомат</option>
-						  <option value="2">Механика</option>
-						 </datalist>
-					  </select>
-					  <div class="invalid-feedback">
-                        Это поле обязательно для заполнения
-                   </div>
-				  </div>
-				<div class="fields-bl">
-				  <label>Объем</label>
-				  <select id="sb-volume" class="form-select" name="volume" list="volume" onchange="get_cars_by_engine_volume();" required>
-                      <datalist id="volume">
-						<option value="">Выберите из списка</option>
-						<option value="1">1.6</option>
-						<option value="2">1.9</option>
-                       </datalist>
-		            </select>
-					<div class="invalid-feedback">
-                        Это поле обязательно для заполнения
-                   </div>
-				</div>
-				<!--<div class="fields-bl">
+							</datalist>
+						</select>
+						<div class="invalid-feedback">
+							Это поле обязательно для заполнения
+						</div>
+					</div>
+					<div class="fields-bl">
+						<label>КПП</label>
+						<select id="sb-transmission" class="form-select" name="transmission" list="transmission"
+							onchange="get_cars_by_transmission();" required>
+							<option value="">Выберите из списка</option>
+							<datalist id="transmission">
+								<option value="1">Автомат</option>
+								<option value="2">Механика</option>
+							</datalist>
+						</select>
+						<div class="invalid-feedback">
+							Это поле обязательно для заполнения
+						</div>
+					</div>
+					<div class="fields-bl">
+						<label>Объем</label>
+						<select id="sb-volume" class="form-select" name="volume" list="volume"
+							onchange="get_cars_by_engine_volume();" required>
+							<datalist id="volume">
+								<option value="">Выберите из списка</option>
+								<option value="1">1.6</option>
+								<option value="2">1.9</option>
+							</datalist>
+						</select>
+						<div class="invalid-feedback">
+							Это поле обязательно для заполнения
+						</div>
+					</div>
+					<!--<div class="fields-bl">
 				  <label>Мощность двигателя</label>
 				  <select id="sb-power" class="form-select" name="power" list="power" >
                       <datalist id="power">
@@ -294,481 +323,530 @@
                        </datalist>
 		            </select>
 				</div>-->
-				<div class="fields-bl btn-blue">
-				  <button id="search-car-btn" class="look-btn" type="submit" onclick="window.location.href='#catalog'">Смотреть авто</button>
-				</div>
-				<div class="fields-bl">
-				  <input class="clean-btn" type="reset" value="Сбросить все параметры">
-				</div>
-			</form>
-	        </div>
-			
+					<div class="fields-bl btn-blue">
+						<button id="search-car-btn" class="look-btn" type="submit"
+							onclick="window.location.href='#catalog'">Смотреть авто</button>
+					</div>
+					<div class="fields-bl">
+						<input class="clean-btn" type="reset" value="Сбросить все параметры">
+					</div>
+				</form>
+			</div>
+
 	</section>
 	{% if is_search %}
-		{% if not cars %}
-		<section id="catalog" class="catalog">
+	{% if not cars %}
+	<section id="catalog" class="catalog">
 		<div class="container">
 			<p>Автомобиль не найден</p>
-		</div>	
-		</section>
-		{% else %}
-		<section id="catalog" class="catalog">
-			<div class="container">
-			  <div class="item-auto item-auto-first">
+		</div>
+	</section>
+	{% else %}
+	<section id="catalog" class="catalog">
+		<div class="container">
+			<div class="item-auto item-auto-first">
 				<div class="item-wrap">
 					<img src="{{image}}" alt="Car" width="250" height="150">
 					<div class="item-auto-info">
-					       <h5>{{mark}}</h5>
-						   <span class="count">{{main_length}}</span>
-						   <span>автомобилей</span>
-						   <span class="red-color">от {{min_price|add:"0"}} ₽</span>
+						<h5>{{mark}}</h5>
+						<span class="count">{{main_length}}</span>
+						<span>автомобилей</span>
+						<span class="red-color">от {{min_price|add:"0"}} ₽</span>
 					</div>
 				</div>
 			</div>
 			{% for k, v in cars.items %}
-	 		<div class="item-auto">
-			   <div class="item-auto-open">
-				 <div class="item-wrap-open">
-					<h5>{{k|safe}}</h5>
-					<span class="count">&nbsp; {{v.pattern|length}} вариантов</span>
-					<span class="red-color">от {{v.min_price|add:"0"}} ₽</span>
-				 </div>
-			   </div>
-			  <div class="item-auto-hide">
-				{% for w_car in v.pattern %}
-				 <div class="item-wrap">
-					<img src="{{w_car.image}}" alt="Car"  width="175" height="100">
-					<div class="item-auto-info">
-					   <strong>{{w_car.title}}</strong>
-					   <span>{{w_car.body}}, {{w_car.transmission}}, {{w_car.engine_type_fuel}}, {{w_car.engine_volume}}, {{w_car.engine_power}}, {{w_car.wd}}</span>
-					   <!--<div class="variant-color"><span>Выбрать цвет:</span>
+			<div class="item-auto">
+				<div class="item-auto-open">
+					<div class="item-wrap-open">
+						<h5>{{k|safe}}</h5>
+						<span class="count">&nbsp; {{v.pattern|length}} вариантов</span>
+						<span class="red-color">от {{v.min_price|add:"0"}} ₽</span>
+					</div>
+				</div>
+				<div class="item-auto-hide">
+					{% for w_car in v.pattern %}
+					<div class="item-wrap">
+						<img src="{{w_car.image}}" alt="Car" width="175" height="100">
+						<div class="item-auto-info">
+							<strong>{{w_car.title}}</strong>
+							<span>{{w_car.body}}, {{w_car.transmission}}, {{w_car.engine_type_fuel}},
+								{{w_car.engine_volume}}, {{w_car.engine_power}}, {{w_car.wd}}</span>
+							<!--<div class="variant-color"><span>Выбрать цвет:</span>
 					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
 					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
 					   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
 					 </div>-->
+						</div>
+						<div class="item-auto-price">
+							<span>{{w_car.price|add:"0"}} ₽</span>
+							<a target="_blank" onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
+						</div>
 					</div>
-					<div class="item-auto-price">
-						<span>{{w_car.price|add:"0"}} ₽ </span>
-						<a target="_blank" onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
-					</div>
-				 </div>
-				 {% endfor %}
-			  </div>
-			 </div>
-			 {% endfor %}
-		 	</div>
-		</section>
-		{% endif %}
-	{% endif %}
-	{% if new_cars %}
-	 <section id="new" class="slider">
-		<div class="container">
-		   <h2>Новинки<span class="new">new</span></h2>
-		   <div class="slider-bl">
-		   <div id="owl-demo" class="owl-carousel">
-			{% for car in new_cars %}
-	 			<div class="item"><h3 class="">{{car.title}}</h3>
-					<div class="item-img"><img src="{{car.image.url}}" alt="Car"></div>
-					<div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span>
-					<a  onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a></div></div>
+					{% endfor %}
+				</div>
+			</div>
 			{% endfor %}
 		</div>
-			<div class="customNavigation">
-				<a class="btn prev"><img src="{% static 'img/prev.svg' %}" alt="Previous"></a>
-                <a class="btn next"><img src="{% static 'img/next.svg' %}" alt="Next"></a>
-			 </div>
-			 </div>
-		</div>
-	 </section>
+	</section>
 	{% endif %}
-    <section id="order-work" class="order-work">
-       <div class="container">
-	      <h2>Порядок работы</h2>
-		  <div class="blocks">
-		    <div class="block-1">
-			   <span>Выбираете</br> автомобиль</span>
-			   <span>Мы отправляем вам</br> электронный договор</span>
-			   <span>Производитель в течение</br> 3-ех дней отгружает</br> автомобиль</span>
-			   <span>Автомобиль прибывает к вам, вы</br> проводите осмотр и</br> подписываете акт приемки</span>
+	{% endif %}
+	{% if new_cars %}
+	<section id="new" class="slider">
+		<div class="container">
+			<h2>Новинки<span class="new">new</span></h2>
+			<div class="slider-bl">
+				<div id="owl-demo" class="owl-carousel">
+					{% for car in new_cars %}
+					<div class="item">
+						<h3 class="">{{car.title}}</h3>
+						<div class="item-img"><img src="{{car.image.url}}" alt="Car"></div>
+						<div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span>
+							<a onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				<div class="customNavigation">
+					<a class="btn prev"><img src="{% static 'img/prev.svg' %}" alt="Previous"></a>
+					<a class="btn next"><img src="{% static 'img/next.svg' %}" alt="Next"></a>
+				</div>
 			</div>
-		    <div class="block-2">
-			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span>Наслаждайтесь!</span>
+		</div>
+	</section>
+	{% endif %}
+	<section id="order-work" class="order-work">
+		<div class="container">
+			<h2>Порядок работы</h2>
+			<div class="blocks">
+				<div class="block-1">
+					<span>Выбираете</br> автомобиль</span>
+					<span>Мы отправляем вам</br> электронный договор</span>
+					<span>Производитель в течение</br> 3-ех дней отгружает</br> автомобиль</span>
+					<span>Автомобиль прибывает к вам, вы</br> проводите осмотр и</br> подписываете акт приемки</span>
+				</div>
+				<div class="block-2">
+					<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span>Наслаждайтесь!</span>
+				</div>
+				<div class="block-3">
+					<span>Оставляете заявку</br> на бронирование</span>
+					<span>После подписания договора</br> вы вносите предоплату 100%</br> напрямую производителю</span>
+					<span>Доставка автомобиля до</br> вашего адреса</span>
+				</div>
 			</div>
-			<div class="block-3">
-			   <span>Оставляете заявку</br> на бронирование</span>
-			   <span>После подписания договора</br> вы вносите предоплату 100%</br> напрямую производителю</span>
-			   <span>Доставка автомобиля до</br> вашего адреса</span>
+		</div>
+	</section>
+	<section id="about" class="about">
+		<div class="container">
+			<h2>Кто такие OneTwoCar?</h2>
+			<span class="subtitle">
+				Онлайн-покупки стали неотъемлемой частью нашей жизни. Все больше сфер переходят в online. OneTwoCar -
+				это первый полностью дистанционный сервис покупки автомобилей напрямую у производителя, без накруток и
+				переплат.
+			</span>
+			<h3>OneTwoCar vs. Дилер</h3>
+			<div class="table-grid-container">
+				<div class="table-grid">
+					<div class="col-one">
+						<strong class="head-title">Параметр</strong>
+						<span>Цена</span>
+						<span>Доставка</span>
+						<span>Выбор</span>
+						<span>Процесс поиска</span>
+						<span>Ассортимент</span>
+						<span>Дополнительные услуги</span>
+						<span>Общение с менеджерами</span>
+						<span>Бюрократия</span>
+						<span>Прозрачность сделки</span>
+						<span>Акции и скидки</span>
+					</div>
+					<div class="col-two">
+						<strong class="head-title">Покупка у OneTwoCar</strong>
+						<span>
+							<p>Честная цена от производителя.</br>Экономия <b>до 70%</b> от цены диллера</p>
+						</span>
+						<span>
+							<p><b>Доставка</b> автомобиля прямо <b>к дому</b></p>
+						</span>
+						<span>
+							<p><b>Огромный выбор</b> автомобилей. Возможность сравнить</br> актуальные цены и
+								комплектации сразу по всем производителям</p>
+						</span>
+						<span>
+							<p>Все марки и модели <b>в вашем смартфоне</b> - </br>выбирайте, не выходя из дома</p>
+						</span>
+						<span>
+							<p>Возможность найти <b>эксклюзивные</b> марки, модели и</br> комплектации, не
+								представленные в вашем городе</p>
+						</span>
+						<span>
+							<p>Опции и финансовые услуги <b>только по запросу</b> клиента</p>
+						</span>
+						<span>
+							<p><b>Не нужно</b> общаться с навязчивыми менеджерами</p>
+						</span>
+						<span>
+							<p>Максимальная <b>простота и скорость</b> покупки - вы выбираете</br> автомобиль, все
+								остальные вопросы мы решаем за вас</p>
+						</span>
+						<span>
+							<p><b>Прозрачность и безопасность</b> сделки,</br>возможность оформления смарт-контракта</p>
+						</span>
+						<span>
+							<p>Прозрачная цена, без нюансов. Вы можете воспользоваться <b>официальными акциями</b> от
+								дистрибьютора</p>
+						</span>
+					</div>
+					<div class="col-three">
+						<strong class="head-title">Покупка у дилера</strong>
+						<span>Необоснованно завышенные цены на автомобили</span>
+						<span>Многократные визиты в салон,</br>прежде чем вы сможете купить свой автомобиль</span>
+						<span>Очень трудно найти нужный</br>автомобиль в нужной комплектации</span>
+						<span>Нужно посетить всех дилеров в городе,</br>чтобы выбрать подходящий вам автомобиль</span>
+						<span>Скудный выбор марок, моделей и комплектаций, ограниченный дилерами, представленными в
+							вашем городе</span>
+						<span>Навязывание дополнительных опций, кредитов, пакетов и услуг</span>
+						<span>Менеджеры, которые упорно будут навязывать</br>покупку и надоедать звонками</span>
+						<span>Долгий цикл покупки, сопровождающийся бесконечной бумажной волокитой и многократными
+							визитами в салон</span>
+						<span>Дилеры, заинтересованные в получении максимальной прибыли, часто скрывают полные условия
+							сделки</span>
+						<span>Все скидки искусственны – дилер всегда компенсирует свои издержки.Официальные акции от
+							дистрибьютора чаще всего не афишируются</span>
+					</div>
+				</div>
 			</div>
-		  </div>
-	   </div>
-	 </section>    
-    <section id="about" class="about">
-       <div class="container">
-          <h2>Кто такие OneTwoCar?</h2>
-	      <span class="subtitle">
-	       Онлайн-покупки стали неотъемлемой частью нашей жизни. Все больше сфер переходят в online. OneTwoCar - это первый полностью дистанционный сервис покупки автомобилей напрямую у производителя, без накруток и переплат. 
-	       </span>
-		   <h3>OneTwoCar vs. Дилер</h3>
-		   <div class="table-grid-container">
-		   <div class="table-grid">
-		      <div class="col-one">
-			    <strong class="head-title">Параметр</strong>
-				<span>Цена</span>
-				<span>Доставка</span>
-				<span>Выбор</span>
-				<span>Процесс поиска</span>
-				<span>Ассортимент</span>
-				<span>Дополнительные услуги</span>
-				<span>Общение с менеджерами</span>
-				<span>Бюрократия</span>
-				<span>Прозрачность сделки</span>
-				<span>Акции и скидки</span>
-			  </div>
-			  <div class="col-two">
-			    <strong class="head-title">Покупка у OneTwoCar</strong>
-				<span><p>Честная цена от производителя.</br>Экономия <b>до 70%</b> от цены диллера</p></span>
-				<span><p><b>Доставка</b> автомобиля прямо <b>к дому</b></p></span>
-				<span><p><b>Огромный выбор</b> автомобилей. Возможность сравнить</br> актуальные цены и комплектации сразу по всем производителям</p></span>
-				<span><p>Все марки и модели <b>в вашем смартфоне</b> - </br>выбирайте, не выходя из дома</p></span>
-				<span><p>Возможность найти <b>эксклюзивные</b> марки, модели и</br> комплектации, не представленные в вашем городе</p></span>
-				<span><p>Опции и финансовые услуги <b>только по запросу</b> клиента</p></span>
-				<span><p><b>Не нужно</b> общаться с навязчивыми менеджерами</p></span>
-				<span><p>Максимальная <b>простота и скорость</b> покупки - вы выбираете</br> автомобиль, все остальные вопросы мы решаем за вас</p></span>
-				<span><p><b>Прозрачность и безопасность</b> сделки,</br>возможность оформления смарт-контракта</p></span>
-				<span><p>Прозрачная цена, без нюансов. Вы можете воспользоваться <b>официальными акциями</b> от дистрибьютора</p></span>
-			  </div>
-			  <div class="col-three">
-			    <strong class="head-title">Покупка у дилера</strong>
-				<span>Необоснованно завышенные цены на автомобили</span>
-				<span>Многократные визиты в салон,</br>прежде чем вы сможете купить свой автомобиль</span>
-				<span>Очень трудно найти нужный</br>автомобиль в нужной комплектации</span>
-				<span>Нужно посетить всех дилеров в городе,</br>чтобы выбрать подходящий вам автомобиль</span>
-				<span>Скудный выбор марок, моделей и комплектаций, ограниченный дилерами, представленными в вашем городе</span>
-				<span>Навязывание дополнительных опций, кредитов, пакетов и услуг</span>
-				<span>Менеджеры, которые упорно будут навязывать</br>покупку и надоедать звонками</span>
-				<span>Долгий цикл покупки, сопровождающийся бесконечной бумажной волокитой и многократными визитами в салон</span>
-				<span>Дилеры, заинтересованные в получении максимальной прибыли, часто скрывают полные условия сделки</span>
-				<span>Все скидки искусственны – дилер всегда компенсирует свои издержки.Официальные акции от дистрибьютора чаще всего не афишируются</span>
-			  </div>
-		   </div>
-		   </div>
-       </div>
+		</div>
 	</section>
 	{% if questions %}
 	<section id="faq" class="faq">
-      <div class="container">
-	    <h2>Часто задаваемые вопросы</h2>
-		{% for question in questions %}
-		<div class="accordion" id="accordionExample{{question.pk}}">
-			<div class="accordion-item">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{question.pk}}" aria-expanded="false" aria-controls="collapse{{question.pk}}">
-				  {{question.question}}
-				</button>
-			  <div id="collapse{{question.pk}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample{{question.pk}}">
-				<div class="accordion-body">
-				  {{question.answer}}
+		<div class="container">
+			<h2>Часто задаваемые вопросы</h2>
+			{% for question in questions %}
+			<div class="accordion" id="accordionExample{{question.pk}}">
+				<div class="accordion-item">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+						data-bs-target="#collapse{{question.pk}}" aria-expanded="false"
+						aria-controls="collapse{{question.pk}}">
+						{{question.question}}
+					</button>
+					<div id="collapse{{question.pk}}" class="accordion-collapse collapse" aria-labelledby="headingOne"
+						data-bs-parent="#accordionExample{{question.pk}}">
+						<div class="accordion-body">
+							{{question.answer}}
+						</div>
+					</div>
 				</div>
-			  </div>
 			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
-	  </div>
 	</section>
 	{% endif %}
 	<section class="question">
-       <div class="container">
-	     <div class="wrap">
-	        <div class="form">
-		      <h2>Есть вопрос?</h2>
-			  <span class="subtitle">Задайте его через форму ниже, мы ответим вам в ближайшее время</span>
-			  <form action="send_question" method="post" class="needs-validation" novalidate>
-				{% csrf_token %}
-                <input id="name" type="text" name="name" placeholder="Ваше имя" required>
-				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
-				<input id="tel" type="tel" name="tel" placeholder="+7 (- - -) - - -   - -   - -   " required>
-				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
-				<textarea id="text" name="text" placeholder="Ваш вопрос"></textarea>
-				<div class="invalid-feedback">Это поле обязательно для заполнения</div>
-				<script src="https://www.google.com/recaptcha/api.js"></script>
-        		<div class="g-recaptcha" data-sitekey="{{CAPTCHA_PUBLIC_KEY}}"></div>
-				<span class="form-text">Нажимая "Отправить", вы соглашаетесь на сбор и обработку персональных данных</span>
-				<button class="submit" type="submit">Отправить</button>
-              </form>
-		    </div>
-		 </div>
-	   </div>
-	</section>  
-	<section id="contact" class="contact" style="display:none">
-       <div class="container">
-		    <h2>Контакты</h2>
-            <div class="soc-icon">
-			   <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
+		<div class="container">
+			<div class="wrap">
+				<div class="form">
+					<h2>Есть вопрос?</h2>
+					<span class="subtitle">Задайте его через форму ниже, мы ответим вам в ближайшее время</span>
+					<form action="send_question" method="post" class="needs-validation" novalidate>
+						{% csrf_token %}
+						<input id="name" type="text" name="name" placeholder="Ваше имя" required>
+						<div class="invalid-feedback">Это поле обязательно для заполнения</div>
+						<input id="tel" type="tel" name="tel" placeholder="+7 (- - -) - - -   - -   - -   " required>
+						<div class="invalid-feedback">Это поле обязательно для заполнения</div>
+						<textarea id="text" name="text" placeholder="Ваш вопрос"></textarea>
+						<div class="invalid-feedback">Это поле обязательно для заполнения</div>
+						<script src="https://www.google.com/recaptcha/api.js"></script>
+						<div class="g-recaptcha" data-sitekey="{{CAPTCHA_PUBLIC_KEY}}"></div>
+						<span class="form-text">Нажимая "Отправить", вы соглашаетесь на сбор и обработку персональных
+							данных</span>
+						<button class="submit" type="submit">Отправить</button>
+					</form>
+				</div>
 			</div>
-			<span class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
+		</div>
+	</section>
+	<section id="contact" class="contact" style="display:none">
+		<div class="container">
+			<h2>Контакты</h2>
+			<div class="soc-icon">
+				<a href="https://instagram.com/carpoint_russia" target="_blank"><img
+						src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
+			</div>
+			<span class="bot"><a href="https://t.me/One_Two_Car_bot" target="_blank"><img
+						src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в
+					Telegram</a></span>
 			<a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
-	   </div>
+		</div>
 	</section>
 	<footer>
-	  <div class="footer">
-        <div class="container">
-		  <div class="row">
-		    <div class="col-lg-2">
-			    <a href="/" target="_blank"><img src="{% static 'img/logo_footer.svg' %}" alt="OneTwoCar"></a>
+		<div class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2">
+						<a href="/" target="_blank"><img src="{% static 'img/logo_footer.svg' %}" alt="OneTwoCar"></a>
+					</div>
+					<div class="col-lg-3">
+						<div class="menu-footer">
+							<a href="#podbor">Подобрать автомобиль</a>
+							<a href="#new">Новинки</a>
+							<a href="#order-work">Порядок работы</a>
+							<a href="#about">О компании</a>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="menu-footer">
+							<a href="#faq">Часто задаваемые вопросы</a>
+							<a href="oferta" target="_blank">Договор оферты</a>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="soc-icon">
+							<a href="https://instagram.com/carpoint_russia" target="_blank"><img
+									src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
+						</div>
+						<span class="bot"><a href="https://t.me/One_Two_Car_bot"><img
+									src="{% static 'img/paper-plane.svg' %}"
+									alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
+						<a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
+					</div>
+				</div>
+				<div class="copyright">
+					<div class="row">
+						<div class="col-lg-4"><span>© 2022 One Two Car. Все права защищены.</span></div>
+						<div class="col-lg-8"><span class="text-right">Все материалы, размещенные на настоящем сайте
+								носят исключительно информационный характер и не являются публичной офертой.</span>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-lg-3">
-			  <div class="menu-footer">
-			    <a href="#podbor">Подобрать автомобиль</a>
-				<a href="#new">Новинки</a>
-				<a href="#order-work">Порядок работы</a>
-				<a href="#about">О компании</a>
-			  </div>
-			</div>
-			<div class="col-lg-4">
-			    <div class="menu-footer">
-			    <a href="#faq">Часто задаваемые вопросы</a>
-				<a href="oferta" target="_blank">Договор оферты</a>
-			  </div>
-			</div>
-			<div class="col-lg-3">
-                <div class="soc-icon">
-			      <a href="https://instagram.com/carpoint_russia" target="_blank"><img src="{% static 'img/Instagram_white_1.svg' %}" alt="Instagram"></a>
-			    </div>  
-			   <span class="bot"><a href="https://t.me/One_Two_Car_bot"><img src="{% static 'img/paper-plane.svg' %}" alt="Бот-конфигуратор в Telegram">Бот-конфигуратор в Telegram</a></span>
-			   <a href="mailto:info@onetwocar.com" class="email-info">info@onetwocar.com</a>
-			 </div>
-		   </div>
-		<div class="copyright">
-		   <div class="row">
-		    <div class="col-lg-4"><span>© 2022 One Two Car.  Все права защищены.</span></div>
-			<div class="col-lg-8"><span class="text-right">Все материалы, размещенные на настоящем сайте носят исключительно информационный характер и не являются публичной офертой.</span></div>
-		   </div>
-	   </div>	
-	    </div>
-	   </div>
-    </footer>
-	
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+		</div>
+	</footer>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 	<!--<script src="{% static 'owl-carousel/jquery.min.js' %}"></script>-->
-    <script src="{% static 'owl-carousel/owl.carousel.js' %}"></script>
+	<script src="{% static 'owl-carousel/owl.carousel.js' %}"></script>
 	<script>
-            $(document).ready(function() {
-              var owl = $('#owl-carousel');
-              owl.owlCarousel({
-                items: 8,
-                loop: true,
-                margin: 10,
-                autoplay: true,
-                autoplayTimeout: 1000,
-                autoplayHoverPause: true,
-				responsive : true,
-    responsive:{
-        0:{
-            items:3,
-            nav:true
-        },
-        600:{
-            items:3,
-            nav:false
-        },
-        1000:{
-            items:5,
-            nav:true,
-            loop:false
-        }
-    }
-              });
-              $('.play').on('click', function() {
-                owl.trigger('play.owl.autoplay', [1000])
-              })
-              $('.stop').on('click', function() {
-                owl.trigger('stop.owl.autoplay')
-              })
-            })
-          </script>
-	
+		$(document).ready(function () {
+			var owl = $('#owl-carousel');
+			owl.owlCarousel({
+				items: 8,
+				loop: true,
+				margin: 10,
+				autoplay: true,
+				autoplayTimeout: 1000,
+				autoplayHoverPause: true,
+				responsive: true,
+				responsive: {
+					0: {
+						items: 3,
+						nav: true
+					},
+					600: {
+						items: 3,
+						nav: false
+					},
+					1000: {
+						items: 5,
+						nav: true,
+						loop: false
+					}
+				}
+			});
+			$('.play').on('click', function () {
+				owl.trigger('play.owl.autoplay', [1000])
+			})
+			$('.stop').on('click', function () {
+				owl.trigger('stop.owl.autoplay')
+			})
+		})
+	</script>
+
 	<script src="{% static 'js/maskinput.js' %}"></script>
 	<script src="{% static 'js/search.js' %}"></script>
 	<script src="{% static 'js/modal.js' %}"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script type="text/javascript">
-   jQuery(function(jQuery){
-   jQuery("#tel").mask("+7(999) 999-9999");
-   jQuery("#tel1").mask("+7(999) 999-9999");
-   });
-</script>
-	
-<script>
-var x, i, j, l, ll, selElmnt, a, b, c;
-/* Look for any elements with the class "custom-select": */
-x = document.getElementsByClassName("custom-select");
-l = x.length;
-for (i = 0; i < l; i++) {
-  selElmnt = x[i].getElementsByTagName("select")[0];
-  ll = selElmnt.length;
-  /* For each element, create a new DIV that will act as the selected item: */
-  a = document.createElement("DIV");
-  a.setAttribute("class", "select-selected");
-  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-  x[i].appendChild(a);
-  /* For each element, create a new DIV that will contain the option list: */
-  b = document.createElement("DIV");
-  b.setAttribute("class", "select-items select-hide");
-  for (j = 1; j < ll; j++) {
-    /* For each option in the original select element,
-    create a new DIV that will act as an option item: */
-    c = document.createElement("DIV");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        /* When an item is clicked, update the original select box,
-        and the selected item: */
-        var y, i, k, s, h, sl, yl;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        sl = s.length;
-        h = this.parentNode.previousSibling;
-        for (i = 0; i < sl; i++) {
-          if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            yl = y.length;
-            for (k = 0; k < yl; k++) {
-              y[k].removeAttribute("class");
-            }
-            this.setAttribute("class", "same-as-selected");
-            break;
-          }
-        }
-        h.click();
-    });
-    b.appendChild(c);
-  }
-  x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
-    /* When the select box is clicked, close any other select boxes,
-    and open/close the current select box: */
-    e.stopPropagation();
-    closeAllSelect(this);
-    this.nextSibling.classList.toggle("select-hide");
-    this.classList.toggle("select-arrow-active");
-  });
-}
-
-function closeAllSelect(elmnt) {
-  /* A function that will close all select boxes in the document,
-  except the current select box: */
-  var x, y, i, xl, yl, arrNo = [];
-  x = document.getElementsByClassName("select-items");
-  y = document.getElementsByClassName("select-selected");
-  xl = x.length;
-  yl = y.length;
-  for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
-      arrNo.push(i)
-    } else {
-      y[i].classList.remove("select-arrow-active");
-    }
-  }
-  for (i = 0; i < xl; i++) {
-    if (arrNo.indexOf(i)) {
-      x[i].classList.add("select-hide");
-    }
-  }
-}
-
-/* If the user clicks anywhere outside the select box,
-then close all select boxes: */
-document.addEventListener("click", closeAllSelect);
-</script>
- <script>// Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
-(function () {
-  'use strict'
-
-  // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
-  var forms = document.querySelectorAll('.needs-validation')
-
-  // Зацикливайтесь на них и предотвращайте отправку
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()</script>
-          
-    <script>
-    $(document).ready(function() {
-
-      var owl = $("#owl-demo");
-	  
-
-      owl.owlCarousel({
-
-      items : 3, //10 items above 1000px browser width
-      itemsDesktop : [1000,3], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-      itemsTablet: [600,1], //2 items between 600 and 0;
-      itemsMobile : true, // itemsMobile disabled - inherit from itemsTablet option
-	  navigation : false,
-      dots : false
-      });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl.trigger('owl.prev');
-      })
-      $(".play").click(function(){
-        owl.trigger('owl.play',1000);
-      })
-      $(".stop").click(function(){
-        owl.trigger('owl.stop');
-      })
-
-
-    });
-    </script>
-	<script>
-$(document).ready(function(){
-  $('.item-auto-open').on('click', function(){
-    $(this).parent().toggleClass('item-auto-plus');
-    // console.log($(this).parent().attr('class'));
-  });
-});
-</script>
-<script>
-$("#obem").change(function(){
-    if($(this).val() == "0") {
-	   $('#mochnost').removeClass('disabled');
-    } else {
-       $('#mochnost').addClass('disabled');
-    }
-});
-$("#mochnost").change(function(){
-    if($(this).val() == "0") {
-	   $('#obem').removeClass('disabled');
-    } else {
-       $('#obem').addClass('disabled');
-    }
-});
-</script>
-
-<script>
- $(document).ready(function(){
-	$('.burger').click(function () {
-		$('.menu-mobile').toggleClass('mobile-open');
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	<script type="text/javascript">
+		jQuery(function (jQuery) {
+			jQuery("#tel").mask("+7(999) 999-9999");
+			jQuery("#tel1").mask("+7(999) 999-9999");
 		});
-	});
-</script>
-  </body>
+	</script>
+
+	<script>
+		var x, i, j, l, ll, selElmnt, a, b, c;
+		/* Look for any elements with the class "custom-select": */
+		x = document.getElementsByClassName("custom-select");
+		l = x.length;
+		for (i = 0; i < l; i++) {
+			selElmnt = x[i].getElementsByTagName("select")[0];
+			ll = selElmnt.length;
+			/* For each element, create a new DIV that will act as the selected item: */
+			a = document.createElement("DIV");
+			a.setAttribute("class", "select-selected");
+			a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+			x[i].appendChild(a);
+			/* For each element, create a new DIV that will contain the option list: */
+			b = document.createElement("DIV");
+			b.setAttribute("class", "select-items select-hide");
+			for (j = 1; j < ll; j++) {
+				/* For each option in the original select element,
+				create a new DIV that will act as an option item: */
+				c = document.createElement("DIV");
+				c.innerHTML = selElmnt.options[j].innerHTML;
+				c.addEventListener("click", function (e) {
+					/* When an item is clicked, update the original select box,
+					and the selected item: */
+					var y, i, k, s, h, sl, yl;
+					s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+					sl = s.length;
+					h = this.parentNode.previousSibling;
+					for (i = 0; i < sl; i++) {
+						if (s.options[i].innerHTML == this.innerHTML) {
+							s.selectedIndex = i;
+							h.innerHTML = this.innerHTML;
+							y = this.parentNode.getElementsByClassName("same-as-selected");
+							yl = y.length;
+							for (k = 0; k < yl; k++) {
+								y[k].removeAttribute("class");
+							}
+							this.setAttribute("class", "same-as-selected");
+							break;
+						}
+					}
+					h.click();
+				});
+				b.appendChild(c);
+			}
+			x[i].appendChild(b);
+			a.addEventListener("click", function (e) {
+				/* When the select box is clicked, close any other select boxes,
+				and open/close the current select box: */
+				e.stopPropagation();
+				closeAllSelect(this);
+				this.nextSibling.classList.toggle("select-hide");
+				this.classList.toggle("select-arrow-active");
+			});
+		}
+
+		function closeAllSelect(elmnt) {
+			/* A function that will close all select boxes in the document,
+			except the current select box: */
+			var x, y, i, xl, yl, arrNo = [];
+			x = document.getElementsByClassName("select-items");
+			y = document.getElementsByClassName("select-selected");
+			xl = x.length;
+			yl = y.length;
+			for (i = 0; i < yl; i++) {
+				if (elmnt == y[i]) {
+					arrNo.push(i)
+				} else {
+					y[i].classList.remove("select-arrow-active");
+				}
+			}
+			for (i = 0; i < xl; i++) {
+				if (arrNo.indexOf(i)) {
+					x[i].classList.add("select-hide");
+				}
+			}
+		}
+
+		/* If the user clicks anywhere outside the select box,
+		then close all select boxes: */
+		document.addEventListener("click", closeAllSelect);
+	</script>
+	<script>// Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
+		(function () {
+			'use strict'
+
+			// Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Зацикливайтесь на них и предотвращайте отправку
+			Array.prototype.slice.call(forms)
+				.forEach(function (form) {
+					form.addEventListener('submit', function (event) {
+						if (!form.checkValidity()) {
+							event.preventDefault()
+							event.stopPropagation()
+						}
+
+						form.classList.add('was-validated')
+					}, false)
+				})
+		})()</script>
+
+	<script>
+		$(document).ready(function () {
+
+			var owl = $("#owl-demo");
+
+
+			owl.owlCarousel({
+
+				items: 3, //10 items above 1000px browser width
+				itemsDesktop: [1000, 3], //5 items between 1000px and 901px
+				itemsDesktopSmall: [900, 3], // 3 items betweem 900px and 601px
+				itemsTablet: [600, 1], //2 items between 600 and 0;
+				itemsMobile: true, // itemsMobile disabled - inherit from itemsTablet option
+				navigation: false,
+				dots: false
+			});
+
+			// Custom Navigation Events
+			$(".next").click(function () {
+				owl.trigger('owl.next');
+			})
+			$(".prev").click(function () {
+				owl.trigger('owl.prev');
+			})
+			$(".play").click(function () {
+				owl.trigger('owl.play', 1000);
+			})
+			$(".stop").click(function () {
+				owl.trigger('owl.stop');
+			})
+
+
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			$('.item-auto-open').on('click', function () {
+				$(this).parent().toggleClass('item-auto-plus');
+				// console.log($(this).parent().attr('class'));
+			});
+		});
+	</script>
+	<script>
+		$("#obem").change(function () {
+			if ($(this).val() == "0") {
+				$('#mochnost').removeClass('disabled');
+			} else {
+				$('#mochnost').addClass('disabled');
+			}
+		});
+		$("#mochnost").change(function () {
+			if ($(this).val() == "0") {
+				$('#obem').removeClass('disabled');
+			} else {
+				$('#obem').addClass('disabled');
+			}
+		});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			$('.burger').click(function () {
+				$('.menu-mobile').toggleClass('mobile-open');
+			});
+		});
+	</script>
+</body>
+
 </html>

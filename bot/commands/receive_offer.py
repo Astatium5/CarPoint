@@ -115,7 +115,7 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
         marks.sort()
         reply_markup = marks_markup(marks=marks, callback_data="mark#")
         reply_markup.add(
-            InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+            # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
             InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
         text = offer_page.find("select_mark").text
 
@@ -159,7 +159,7 @@ async def get_max_price(message: Message, state: FSMContext) -> Message:
         marks.sort()
         reply_markup = marks_markup(marks=marks, callback_data="mark#")
         reply_markup.add(
-            InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+            # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
             InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
         text = offer_page.find("select_mark").text
 
@@ -189,7 +189,7 @@ async def get_specific_amount(message: Message, state: FSMContext) -> Message:
         marks.sort()
         reply_markup = marks_markup(marks=marks, callback_data="mark#")
         reply_markup.add(
-            InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
+            # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
             InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
         text = offer_page.find("select_mark").text
 

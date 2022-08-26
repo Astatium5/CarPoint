@@ -95,14 +95,17 @@
 											<h5 class="modal-title" id="exampleModalLongTitle">Купить автомобиль</h5>
 										</div>
 										<div class="modal-body">
-											<!--<div class="auto-form">
-            <div class="auto-img"><img src="{% static 'img/auto.svg' %}" alt="Auto"></div>
-			<div class="auto-info">
-			    <h5 class="auto-title">HAVAL F7x  Универсал 5 дверей</h5>
-				<h6 class="auto-subtitle">Comfort 1.5  4x2</h6>
-				<span>АКПП,</span><span> бензин,</span><span>передний 2WD,</span><span> ДВС 1.5</span>
-			</div>
-        </div>-->
+											<div class="auto-form">
+												<div class="auto-img"><img id="auto-img" src="" alt="Auto"></div>
+												<div class="auto-info">
+													<h5 class="auto-title"></h5>
+													<h6 class="auto-subtitle">Comfort 1.5  4x2</h6>
+													<span id="transmission"></span>
+													<span id="type_fuel"></span>
+													<span id="wd"></span>
+													<span id="engine_volume"></span>
+												</div>
+											</div>
 											<form class="modal-form" action="" method="post">
 												<input id="name" type="text" name="name" placeholder="Ваше имя">
 												<select id="city" list="datalistOptions" id="exampleDataList"
@@ -380,7 +383,9 @@
 						</div>
 						<div class="item-auto-price">
 							<h6>{{w_car.price|add:"0"}} ₽</h6>
-							<a target="_blank" onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
+							<a target="_blank" onclick="showLeaveRequestModal(
+								'{{w_car.id}}', '{{w_car.title}}', '{{w_car.image}}', '{{k}}',
+								'{{w_car.transmission}}', '{{w_car.engine_type_fuel}}', '{{w_car.wd}}', '{{w_car.engine_volume}}')">Купить</a>
 						</div>
 					</div>
 					{% endfor %}

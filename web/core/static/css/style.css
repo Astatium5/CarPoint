@@ -1232,7 +1232,7 @@ footer {
 .variant-color .form-check-input:nth-child(4n) {
     background-color: #E30613;
 }
-.item-auto-price span {
+.item-auto-price h1 {
 	font-family: 'Manrope';
     font-style: normal;
     font-weight: 700;

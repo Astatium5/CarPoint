@@ -371,15 +371,19 @@ class Web:
         return redirect("/")
 
     def leave_request(request):
+        is_new = request.POST.get("is_new")
         car_id = request.POST.get("car_id")
         name = request.POST.get("name")
         city = request.POST.get("city")
         tel = re.sub("[^0-9]", "", request.POST.get("tel"))
         email = request.POST.get("email")
         address = request.POST.get("address")
-        response = leaveRequest(car_id, name, city, tel, email, address)
-        car = Car.objects.get(id=car_id)
-        Entry.objects.create(car=car, email=email, name=name, address=address, phone=tel)
+        response = leaveRequest(car_id, name, city, tel, email, address, is_new)
+        if is_new:
+            car = NewCar.objects.get(id=car_id)
+        else:
+            car = Car.objects.get(id=car_id)
+            Entry.objects.create(car=car, email=email, name=name, address=address, phone=tel)
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
@@ -461,8 +465,12 @@ def sendQuestion(name, tel, text):
     response = requests.post(url, data=data)
     return response
 
-def leaveRequest(car_id, name, city, tel, email, address):
+def leaveRequest(car_id, name, city, tel, email, address, is_new):
     host = os.getenv("HOST")
+    if is_new:
+        table_name = "newcar"
+    else:
+        table_name = "car"
     text = (
         F"<b>Новая заявка. (WEB)</b>\n"
         F"ID автомобиля: <code>{car_id}</code>\n"
@@ -471,7 +479,7 @@ def leaveRequest(car_id, name, city, tel, email, address):
         F"Город: <code>{city}</code>\n"
         F"Номер телефона: <code>{tel}</code>\n"
         F"Адрес: <code>{address}</code>\n"
-        F"Подробная информация об автомобиле: <code>{host}/admin/core/car/{car_id}/change</code>"
+        F"Подробная информация об автомобиле: <code>{host}/admin/core/{table_name}/{car_id}/change</code>"
     )
     bot_token = os.getenv("BOT_TOKEN")
     chat_id = os.getenv("CHAT_ID")

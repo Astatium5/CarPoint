@@ -8,11 +8,21 @@ function showLeaveRequestModal(id, title, image, k, transmission, type_fuel, wd,
     modal.find('#wd').text(`${wd},`);
     modal.find('#engine_volume').text(`${engine_volume.replace(",", ".")}`);
     var lv_btn = document.getElementById("leave-request-btn");
-    lv_btn.setAttribute( "onClick", `javascript: leaveRequest(${id});` );
+    lv_btn.setAttribute( "onClick", `javascript: leaveRequest(${id}, false);` );
     modal.modal("show");
 }
 
-function leaveRequest(car_id){
+function showLeaveRequestModalNewCar(id, title, image, price){
+    var modal = $("#lr-modal");
+    modal.find('.auto-title').text(title);
+    modal.find('#auto-img').attr("src", image);
+    modal.find('.auto-subtitle').text(`${parseInt(price)} ₽`);
+    var lv_btn = document.getElementById("leave-request-btn");
+    lv_btn.setAttribute( "onClick", `javascript: leaveRequest(${id}, true);` );
+    modal.modal("show");
+}
+
+function leaveRequest(car_id, is_new){
     var name = $("#name").val();
     var city = $("#city").val();
     var tel = $("#tel1").val();
@@ -22,6 +32,7 @@ function leaveRequest(car_id){
         return alert("Нужно заполнить все поля!");
     }
     var data = new FormData(); // Init new FormData object.
+    data.append("is_new", is_new)
     data.append("car_id", car_id);
     data.append("name", name);
     data.append("city", city);

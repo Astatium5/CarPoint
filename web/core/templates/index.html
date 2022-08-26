@@ -99,7 +99,7 @@
 												<div class="auto-img"><img id="auto-img" src="" alt="Auto"></div>
 												<div class="auto-info">
 													<h5 class="auto-title"></h5>
-													<h6 class="auto-subtitle">Comfort 1.5  4x2</h6>
+													<h6 class="auto-subtitle"></h6>
 													<span id="transmission"></span>
 													<span id="type_fuel"></span>
 													<span id="wd"></span>
@@ -406,7 +406,7 @@
 						<h3 class="">{{car.title}}</h3>
 						<div class="item-img"><img src="{{car.image.url}}" alt="Car"></div>
 						<div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span>
-							<a onclick="showLeaveRequestModal('{{w_car.id}}')">Купить</a>
+							<a onclick="showLeaveRequestModalNewCar('{{car.id}}', '{{car.title}}', '{{car.image.url}}', '{{car.price}}')">Купить</a>
 						</div>
 					</div>
 					{% endfor %}

@@ -266,7 +266,6 @@ class Web:
         cities = City.objects.all()
         new_cars = NewCar.objects.all()
         questions = Question.objects.all()
-        is_search = False
         image = None
         main_length = 0
         min_price = 0
@@ -281,15 +280,13 @@ class Web:
         cars = p_find_car(pricerange, mark, transmission, body, type_fuel, volume, power)
 
         if cars:
-            is_search = True
             cars_values = list(cars.values())
             main_length = sum([len(v["pattern"]) for v in cars_values])
             image = cars_values[0]["pattern"][0]["image"]
             min_price = min([car["pattern"][0]["price"] for car in cars_values])
 
         return render(request, "index.html", dict(cities=cities, CAPTCHA_PUBLIC_KEY=CAPTCHA_PUBLIC_KEY,
-                new_cars=new_cars, questions=questions,
-                is_search=is_search, cars=cars, image=image, min_price=min_price,
+                new_cars=new_cars, questions=questions, cars=cars, image=image, min_price=min_price,
                 main_length=main_length, mark=mark))
 
     def oferta(request) -> HttpResponse:

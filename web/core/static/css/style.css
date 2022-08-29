@@ -161,6 +161,9 @@ button.close {
     float: left;
     padding: 0 10px;
 }
+.logo-img .owl-item {
+	max-width:100px;
+}
 .logo-img .img:first-child {
 	margin-left: 0;
 }
@@ -1428,7 +1431,7 @@ footer .bot a {
     left: 0;
 	height: 100vh;
 }
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
 	.menu-mobile {
 	display:block;
 }
@@ -1461,9 +1464,12 @@ footer .bot a {
     line-height: 110%;
 	padding: 16px 0;
 }
-.baner-img img {
-    position: relative;
-	max-width: 100%;
+.baner-img {
+    text-align: right;
+}
+.header-baner .subtitle {
+    font-size: 15px;
+    max-width: 78%;
 }
 .baner-img:after {
     content: "";
@@ -1666,6 +1672,12 @@ footer .bot a {
 }
 .header-info .col-lg-3 {
 	margin-bottom: 30px;
+}
+}
+@media (max-width: 900px) {
+.baner-img img {
+    position: relative;
+	max-width: 100%;
 }
 }
 @media (max-width: 576px) {

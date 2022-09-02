@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from .models import *
 
 
-@admin.action(description='Клонировать')
+@admin.action(description='Клонировать выбранные Автомобили')
 def clone_object(modeladmin, request, queryset):
     obj = queryset.get()
     car = copy.copy(obj)

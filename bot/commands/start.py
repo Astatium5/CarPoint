@@ -21,7 +21,7 @@ async def start(message: Message, state: FSMContext) -> Union[Message, None]:
         # Init OfferMetaData and set to vatiable
         globals.offer_metadata = OfferMetaData()
         await state.finish()
-        response = api_requests.create_user(user_id=message.from_user.id, first_name=message.from_user.first_name,
+        response: dict = api_requests.create_user(user_id=message.from_user.id, first_name=message.from_user.first_name,
                                             username=message.from_user.username)  # Create new user
 
         bot_info = await bot.get_me()  # Get bot info

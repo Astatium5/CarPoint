@@ -13,11 +13,11 @@ def make_request(path: str, headers=None, timeout=7, **kwargs) -> dict:
     if headers:
         HEADERS.update(convert_to_headers(**headers))
     if kwargs:
-        values = [str(v) for v in kwargs.values()]
-        args_string = "/".join(values)
-        url = (rF"{config.host}/{path}{args_string}")
+        values: list = [str(v) for v in kwargs.values()]
+        args_string: str = "/".join(values)
+        url: str = rF"{config.host}/{path}{args_string}"
     else:
-        url = (rF"{config.host}/{path}")
+        url: str = rF"{config.host}/{path}"
     try:
         response = requests.get(url, headers=HEADERS, timeout=timeout, verify=False)
         if response.status_code == 200:

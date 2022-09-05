@@ -1,5 +1,5 @@
 class FloatUrlParameterConverter:
-    regex = '[0-9]+\.?[0-9]+'
+    regex: str = '[0-9]+\.?[0-9]+'
 
     def to_python(self, value):
         return float(value)
@@ -9,7 +9,7 @@ class FloatUrlParameterConverter:
 
 
 class BooleanUrlParameterConverter:
-    regex = "$"
+    regex: str = "$"
 
     def to_python(self, value):
         return bool(value)

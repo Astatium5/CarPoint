@@ -1,4 +1,3 @@
-from email import message
 import re
 from collections import Counter
 from typing import Any, Dict, Union
@@ -18,7 +17,7 @@ from log.logger import logger
 from utils.converter import *
 from keyboard.keyboard import *
 from config.config import Config
-from . import start
+from . import start  # Use handler
 
 MAX_SHOW: int = 20
 
@@ -104,11 +103,13 @@ async def get_price(query: CallbackQuery) -> Union[Message, None]:
     globals.offer_metadata.MinPrice = price_range.get("min")
     globals.offer_metadata.MaxPrice = price_range.get("max")
 
-    response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+    response: dict = api_requests.get_all_marks(
+        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     marks: Union[Any, None] = response.get("all_marks")
     if not marks:
         reply_markup = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search")]
+            [InlineKeyboardButton(
+                text="Начать поиск сначала", callback_data="new_search")]
         ])
         text = "Ничего не найдено."
     else:
@@ -148,11 +149,13 @@ async def get_max_price(message: Message, state: FSMContext) -> Message:
         return await message.answer("Значение не должно быть меньше предыдущего!")
     await state.finish()
     globals.offer_metadata.MaxPrice = message.text
-    response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+    response: dict = api_requests.get_all_marks(
+        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     marks: Union[Any, None] = response.get("all_marks")
     if not marks:
         reply_markup = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search")]
+            [InlineKeyboardButton(
+                text="Начать поиск сначала", callback_data="new_search")]
         ])
         text = "Ничего не найдено."
     else:
@@ -161,7 +164,7 @@ async def get_max_price(message: Message, state: FSMContext) -> Message:
         reply_markup.add(
             # InlineKeyboardButton(text="Искать по всем маркам", callback_data="mark#any"),
             InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search"))
-        text = offer_page.find("select_mark").text
+        text: Any = offer_page.find("select_mark").text
 
     return await message.answer(text, reply_markup=reply_markup)
 
@@ -178,11 +181,13 @@ async def get_specific_amount(message: Message, state: FSMContext) -> Message:
         return await message.answer("Некорректный формат ввода!")
     await state.finish()
     globals.offer_metadata.MinPrice = message.text
-    response: dict = api_requests.get_all_marks(min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+    response: dict = api_requests.get_all_marks(
+        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     marks: Union[Any, None] = response.get("all_marks")
     if not marks:
         reply_markup = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Начать поиск сначала", callback_data="new_search")]
+            [InlineKeyboardButton(
+                text="Начать поиск сначала", callback_data="new_search")]
         ])
         text = "Ничего не найдено."
     else:
@@ -205,7 +210,7 @@ async def get_mark(query: CallbackQuery) -> Union[Message, None]:
         globals.offer_metadata.Mark = mark
 
     response: dict = api_requests.get_all_bodies(mark=mark,
-        min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+                                                 min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
     bodies: Union[Any, None] = response.get("all_bodies")
 
     reply_markup = InlineKeyboardMarkup()
@@ -265,7 +270,7 @@ async def get_fuel_type(query: CallbackQuery) -> Message:
         globals.offer_metadata.IsAnyFuelType = True
     else:
         globals.offer_metadata.FuelType = fuel_type
-    reply_markup = InlineKeyboardMarkup(
+    reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(
                 text="По объему", callback_data="by_volume")],
@@ -304,18 +309,18 @@ async def get_max_volume(message: Message, state: FSMContext) -> Message:
 
     await state.finish()
     globals.cars = await find_car()
-    reply_markup = InlineKeyboardMarkup()
+    reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup()
     if not globals.cars:
-        text = "Ничего не найдено."
+        text: str = "Ничего не найдено."
     else:
         transmissions = await get_transmission(globals.cars)
         if not transmissions:
-            text = "Ничего не найдено."
+            text: str = "Ничего не найдено."
         else:
             for transmission in transmissions:
                 reply_markup.add(InlineKeyboardButton(
                     text=transmission, switch_inline_query_current_chat=transmission))
-            text = offer_page.find("select_transmission").text
+            text: Any = offer_page.find("select_transmission").text
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(text, reply_markup=reply_markup)
@@ -346,19 +351,19 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
     globals.offer_metadata.MaxPower = message.text
     await state.finish()
     globals.cars = await find_car()
-    reply_markup = InlineKeyboardMarkup()
+    reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup()
     if not globals.cars:
-        text = "Ничего не найдено."
+        text: str = "Ничего не найдено."
     else:
-        transmissions = await get_transmission(globals.cars)
+        transmissions: list = await get_transmission(globals.cars)
         if not transmissions:
-            text = "Ничего не найдено."
+            text: str = "Ничего не найдено."
         else:
-            reply_markup = InlineKeyboardMarkup()
+            reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup()
             for transmission in transmissions:
                 reply_markup.add(InlineKeyboardButton(
                     text=transmission, switch_inline_query_current_chat=transmission))
-            text = offer_page.find("select_transmission").text
+            text: Any = offer_page.find("select_transmission").text
     reply_markup.add(InlineKeyboardButton(
         text="Начать поиск сначала", callback_data="new_search"))
     return await message.answer(text, reply_markup=reply_markup)
@@ -373,7 +378,7 @@ async def inline_echo(query: InlineQuery) -> Any:
     mark_ids: list = []
     if not globals.response:
         return not_found(query)
-    is_any = globals.response.get("is_any")
+    is_any: Any = globals.response.get("is_any")
     for car in globals.cars:
         if car.get("transmission") == transmission:
             id: Any = car.get("id")
@@ -386,15 +391,14 @@ async def inline_echo(query: InlineQuery) -> Any:
             type_fuel: Any = car.get("engine_type_fuel")
             wd: Any = car.get("wd")
             special = car.get("special")
-            item: InlineQueryResultArticle = InlineQueryResultArticle(id=id, title=title,
-                                                                    input_message_content=InputTextMessageContent(
-                                                                        title),
-                                                                    description=(F"Цена: {int(price)}₽\t"
-                                                                                F"Объем: {engine_volume}\t"
-                                                                                F"Мощность: {engine_power}\t"
-                                                                                F"Тип: {type_fuel},\t"
-                                                                                F"{wd}"),
-                                                                    hide_url=True, thumb_url=image)
+            item: InlineQueryResultArticle = InlineQueryResultArticle(
+                id=id, title=title, input_message_content=InputTextMessageContent(title),
+                description=(F"Цена: {int(price)}₽\t"
+                             F"Объем: {engine_volume}\t"
+                             F"Мощность: {engine_power}\t"
+                             F"Тип: {type_fuel},\t"
+                             F"{wd}"),
+                hide_url=True, thumb_url=image)
             if is_any:
                 if not price in price_arr and not mark_id in mark_ids:
                     mark_ids.append(mark_id)
@@ -437,8 +441,8 @@ async def find_car() -> Union[Any, None]:
 
 
 async def get_transmission(cars: list) -> list:
-    transmission = [car.get("transmission") for car in cars]
-    counter = Counter(transmission)
+    transmission: list = [car.get("transmission") for car in cars]
+    counter: Counter = Counter(transmission)
     return list(counter)
 
 

@@ -14,10 +14,10 @@ root = None  # Xml data from local file.
 user_id: int = None  # State user id.
 phone = None  # User phone.
 
-start = None
+start = None # Start function
 
 offer_metadata: OfferMetaData = None
 leave_request_metadata: LeaveRequestMetaData = None
 
-cars = None
-response = None
+cars = None # Cars
+response = None # Response

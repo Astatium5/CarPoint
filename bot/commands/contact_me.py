@@ -24,7 +24,7 @@ async def contact_me(query: CallbackQuery):
 
 @dp.message_handler(state=ContactMe.name)
 async def get_name(message: Message):
-    name = message.text
+    name: str = message.text
     globals.ContactMeMetaData.name = name
     await message.answer(contact_me_page.find("email").text)
     return await ContactMe.email.set()
@@ -35,7 +35,7 @@ async def get_email(message: Message):
     _email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
     if _email:
         return await message.answer("Почта не является валидной!")
-    email = message.text
+    email: str = message.text
     globals.ContactMeMetaData.email = email
     await message.answer(contact_me_page.find("phone").text)
     return await ContactMe.phone.set()
@@ -43,15 +43,15 @@ async def get_email(message: Message):
 
 @dp.message_handler(state=ContactMe.phone)
 async def get_phone(message: Message, state: FSMContext):
-    phone = re.sub("[^0-9]", "", message.text)
+    phone: str = re.sub("[^0-9]", "", message.text)
     if not phone:
         return await message.answer("Телефон не является валидным!")
     globals.ContactMeMetaData.phone = phone
 
     _ = globals.ContactMeMetaData
-    user_id = message.from_user.id
-    username = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
-    _contact_me_page = (
+    user_id: int = message.from_user.id
+    username: str = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
+    _contact_me_page: str = (
         F"<b>Связь с инвестором!</b>\n"
         F"ID пользователя:  <code>{user_id}</code>\n"
         F"Имя пользователя: {username}\n"

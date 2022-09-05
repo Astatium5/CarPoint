@@ -24,7 +24,7 @@ async def support(query: CallbackQuery):
 
 @dp.message_handler(state=Support.name)
 async def get_name(message: Message):
-    name = message.text
+    name: str = message.text
     globals.SupportMetaData.name = name
     await message.answer(support_page.find("email").text)
     return await Support.email.set()
@@ -35,7 +35,7 @@ async def get_email(message: Message):
     _email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
     if _email:
         return await message.answer("Почта не является валидной!")
-    email = message.text
+    email: str = message.text
     globals.SupportMetaData.email = email
     await message.answer(support_page.find("phone").text)
     return await Support.phone.set()
@@ -43,7 +43,7 @@ async def get_email(message: Message):
 
 @dp.message_handler(state=Support.phone)
 async def get_phone(message: Message):
-    phone = re.sub("[^0-9]", "", message.text)
+    phone: str = re.sub("[^0-9]", "", message.text)
     if not phone:
         return await message.answer("Телефон не является валидным!")
     globals.SupportMetaData.phone = phone
@@ -53,12 +53,12 @@ async def get_phone(message: Message):
 
 @dp.message_handler(state=Support.question)
 async def get_question(message: Message, state: FSMContext):
-    question = message.text
+    question: str = message.text
     globals.SupportMetaData.question = question
     _ = globals.SupportMetaData
-    user_id = message.from_user.id
+    user_id: int = message.from_user.id
     username = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
-    _support_page = (
+    _support_page: str = (
         F"<b>Новый вопрос. (BOT)</b>\n"
         F"ID пользователя: <code>{user_id}</code>\n"
         F"Имя пользователя: {username}\n"

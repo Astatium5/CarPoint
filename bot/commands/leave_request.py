@@ -61,13 +61,13 @@ async def get_address(message: Message) -> None:
 
 @dp.message_handler(state=LeaveRequest.phone)
 async def get_phone(message: Message, state: FSMContext) -> Message:
-    phone = re.sub("[^0-9]", "", message.text)
+    phone: str = re.sub("[^0-9]", "", message.text)
     if not phone:
         return await message.answer("Телефон не является валидным!")
     globals.leave_request_metadata.phone = phone
     _ = globals.leave_request_metadata
-    user_id = message.from_user.id
-    username = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
+    user_id: int = message.from_user.id
+    username: str = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
     _leave_request_page: str = (
         F"<b>Новая заявка. (BOT)</b>\n"
         F"ID пользователя: <code>{user_id}</code>\n"

@@ -17,9 +17,9 @@ api_requests: Requests = Requests()
 @dp.message_handler(state=Meeting.name)
 async def get_name(message: Message) -> None:
     name: str = re.sub("[^a-zA-Zа-яА-Я]", "", message.text)
-    response = api_requests.set_name(user_id=message.from_user.id, name=name)
+    response: dict = api_requests.set_name(user_id=message.from_user.id, name=name)
 
-    welcome_page = globals.root.find("welcome")
+    welcome_page: Any = globals.root.find("welcome")
     await message.answer(welcome_page.find("is_not_city").text)
     return await Meeting.city.set()
 
@@ -32,7 +32,7 @@ async def get_city(message: Message, state: FSMContext) -> Message:
     if not city:
         return await message.answer(welcome_page.find("city_is_not_found").text)
     else:
-        response = api_requests.set_city(
+        response: dict = api_requests.set_city(
             user_id=message.from_user.id, city=city)
 
         if not response.get("response"):

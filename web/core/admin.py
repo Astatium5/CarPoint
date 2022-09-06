@@ -18,14 +18,15 @@ def clone_object(modeladmin, request, queryset):
 
 @admin.register(BotUser)
 class BotUser(admin.ModelAdmin):
-    fields = ["user_id", "first_name", "phone", "city", "username", "name"]
-    list_display = ["user_id", "first_name", "phone", "get_city"]
+    fields = ["user_id", "first_name", "username", "name", "city"]
+    list_display = ["user_id", "first_name", "get_city"]
     readonly_fields = ("user_id", "first_name", "username",)
     search_fields = ["user_id"]
     search_help_text = "Для поиска введите идентификатор пользователя"
 
     def get_city(self, obj) -> Any:
-        return obj.city.title
+        if obj.city:
+            return obj.city.title
 
     get_city.short_description = 'Город'
 

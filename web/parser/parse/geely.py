@@ -28,89 +28,72 @@
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import requests
+from loguru import logger
 
-url = "https://showroom.geely-motors.com/catalog/vehicle-list-by-models?brandName=geely&TotalVehicleSearch%5Bstatus%5D=1&TotalVehicleSearch%5Bcity_id%5D%5B0%5D=1459&TotalVehicleSearch%5Bdealership_id%5D=&TotalVehicleSearch%5Bmodel_id%5D%5B0%5D=19095&TotalVehicleSearch%5BmodificationList%5D=&TotalVehicleSearch%5BdriveTypeList%5D=&TotalVehicleSearch%5BequipmentList%5D=&page="
-
-user_agnt = UserAgent()
-
-page_n = 1
-
-car_id = 24563
-
-engine_id = 10426
-
-transmission_id = 2
-
-#wd_id =
+from core.models import Car
 
 
+URL = r"https://showroom.geely-motors.com/catalog/vehicle-list-by-models?brandName=geely&TotalVehicleSearch%5Bstatus%5D=1&TotalVehicleSearch%5Bcity_id%5D%5B0%5D=1459&TotalVehicleSearch%5Bdealership_id%5D=&TotalVehicleSearch%5Bmodel_id%5D%5B0%5D=19095&TotalVehicleSearch%5BmodificationList%5D=&TotalVehicleSearch%5BdriveTypeList%5D=&TotalVehicleSearch%5BequipmentList%5D=&page="
+USER_AGENT = UserAgent()
 
-city_id = 78
-
-mark_id = 3
-
-
-wd_id = 1
-
-all_n = 0
-all_n2 = 0
-
-expenditure = '8.1 л.. смешанный'
-
-for i in range(8):
-
-    engine_n = 2
-
-    r = requests.get(url+str(page_n)+'&per-page=18', headers={'user-agent': f'{user_agnt.random}'})
-    page_n += 1
-
-    all_site = BeautifulSoup(r.text, "lxml")
-
-    all_name = all_site.find_all(class_="vehicle-preview--title--model")
-
-    all_status = all_site.find_all(class_="vehicle-preview--title--equipment")
-
-    all_price = all_site.find_all(class_="vehicle-preview--maininfo")
-
-    all_engine = all_site.find_all(class_="vehicle-preview--information--item--text")
-
-    all_image = all_site.find_all("picture")
-
-    for i in range(len(all_price)):
-
-        name = all_name[i].text
-        status = all_status[i].text
-        engine = all_engine[engine_n].text
-
-        price = all_price[i]
-        try :
-            price = price.find(class_="vehicle-preview--price vehicle-preview--price--action").text
-        except AttributeError:
-            price = price.find(class_="vehicle-preview--price").text
-
-        price = price.replace(' ', '').replace('\t', '').replace('\n', '')
-
-        image = all_image[i].find("img")
-        link = image['data-srcset'].rsplit(',')
-
-        if (status == ' Luxury'):
-            set_id = 1723
-        elif (status == ' Flagship'):
-            set_id = 1724
-        else :
-            set_id = 0
-
-        print(f"""({car_id}, '{name+status}', {set_id}, '{link[0]}', {int(price)}, {engine_id}, {transmission_id}, {wd_id}, '{expenditure}', {city_id}, {mark_id}),""")
-
-        car_id += 1
-        all_n += 1
-        engine_n += 3
-print(all_n)
+ENGINE_ID = 10426
+TRANSMISSION_ID = 2
+CITY_ID = 78
+MARK_ID = 3
+WD_ID = 1
+EXPENDITURE = '8.1 л.. смешанный'
 
 
+def geely_main(page_n=1, all_n=0, all_n2=0, engine_n=2):
+    try:
+        for i in range(8):
+            r = requests.get(URL+str(page_n)+'&per-page=18', headers={'user-agent': f'{USER_AGENT.random}'})
+            page_n = incPage(page_n)
 
+            all_site = BeautifulSoup(r.text, "lxml")
+            all_name = all_site.find_all(class_="vehicle-preview--title--model")
+            all_status = all_site.find_all(class_="vehicle-preview--title--equipment")
+            all_price = all_site.find_all(class_="vehicle-preview--maininfo")
+            all_engine = all_site.find_all(class_="vehicle-preview--information--item--text")
+            all_image = all_site.find_all("picture")
 
-#for i in range(18) :
-#    print(f"{n}){name[n].text} {status[n].text} {price[n].text} {engine[engine_n].text} {engine[engine_n + 1].text} {engine[engine_n + 2].text}")
-#    n += 1
-#    engine_n += 3
+            for i in range(len(all_price)):
+
+                name = all_name[i].text
+                status = all_status[i].text
+                engine = all_engine[engine_n].text
+                full_name = name+status
+
+                price = all_price[i]
+                try :
+                    price = price.find(class_="vehicle-preview--price vehicle-preview--price--action").text
+                except AttributeError:
+                    price = price.find(class_="vehicle-preview--price").text
+
+                price = price.replace(' ', '').replace('\t', '').replace('\n', '')
+
+                image = all_image[i].find("img")
+                link = image['data-srcset'].rsplit(',')
+
+                if (status == ' Luxury'):
+                    set_id = 1723
+                elif (status == ' Flagship'):
+                    set_id = 1724
+                else :
+                    set_id = 0
+
+                car = Car.objects.filter(title=full_name, set_id=set_id, image=link[0], price=int(price), engine_id=ENGINE_ID, transmission_id=TRANSMISSION_ID, wd_id=WD_ID,
+                    expenditure=EXPENDITURE, city_id=CITY_ID, mark_id=MARK_ID)
+
+                if not car.exists():
+                    Car.objects.create(title=full_name, set_id=set_id, image=link[0], price=int(price), engine_id=ENGINE_ID, transmission_id=TRANSMISSION_ID,
+                        wd_id=WD_ID, expenditure=EXPENDITURE, city_id=CITY_ID, mark_id=MARK_ID)
+
+                all_n += 1
+                engine_n += 3
+    except Exception as e:
+        logger.error(e)
+
+def incPage(n: int) -> int:
+    n+=1
+    return n

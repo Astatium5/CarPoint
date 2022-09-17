@@ -166,19 +166,6 @@ function get_cars(){
                         opt.innerHTML = transmission[i];
                         TransmissionList.appendChild(opt);
                     }
-
-                    if (bodies.length == 1){
-                        BodyList.value = bodies[0];
-                    }
-                    if (type_fuel.length == 1){
-                        TypeFuelList.value = type_fuel[0];
-                    }
-                    if (engine_volume.length == 1){
-                        EngineVolumeList.value = engine_volume[0];
-                    }
-                    if (transmission.length == 1){
-                        TransmissionList.value = transmission[0];
-                    }
                 }
             )
         })
@@ -298,16 +285,6 @@ function get_cars_by_body(){
                         opt.innerHTML = transmission[i];
                         TransmissionList.appendChild(opt);
                     }
-
-                    if (type_fuel.length == 1){
-                        TypeFuelList.value = type_fuel[0];
-                    }
-                    if (engine_volume.length == 1){
-                        EngineVolumeList.value = engine_volume[0];
-                    }
-                    if (transmission.length == 1){
-                        TransmissionList.value = transmission[0];
-                    }
                 }
             )
         })
@@ -410,13 +387,6 @@ function get_cars_by_type_fuel(){
                         opt.innerHTML = transmission[i];
                         TransmissionList.appendChild(opt);
                     }
-
-                    if (engine_volume.length == 1){
-                        EngineVolumeList.value = engine_volume[0];
-                    }
-                    if (transmission.length == 1){
-                        TransmissionList.value = transmission[0];
-                    }
                 }
             )
         })
@@ -507,10 +477,6 @@ function get_cars_by_transmission(){
                         opt.innerHTML = engine_power[i];
                         EnginePowerList.appendChild(opt);
                     } */
-
-                    if (engine_volume.length == 1){
-                        EngineVolumeList.value = engine_volume[0];
-                    }
                 }
             )
         })

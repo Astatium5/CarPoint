@@ -1,14 +1,20 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
-import time
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 links = ["https://cena-auto.ru/faw/besturn_x80/1347/universal/29311/", "https://cena-auto.ru/faw/besturn_x80/1347/universal/29312/", "https://cena-auto.ru/faw/besturn_x80/1347/universal/29313/", "https://cena-auto.ru/faw/besturn_x40/1467/universal/31488/", "https://cena-auto.ru/faw/besturn_x40/1467/universal/31489/", "https://cena-auto.ru/faw/besturn_x40/1467/universal/31490/", "https://cena-auto.ru/faw/bestune_t77/1732/hatchback/35724/", "https://cena-auto.ru/faw/bestune_t77/1732/hatchback/35723/", "https://cena-auto.ru/faw/bestune_t77/1732/hatchback/35722/"]
 
-binary = FirefoxBinary(r'bin/firefox.exe')
-driver = webdriver.Firefox(executable_path=r'gecko/geckodriver', firefox_binary=binary)
+options = webdriver.ChromeOptions()
+options.add_argument("--no-sandbox")
+options.add_argument("--headless")
+options.add_argument("--disable-gpu")
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 for link in links:
     driver.get(link)

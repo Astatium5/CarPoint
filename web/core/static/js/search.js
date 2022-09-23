@@ -6,13 +6,13 @@ const PRICE_RANGE = {
 }
 
 function get_marks(){
-    var PriceList = document.getElementById("sb-pricerange");
-    var PriceValue = PriceList.value;
-    var MarkList = document.getElementById("sb-mark");
+    let PriceList = document.getElementById("sb-pricerange");
+    let PriceValue = PriceList.value;
+    let MarkList = document.getElementById("sb-mark");
     if (PriceValue){
-        var PriceRange = PRICE_RANGE[PriceValue];
-        var MinPrice = PriceRange['min'];
-        var MaxPrice = PriceRange['max'];
+        let PriceRange = PRICE_RANGE[PriceValue];
+        let MinPrice = PriceRange['min'];
+        let MaxPrice = PriceRange['max'];
         fetch(`api/get_all_marks/${MinPrice}/${MaxPrice}`, {
             method: "GET",
             contentType: 'application/json',
@@ -23,20 +23,9 @@ function get_marks(){
         }).then(function (response) {
             response.json().then(
                 function (data) {
-                    var marks = data["all_marks"];
+                    let marks = data["all_marks"];
                     marks.sort();
-
-                    var i, L = MarkList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        MarkList.remove(i);
-                    }
-
-                    for (var i = 0; i < marks.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = marks[i];
-                        opt.innerHTML = marks[i];
-                        MarkList.appendChild(opt);
-                    }
+                    setElements(MarkList, marks)
                 }
             )
         })
@@ -44,17 +33,16 @@ function get_marks(){
 }
 
 function get_cars(){
-    var PriceList = document.getElementById("sb-pricerange");
-    var MarkList = document.getElementById("sb-mark");
-    var BodyList = document.getElementById("sb-body");
-    var TypeFuelList = document.getElementById("sb-type-fuel");
-    var EngineVolumeList = document.getElementById("sb-volume");
-    // var EnginePowerList = document.getElementById("sb-power");
-    var TransmissionList = document.getElementById("sb-transmission");
+    let PriceList = document.getElementById("sb-pricerange");
+    let MarkList = document.getElementById("sb-mark");
+    let BodyList = document.getElementById("sb-body");
+    let TypeFuelList = document.getElementById("sb-type-fuel");
+    let EngineVolumeList = document.getElementById("sb-volume");
+    let TransmissionList = document.getElementById("sb-transmission");
 
-    var PriceValue = PriceList.value;
-    var MarkValue = MarkList.value;
-    var PriceRange = PRICE_RANGE[PriceValue];
+    let PriceValue = PriceList.value;
+    let MarkValue = MarkList.value;
+    let PriceRange = PRICE_RANGE[PriceValue];
 
     if (!MarkValue){
         alert("Нужно выбрать марку");
@@ -63,8 +51,8 @@ function get_cars(){
         alert("Нужно выбрать ценовой диапазон!");
     }
     else{
-        var MinPrice = PriceRange['min'];
-        var MaxPrice = PriceRange['max'];
+        let MinPrice = PriceRange['min'];
+        let MaxPrice = PriceRange['max'];
 
         fetch(`get_cars/${MinPrice}/${MaxPrice}/${MarkValue}`, {
             method: "GET",
@@ -76,22 +64,20 @@ function get_cars(){
         }).then(function (response) {
             response.json().then(
                 function (data) {
-                    var cars = data["cars"];
+                    let cars = data["cars"];
 
-                    var SearchCarBtn = document.getElementById("search-car-btn");
+                    let SearchCarBtn = document.getElementById("search-car-btn");
                     SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
 
-                    var bodies = [];
-                    var type_fuel = [];
-                    var engine_volume = [];
-                    // var engine_power = [];
-                    var transmission = [];
+                    let bodies = [];
+                    let type_fuel = [];
+                    let engine_volume = [];
+                    let transmission = [];
 
                     for (i = 0; i < cars.length; i++){
                         bodies.push(cars[i]['body']);
                         type_fuel.push(cars[i]['engine_type_fuel']);
                         engine_volume.push(cars[i]['engine_volume']);
-                        // engine_power.push(cars[i]['engine_power']);
                         transmission.push(cars[i]['transmission']);
                     }
 
@@ -99,73 +85,15 @@ function get_cars(){
                     bodies = bodies.filter(uniqueArray);
                     type_fuel = type_fuel.filter(uniqueArray);
                     engine_volume = engine_volume.filter(uniqueArray);
-                    // engine_power = engine_power.filter(uniqueArray);
                     transmission = transmission.filter(uniqueArray);
                     type_fuel.sort()
                     engine_volume.sort()
-                    // engine_power.sort()
-
-                    // Remove old options.
-                    var i, L = BodyList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        BodyList.remove(i);
-                    }
-
-                    var i, L = TypeFuelList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        TypeFuelList.remove(i);
-                    }
-
-                    var i, L = EngineVolumeList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EngineVolumeList.remove(i);
-                    }
-
-                    /* var i, L = EnginePowerList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EnginePowerList.remove(i);
-                    } */
-
-                    var i, L = TransmissionList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        TransmissionList.remove(i);
-                    }
 
                     // Add new options.
-                    for (var i = 0; i < bodies.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = bodies[i];
-                        opt.innerHTML = bodies[i];
-                        BodyList.appendChild(opt);
-                    }
-
-                    for (var i = 0; i < type_fuel.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = type_fuel[i];
-                        opt.innerHTML = type_fuel[i];
-                        TypeFuelList.appendChild(opt);
-                    }
-
-                    for (var i = 0; i < engine_volume.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_volume[i];
-                        opt.innerHTML = engine_volume[i];
-                        EngineVolumeList.appendChild(opt);
-                    }
-
-                    /* for (var i = 0; i < engine_power.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_power[i];
-                        opt.innerHTML = engine_power[i];
-                        EnginePowerList.appendChild(opt);
-                    } */
-
-                    for (var i = 0; i < transmission.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = transmission[i];
-                        opt.innerHTML = transmission[i];
-                        TransmissionList.appendChild(opt);
-                    }
+                    setElements(BodyList, bodies)
+                    setElements(TypeFuelList, type_fuel)
+                    setElements(EngineVolumeList, engine_volume)
+                    setElements(TransmissionList, transmission)
                 }
             )
         })
@@ -173,18 +101,17 @@ function get_cars(){
 }
 
 function get_cars_by_body(){
-    var PriceList = document.getElementById("sb-pricerange");
-    var MarkList = document.getElementById("sb-mark");
-    var BodyList = document.getElementById("sb-body");
-    var TypeFuelList = document.getElementById("sb-type-fuel");
-    var EngineVolumeList = document.getElementById("sb-volume");
-    // var EnginePowerList = document.getElementById("sb-power");
-    var TransmissionList = document.getElementById("sb-transmission");
+    let PriceList = document.getElementById("sb-pricerange");
+    let MarkList = document.getElementById("sb-mark");
+    let BodyList = document.getElementById("sb-body");
+    let TypeFuelList = document.getElementById("sb-type-fuel");
+    let EngineVolumeList = document.getElementById("sb-volume");
+    let TransmissionList = document.getElementById("sb-transmission");
 
-    var PriceValue = PriceList.value;
-    var MarkValue = MarkList.value;
-    var BodyValue = BodyList.value;
-    var PriceRange = PRICE_RANGE[PriceValue];
+    let PriceValue = PriceList.value;
+    let MarkValue = MarkList.value;
+    let BodyValue = BodyList.value;
+    let PriceRange = PRICE_RANGE[PriceValue];
 
     if (!MarkValue){
         alert("Нужно выбрать марку");
@@ -195,8 +122,8 @@ function get_cars_by_body(){
         alert("Нужно выбрать тип кузова!");
     }
     else{
-        var MinPrice = PriceRange['min'];
-        var MaxPrice = PriceRange['max'];
+        let MinPrice = PriceRange['min'];
+        let MaxPrice = PriceRange['max'];
 
         fetch(`get_cars_by_body/${MinPrice}/${MaxPrice}/${MarkValue}/${BodyValue}`, {
             method: "GET",
@@ -208,83 +135,32 @@ function get_cars_by_body(){
         }).then(function (response) {
             response.json().then(
                 function (data) {
-                    var cars = data["cars"];
+                    let cars = data["cars"];
 
-                    var SearchCarBtn = document.getElementById("search-car-btn");
+                    let SearchCarBtn = document.getElementById("search-car-btn");
                     SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
 
-                    var type_fuel = [];
-                    var engine_volume = [];
-                    // var engine_power = [];
-                    var transmission = [];
+                    let type_fuel = [];
+                    let engine_volume = [];
+                    let transmission = [];
 
                     for (i = 0; i < cars.length; i++){
                         type_fuel.push(cars[i]['engine_type_fuel']);
                         engine_volume.push(cars[i]['engine_volume']);
-                        // engine_power.push(cars[i]['engine_power']);
                         transmission.push(cars[i]['transmission']);
                     }
 
                     // Filter unique values.
                     type_fuel = type_fuel.filter(uniqueArray);
                     engine_volume = engine_volume.filter(uniqueArray);
-                    // engine_power = engine_power.filter(uniqueArray);
                     transmission = transmission.filter(uniqueArray);
                     type_fuel.sort()
                     engine_volume.sort()
-                    // engine_power.sort()
-
-                    // Remove old options.
-
-                    var i, L = TypeFuelList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        TypeFuelList.remove(i);
-                    }
-
-                    var i, L = EngineVolumeList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EngineVolumeList.remove(i);
-                    }
-
-                    /* var i, L = EnginePowerList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EnginePowerList.remove(i);
-                    } */
-
-                    var i, L = TransmissionList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        TransmissionList.remove(i);
-                    }
 
                     // Add new options.
-
-                    for (var i = 0; i < type_fuel.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = type_fuel[i];
-                        opt.innerHTML = type_fuel[i];
-                        TypeFuelList.appendChild(opt);
-                    }
-
-                    for (var i = 0; i < engine_volume.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_volume[i];
-                        opt.innerHTML = engine_volume[i];
-                        EngineVolumeList.appendChild(opt);
-                    }
-
-                    /* for (var i = 0; i < engine_power.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_power[i];
-                        opt.innerHTML = engine_power[i];
-                        EnginePowerList.appendChild(opt);
-                    } */
-
-                    for (var i = 0; i < transmission.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = transmission[i];
-                        opt.innerHTML = transmission[i];
-                        TransmissionList.appendChild(opt);
-                    }
+                    setElements(TypeFuelList, type_fuel)
+                    setElements(EngineVolumeList, engine_volume)
+                    setElements(TransmissionList, transmission)
                 }
             )
         })
@@ -292,19 +168,18 @@ function get_cars_by_body(){
 }
 
 function get_cars_by_type_fuel(){
-    var PriceList = document.getElementById("sb-pricerange");
-    var MarkList = document.getElementById("sb-mark");
-    var BodyList = document.getElementById("sb-body");
-    var TypeFuelList = document.getElementById("sb-type-fuel");
-    var EngineVolumeList = document.getElementById("sb-volume");
-    // var EnginePowerList = document.getElementById("sb-power");
-    var TransmissionList = document.getElementById("sb-transmission");
+    let PriceList = document.getElementById("sb-pricerange");
+    let MarkList = document.getElementById("sb-mark");
+    let BodyList = document.getElementById("sb-body");
+    let TypeFuelList = document.getElementById("sb-type-fuel");
+    let EngineVolumeList = document.getElementById("sb-volume");
+    let TransmissionList = document.getElementById("sb-transmission");
 
-    var PriceValue = PriceList.value;
-    var MarkValue = MarkList.value;
-    var BodyValue = BodyList.value;
-    var TypeFuelValue = TypeFuelList.value;
-    var PriceRange = PRICE_RANGE[PriceValue];
+    let PriceValue = PriceList.value;
+    let MarkValue = MarkList.value;
+    let BodyValue = BodyList.value;
+    let TypeFuelValue = TypeFuelList.value;
+    let PriceRange = PRICE_RANGE[PriceValue];
 
     if (!MarkValue){
         alert("Нужно выбрать марку");
@@ -315,8 +190,8 @@ function get_cars_by_type_fuel(){
         alert("Нужно выбрать тип кузова!");
     }
     else{
-        var MinPrice = PriceRange['min'];
-        var MaxPrice = PriceRange['max'];
+        let MinPrice = PriceRange['min'];
+        let MaxPrice = PriceRange['max'];
 
         fetch(`get_cars_by_type_fuel/${MinPrice}/${MaxPrice}/${MarkValue}/${BodyValue}/${TypeFuelValue}`, {
             method: "GET",
@@ -328,65 +203,27 @@ function get_cars_by_type_fuel(){
         }).then(function (response) {
             response.json().then(
                 function (data) {
-                    var cars = data["cars"];
+                    let cars = data["cars"];
 
-                    var SearchCarBtn = document.getElementById("search-car-btn");
+                    let SearchCarBtn = document.getElementById("search-car-btn");
                     SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
 
-                    var engine_volume = [];
-                    // var engine_power = [];
-                    var transmission = [];
+                    let engine_volume = [];
+                    let transmission = [];
 
                     for (i = 0; i < cars.length; i++){
                         engine_volume.push(cars[i]['engine_volume']);
-                        // engine_power.push(cars[i]['engine_power']);
                         transmission.push(cars[i]['transmission']);
                     }
 
                     // Filter unique values.
                     engine_volume = engine_volume.filter(uniqueArray);
-                    // engine_power = engine_power.filter(uniqueArray);
                     transmission = transmission.filter(uniqueArray);
                     engine_volume.sort()
-                    // engine_power.sort()
-
-                    // Remove old options.
-                    var i, L = EngineVolumeList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EngineVolumeList.remove(i);
-                    }
-
-                    /* var i, L = EnginePowerList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EnginePowerList.remove(i);
-                    } */
-
-                    var i, L = TransmissionList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        TransmissionList.remove(i);
-                    }
 
                     // Add new options.
-                    for (var i = 0; i < engine_volume.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_volume[i];
-                        opt.innerHTML = engine_volume[i];
-                        EngineVolumeList.appendChild(opt);
-                    }
-
-                    /* for (var i = 0; i < engine_power.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_power[i];
-                        opt.innerHTML = engine_power[i];
-                        EnginePowerList.appendChild(opt);
-                    } */
-
-                    for (var i = 0; i < transmission.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = transmission[i];
-                        opt.innerHTML = transmission[i];
-                        TransmissionList.appendChild(opt);
-                    }
+                    setElements(EngineVolumeList, engine_volume)
+                    setElements(TransmissionList, transmission)
                 }
             )
         })
@@ -394,11 +231,11 @@ function get_cars_by_type_fuel(){
 }
 
 function get_cars_by_transmission(){
-    var PriceList = document.getElementById("sb-pricerange");
-    var MarkList = document.getElementById("sb-mark");
-    var BodyList = document.getElementById("sb-body");
-    var TypeFuelList = document.getElementById("sb-type-fuel");
-    var EngineVolumeList = document.getElementById("sb-volume");
+    let PriceList = document.getElementById("sb-pricerange");
+    let MarkList = document.getElementById("sb-mark");
+    let BodyList = document.getElementById("sb-body");
+    let TypeFuelList = document.getElementById("sb-type-fuel");
+    let EngineVolumeList = document.getElementById("sb-volume");
     // var EnginePowerList = document.getElementById("sb-power");
     var TransmissionList = document.getElementById("sb-transmission");
 
@@ -439,44 +276,17 @@ function get_cars_by_transmission(){
                     SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
 
                     var engine_volume = [];
-                    // var engine_power = [];
 
                     for (i = 0; i < cars.length; i++){
                         engine_volume.push(cars[i]['engine_volume']);
-                        // engine_power.push(cars[i]['engine_power']);
                     }
 
                     // Filter unique values.
                     engine_volume = engine_volume.filter(uniqueArray);
-                    // engine_power = engine_power.filter(uniqueArray);
                     engine_volume.sort()
-                    // engine_power.sort()
-
-                    // Remove old options.
-                    var i, L = EngineVolumeList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EngineVolumeList.remove(i);
-                    }
-
-                    /* var i, L = EnginePowerList.options.length - 1;
-                    for(i = L; i >= 1; i--) {
-                        EnginePowerList.remove(i);
-                    } */
 
                     // Add new options.
-                    for (var i = 0; i < engine_volume.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_volume[i];
-                        opt.innerHTML = engine_volume[i];
-                        EngineVolumeList.appendChild(opt);
-                    }
-
-                    /* for (var i = 0; i < engine_power.length; i++){
-                        var opt = document.createElement('option');
-                        opt.value = engine_power[i];
-                        opt.innerHTML = engine_power[i];
-                        EnginePowerList.appendChild(opt);
-                    } */
+                    setElements(EngineVolumeList, engine_volume)
                 }
             )
         })
@@ -484,21 +294,20 @@ function get_cars_by_transmission(){
 }
 
 function get_cars_by_engine_volume(){
-    var PriceList = document.getElementById("sb-pricerange");
-    var MarkList = document.getElementById("sb-mark");
-    var BodyList = document.getElementById("sb-body");
-    var TypeFuelList = document.getElementById("sb-type-fuel");
-    var EngineVolumeList = document.getElementById("sb-volume");
-    // var EnginePowerList = document.getElementById("sb-power");
-    var TransmissionList = document.getElementById("sb-transmission");
+    let PriceList = document.getElementById("sb-pricerange");
+    let MarkList = document.getElementById("sb-mark");
+    let BodyList = document.getElementById("sb-body");
+    let TypeFuelList = document.getElementById("sb-type-fuel");
+    let EngineVolumeList = document.getElementById("sb-volume");
+    let TransmissionList = document.getElementById("sb-transmission");
 
-    var PriceValue = PriceList.value;
-    var MarkValue = MarkList.value;
-    var BodyValue = BodyList.value;
-    var TypeFuelValue = TypeFuelList.value;
-    var EngineVolumeValue = EngineVolumeList.value;
-    var TransmissionValue = TransmissionList.value;
-    var PriceRange = PRICE_RANGE[PriceValue];
+    let PriceValue = PriceList.value;
+    let MarkValue = MarkList.value;
+    let BodyValue = BodyList.value;
+    let TypeFuelValue = TypeFuelList.value;
+    let EngineVolumeValue = EngineVolumeList.value;
+    let TransmissionValue = TransmissionList.value;
+    let PriceRange = PRICE_RANGE[PriceValue];
 
     if (!MarkValue){
         alert("Нужно выбрать марку");
@@ -514,8 +323,8 @@ function get_cars_by_engine_volume(){
         alert("Нужно выбрать коробку передач!");
     }
     else{
-        var MinPrice = PriceRange['min'];
-        var MaxPrice = PriceRange['max'];
+        let MinPrice = PriceRange['min'];
+        let MaxPrice = PriceRange['max'];
 
         fetch(`get_cars_by_engine_volume/${MinPrice}/${MaxPrice}/${MarkValue}/${BodyValue}/${TypeFuelValue}/${TransmissionValue}/${EngineVolumeValue}`, {
             method: "GET",
@@ -527,9 +336,9 @@ function get_cars_by_engine_volume(){
         }).then(function (response) {
             response.json().then(
                 function (data) {
-                    var cars = data["cars"];
+                    let cars = data["cars"];
 
-                    var SearchCarBtn = document.getElementById("search-car-btn");
+                    let SearchCarBtn = document.getElementById("search-car-btn");
                     SearchCarBtn.innerHTML = `Смотреть ${cars.length} авто`;
                 }
             )
@@ -539,4 +348,30 @@ function get_cars_by_engine_volume(){
 
 function uniqueArray(value, index, self) {
     return self.indexOf(value) === index;
+}
+
+function selectElement(sb, valueToSelect) {
+    let opt = document.createElement('option');
+    opt.value = valueToSelect;
+    opt.innerHTML = valueToSelect;
+    sb.appendChild(opt);
+    sb.value = valueToSelect;
+}
+
+function setElements(sb, values){
+    let i, L = sb.options.length - 1;
+    for(i = L; i >= 1; i--) {
+        sb.remove(i);
+    }
+    if (values.length == 1){
+        selectElement(sb, values[0])
+    }else{
+        for (let i = 0; i < values.length; i++){
+            let value = values[i];
+            let opt = document.createElement('option');
+            opt.value = value;
+            opt.innerHTML = value;
+            sb.appendChild(opt);
+        }
+    }
 }

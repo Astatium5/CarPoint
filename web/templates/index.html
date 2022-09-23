@@ -247,9 +247,6 @@
 							required>
 							<datalist id="mark">
 								<option value="">Выберите из списка</option>
-								<!--{% for mark in marks %}
-							<option value="{{mark.title}}">{{mark.title}}</option>
-						{% endfor %}-->
 							</datalist>
 						</select>
 						<div class="invalid-feedback">
@@ -262,9 +259,6 @@
 							required>
 							<datalist id="body">
 								<option value="">Выберите из списка</option>
-								<!--{% for model in models %}
-    						<option value="{{model}}">{{model}}</option>
-						{% endfor %}-->
 							</datalist>
 						</select>
 						<div class="invalid-feedback">
@@ -277,9 +271,6 @@
 							onchange="get_cars_by_type_fuel();" required>
 							<datalist id="type_fuel">
 								<option value="">Выберите из списка</option>
-								<!--{% for type_fuel in type_fuels %}
-							<option value="{{type_fuel}}">{{type_fuel}}</option>
-						{% endfor %}-->
 							</datalist>
 						</select>
 						<div class="invalid-feedback">
@@ -292,8 +283,6 @@
 							onchange="get_cars_by_transmission();" required>
 							<option value="">Выберите из списка</option>
 							<datalist id="transmission">
-								<option value="1">Автомат</option>
-								<option value="2">Механика</option>
 							</datalist>
 						</select>
 						<div class="invalid-feedback">
@@ -306,26 +295,12 @@
 							onchange="get_cars_by_engine_volume();" required>
 							<datalist id="volume">
 								<option value="">Выберите из списка</option>
-								<option value="1">1.6</option>
-								<option value="2">1.9</option>
 							</datalist>
 						</select>
 						<div class="invalid-feedback">
 							Это поле обязательно для заполнения
 						</div>
 					</div>
-					<!--<div class="fields-bl">
-				  <label>Мощность двигателя</label>
-				  <select id="sb-power" class="form-select" name="power" list="power" >
-                      <datalist id="power">
-						<option value="">Выберите из списка</option>
-						<option value="1">100</option>
-						<option value="2">140</option>
-						<option value="3">180</option>
-						<option value="4">190</option>
-                       </datalist>
-		            </select>
-				</div>-->
 					<div class="fields-bl btn-blue">
 						<button id="search-car-btn" class="look-btn" type="submit"
 							onclick="window.location.href='#catalog'">Смотреть авто</button>

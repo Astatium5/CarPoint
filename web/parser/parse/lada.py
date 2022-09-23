@@ -1,10 +1,18 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from bs4 import BeautifulSoup
 import time
 
-driver = webdriver.Firefox()
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeautifulSoup
+
+options = webdriver.ChromeOptions()
+options.add_argument('--ignore-certificate-errors')
+options.add_argument("--no-sandbox")
+options.add_argument("--headless")
+options.add_argument("--disable-gpu")
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 info = [
 " Granta седан Classic'22  ", " 1929 ",

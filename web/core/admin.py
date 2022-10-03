@@ -165,3 +165,16 @@ class NewCar(admin.ModelAdmin):
             return obj.image
 
     get_image.short_description = "Изображение"
+
+@admin.register(Color)
+class Color(admin.ModelAdmin):
+    fields = ["title"]
+    list_display = ["title"]
+    search_fields = ["title"]
+    search_help_text = "Для поиска введите название цвета"
+    list_per_page: int = 20
+
+@admin.register(SetColor)
+class SetColor(admin.ModelAdmin):
+    fields = ["car", "color"]
+    list_display = ["car", "color"]

@@ -134,9 +134,9 @@ class Car(models.Model):
     transmission = models.ForeignKey(
         Transmission, on_delete=models.PROTECT, verbose_name="Трансмиссия")
     wd = models.ForeignKey(Wd, on_delete=models.PROTECT, verbose_name="Привод")
-    expenditure = models.CharField(max_length=255, verbose_name="Расход")
+    expenditure = models.CharField(max_length=255, null=True, verbose_name="Расход")
     city = models.ForeignKey(
-        City, on_delete=models.PROTECT, verbose_name="Город")
+        City, on_delete=models.PROTECT, null=True, verbose_name="Город")
     mark = models.ForeignKey(
         Mark, on_delete=models.PROTECT, verbose_name="Марка")
 

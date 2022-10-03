@@ -1,5 +1,5 @@
 body{
-    background-image: url(../img/back.jpg);
+    background-image: url(../../img/distributor/back.jpg);
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -9,7 +9,7 @@ body{
 }
 
 h1{
-    background-image: url(../img/thumb.jpg);
+    background-image: url(../../img/distributor/thumb.jpg);
     width: 320px;
     height: 300px;
 }
@@ -24,8 +24,140 @@ h1{
     border: 3px solid #ddd;
     border-radius: 5px;
     padding: 1rem 0.5rem;
-
-
+    background-color: white;
     font-family: arial;
     margin-top: 3%;
 }
+
+#upload-form{
+    width: 329px;
+    height: 100px;
+    border: 4px dashed black;
+}
+form p{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 100px;
+    color: black;
+    font-family: Arial;
+    font-size: 15px;
+}
+#upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+}
+#upload-button{
+    margin: 0;
+    color: #fff;
+    background: #16a085;
+    border: none;
+    width: 328px;
+    height: 35px;
+    margin-top: -20px;
+    margin-left: -4px;
+    border-radius: 4px;
+    border-bottom: 4px solid #117A60;
+    transition: all .2s ease;
+    outline: none;
+}
+#upload-button:hover{
+    background: #149174;
+      color: #0C5645;
+}
+#upload-button:active{
+    border:0;
+}
+
+.logout-btn {
+    background-color: rgb(225, 65, 75); /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 11px 16px; /* Some padding */
+    font-size: 11px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    position: relative;
+    left: 150px;
+    border-radius: 5px;
+  }
+  
+/* Darker background on mouse-over */
+.logout-btn:hover {
+    background-color: rgb(225, 60, 65);
+}
+
+.history-btn {
+    background-color: rgb(65, 188, 235); /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 11px 16px; /* Some padding */
+    font-size: 11px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    position: relative;
+    left: 140px;
+    border-radius: 5px;
+  }
+  
+/* Darker background on mouse-over */
+.history-btn:hover {
+    background-color: rgb(65, 183, 225);
+}
+
+#id-session-alert {
+    font-size: 11px;
+}
+
+#id-session-alert b {
+    font-size: 9px;
+}
+
+#doneToast {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#warning-alert {
+    font-size: 13px;
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid black;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: grey transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

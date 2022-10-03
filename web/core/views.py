@@ -451,11 +451,7 @@ class Distributor:
             if not user.is_superuser:
                 login(request, user)
                 return redirect("distributor")
-            else:
-                data = {"message": "Админ не может быть авторизован в системе"}
-        else:
-            data = {"message": "Неверные данные"}
-        return render(request, "distributor/auth.html", data)
+        return redirect("distributor")
 
     def logout_view(request):
         logout(request)

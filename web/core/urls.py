@@ -17,6 +17,12 @@ urlpatterns = [
     path("send_question", Web.send_question, name="send_question"),
     path("leave_request", Web.leave_request, name="leave_request"),
 
+    # Distributor
+    path("distributor", Distributor.distributor, name="distributor"),
+    path("auth", Distributor.auth, name="auth"),
+    path("logout", Distributor.logout_view, name="logout_view"),
+    path("upload_file", Distributor.upload_file, name="upload_file"),
+
     # ===API urls===
     path("api/create_user/<int:user_id>/<str:first_name>/<str:username>",
          API.CreateBotUserView.as_view(), name="create_bot_user"),

@@ -257,8 +257,8 @@ function get_cars_by_transmission(){
         alert("Нужно выбрать тип двигателя!");
     }
     else{
-        var MinPrice = PriceRange['min'];
-        var MaxPrice = PriceRange['max'];
+        let MinPrice = PriceRange['min'];
+        let MaxPrice = PriceRange['max'];
 
         fetch(`get_cars_by_transmission/${MinPrice}/${MaxPrice}/${MarkValue}/${BodyValue}/${TypeFuelValue}/${TransmissionValue}`, {
             method: "GET",

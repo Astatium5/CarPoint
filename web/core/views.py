@@ -1,13 +1,20 @@
 import re
 import json
+import csv
+import codecs
+import traceback
 from collections import Counter
 from typing import Any
+from time import sleep
 
 from loguru import logger
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 from rest_framework.generics import ListAPIView
+from django.contrib.sessions.models import Session
 from django.http import HttpRequest, HttpResponse, HttpResponsePermanentRedirect
 
 from core.models import *
@@ -299,12 +306,12 @@ class Web:
             min_price = min([car["pattern"][0]["price"]
                             for car in cars_values])
 
-        return render(request, "index.html", dict(cities=cities, CAPTCHA_PUBLIC_KEY=CAPTCHA_PUBLIC_KEY,
+        return render(request, "main/index.html", dict(cities=cities, CAPTCHA_PUBLIC_KEY=CAPTCHA_PUBLIC_KEY,
                                                   new_cars=new_cars, questions=questions, cars=cars, image=image, min_price=min_price,
                                                   main_length=main_length, mark=mark))
 
     def oferta(request) -> HttpResponse:
-        return render(request, "oferta.html")
+        return render(request, "main/oferta.html")
 
     def get_cars(request, min_price: int, max_price: int, mark: str) -> HttpResponse:
         mark = Mark.objects.get(title=mark)  # Get mark obj
@@ -413,6 +420,81 @@ class Web:
             Entry.objects.create(car=car, email=email,
                                  name=name, address=address, phone=tel)
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+
+
+class Distributor:
+    def distributor(request):
+        if not request.user.is_authenticated:
+            # Return auth page
+            return render(request, "distributor/auth.html")
+        session_key = request.COOKIES.get("sessionid")
+        session = Session.objects.filter(session_key=session_key)
+        if not session.exists():
+            return redirect("auth")
+        session = session.get()
+        uid = session.get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=uid)
+        return render(request, "distributor/index.html", {
+            "username": user.username, "full_name": user.get_full_name(),
+            "session_key": session_key}
+        )
+
+    def auth(request):
+        if request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if not user.is_superuser:
+                login(request, user)
+                return redirect("distributor")
+            else:
+                data = {"message": "Админ не может быть авторизован в системе"}
+        else:
+            data = {"message": "Неверные данные"}
+        return render(request, "distributor/auth.html", data)
+
+    def logout_view(request):
+        logout(request)
+        return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+
+    def upload_file(request, n=0):
+        try:
+            file = request.FILES.get("file")
+            reader = csv.reader(codecs.iterdecode(file, 'utf-8'))
+            for r in reader:
+                if n >= 1:
+                    power, type_fuel, volume, transmission_id, wd_id, title, price, body, mark_id, image, color = r
+                    try:
+                        engine = Engine.objects.filter(volume=volume, power=power, type_fuel=type_fuel)
+                        if not engine.exists():
+                            engine = Engine.objects.create(volume=volume, power=power, type_fuel=type_fuel)
+                        else:
+                            engine = engine.get()
+                        car = Car.objects.filter(title=title, image=image, price=price, engine=engine,
+                            transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
+                        if not car.exists():
+                            model = Model.objects.create(mark_id=mark_id, title=title, price=price, body=body, is_visible=True)
+                            set = Set.objects.create(model=model, title=title, image=image)
+                            car = Car.objects.create(title=title, set=set, image=image, price=price, engine=engine,
+                                transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
+                            color_obj = Color.objects.filter(title=color)
+                            if not color_obj.exists():
+                                color_obj = Color.objects.create(title=color)
+                            else:
+                                color_obj = color_obj.get()
+                            SetColor.objects.create(car=car, color=color_obj)
+                    except Exception as e:
+                        traceback.print_exc()
+                n+=1
+            sleep(1)
+            return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+        except Exception as e:
+            traceback.print_exc()
+            return HttpResponse(json.dumps({"response": False, "error_message": e}), content_type='application/json')
 
 
 def p_find_car(

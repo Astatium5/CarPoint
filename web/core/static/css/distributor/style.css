@@ -4,10 +4,6 @@ body{
     overflow-y: hidden;
 }
 
-.container{
-    width: 350px;
-}
-
 h1{
     background-image: url(../../img/distributor/thumb.jpg);
     width: 320px;
@@ -327,4 +323,49 @@ input[type=file]::file-selector-button:hover {
 #save-company-data {
   width: 326px;
   margin-left: 16px;
+}
+
+#cars {
+  width: 700px;
+  height: 600px;
+  border-radius: 0.5em;
+  background-color: white;
+  margin-top: 5px;
+}
+
+#download-history {
+  width: 560px;
+  height: 500px;
+  border-radius: 0.5em;
+  background-color: white;
+  margin-top: 5px;
+}
+
+.badge {
+  font-size: 15px;
+}
+
+.alert-dark, .alert-primary {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.my-custom-scrollbar {
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.my-custom-scrollbar::-webkit-scrollbar{
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+.my-custom-scrollbar::-webkit-scrollbar-thumb{
+  background-color: #000000;
+}
+
+.car-card {
+  height: 150px;
+  margin-left: 60px;
+  margin-top: 5px;
 }

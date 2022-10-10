@@ -1,6 +1,7 @@
 __pycache__
 
 env/
+csv/
 profile_pictures/
 
 .env

@@ -271,6 +271,7 @@ class SetTypeCar(models.Model):
 
     type = models.CharField(max_length=128, choices=[x.value for x in TYPES], null=True, verbose_name="Тип загрузки")
     car = models.ForeignKey(Car, on_delete=models.PROTECT, verbose_name="Автомобиль")
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, verbose_name="Пользователь")
 
     class Meta:
         verbose_name = "Тип загрузки автомобиля"

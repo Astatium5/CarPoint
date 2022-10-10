@@ -13,7 +13,38 @@
     <link rel="stylesheet" href="{% static 'css/distributor/style.css' %}">
 </head>
 <body>
-    {% block body %}{% endblock %}
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand">Distributor</a>
+          <form class="d-flex" role="search" action="/distributor/profile" method="post">
+            {% csrf_token %}
+            <button id="profile-btn" class="btn btn-outline-success" type="submit"><i class="fs-4 bi-person-fill"></i></button>
+          </form>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <div class="row flex-nowrap">
+          <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+              <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                <li class="nav-item">
+                  <a href="/distributor" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-house"></i><span class="ms-1 d-none d-sm-inline">Главная страница</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/distributor/cars" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-car-front"></i><span class="ms-1 d-none d-sm-inline">Загрузить авто</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col py-3">
+            {% block sidebar_body %}{% endblock %}
+          </div>
+        </div>
+      </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

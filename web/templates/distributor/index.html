@@ -1,36 +1,60 @@
 {% extends 'base/distributor/base.html' %}
 {% load static %}
 {% block title %}Главная страница{% endblock%}
-{% block body %}
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand">Distributor</a>
-    <form class="d-flex" role="search" action="/distributor/profile" method="post">
-      {% csrf_token %}
-      <button id="profile-btn" class="btn btn-outline-success" type="submit"><i class="fs-4 bi-person-fill"></i></button>
-    </form>
-  </div>
-</nav>
-<div class="container-fluid">
-  <div class="row flex-nowrap">
-    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-          <li class="nav-item">
-            <a href="/distributor" class="nav-link align-middle px-0">
-              <i class="fs-4 bi-house"></i><span class="ms-1 d-none d-sm-inline">Главная страница</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/distributor/cars" class="nav-link align-middle px-0">
-              <i class="fs-4 bi-car-front"></i><span class="ms-1 d-none d-sm-inline">Загрузить авто</span>
-            </a>
-          </li>
-        </ul>
+{% block sidebar_body %}
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <span class="badge text-bg-primary w-75">Ваш список автомобилей</span>
+      <div id="cars" class="container-fluid my-custom-scrollbar">
+        {% if not cars %}
+          <div class="alert alert-dark" role="alert">
+            Отсутствуют
+          </div>
+        {% else %}
+          {% for car in cars %}
+          {% with car=car.car %}
+          <div class="card mb-3 car-card w-100">
+            <div class="row g-0">
+              <div class="col-md-4">
+                {% if not car.image %}
+                  <img src="{% static 'img/distributor/thumb.jpg' %}" class="img-fluid rounded-start" width="120">
+                {% else %}
+                  <img src="{{car.image}}" class="img-fluid rounded-start" width="170">
+                {% endif %}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{car.title}}</h5>
+                  <p class="card-text">{{car.set.model.body}}; {{car.transmission}}; {{car.engine.type_fuel}}; {{car.engine.volume}}; {{car.engine.power}}; {{car.wd}}</p>
+                  <p class="card-text"><small class="text-muted">Цена: {{car.price|add:"0"}}₽</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
-    <div class="col py-3">
-      {% block sidebar_body %}{% endblock %}
+    <div class="col">
+      <span class="badge text-bg-primary w-75">Загруженные файлы</span>
+      <div id="download-history" class="container-fluid my-custom-scrollbar">
+        {% if not files %}
+          <div class="alert alert-dark" role="alert">
+            Отсутствуют
+          </div>
+        {% else %}
+          {% for file in files %}
+            <div class="alert alert-primary" role="alert">
+              <a href="{{file.file.url}}">{{file.file}}</a>
+              <div class="text-muted">
+                {{file.created}}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>

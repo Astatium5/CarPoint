@@ -1,9 +1,7 @@
 import asyncio
-import databases
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-import orm
 from aiogram import Dispatcher, Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
@@ -24,14 +22,6 @@ async def main():
 
     tree = ET.parse(F'{TEXT_PATH}/text/text.xml')
     globals.root = tree.getroot()
-
-    # database = databases.Database(F"mysql+aiomysql://root:fG11xztk@localhost/carpointdb")
-    # Connect to database
-    # await database.connect()
-
-    # globals.models = orm.ModelRegistry(database=database)
-    # Create the tables
-    # await globals.models.create_all()
 
     import commands
 

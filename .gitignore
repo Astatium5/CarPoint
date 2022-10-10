@@ -1,6 +1,7 @@
 __pycache__
 
 env/
+profile_pictures/
 
 .env
 logging.ini

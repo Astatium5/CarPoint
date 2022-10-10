@@ -1,6 +1,7 @@
 from os.path import splitext
 from uuid import uuid4
 from enum import Enum
+from django.utils import timezone
 
 from django.conf import settings
 from django.db import models
@@ -12,6 +13,11 @@ class UUIDFileStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/profile_pictures/{uuid4().hex + ext}"
+
+class CSVFileStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        _, ext = splitext(name)
+        return F"{settings.MEDIA_ROOT}/csv/{uuid4().hex + ext}"
 
 
 class BotUser(models.Model):
@@ -276,3 +282,14 @@ class SetTypeCar(models.Model):
     class Meta:
         verbose_name = "Тип загрузки автомобиля"
         verbose_name_plural = "Тип загрузки автомобилей"
+
+
+class Files(models.Model):
+    file = models.FileField(upload_to="distributor/csv/", storage=CSVFileStorage(), verbose_name="CSV файл")
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Пользователь")
+    created = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ["-created"]
+        verbose_name = "CSV файл"
+        verbose_name_plural = "CSV файлы"

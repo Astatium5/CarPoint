@@ -423,7 +423,7 @@ class WebObj:
 
 
 class DistributorObj:
-    def distributor(request):
+    def distributor(request, cars=None, files=None):
         if not request.user.is_authenticated:
             # Return auth page
             return render(request, "distributor/auth.html")
@@ -434,9 +434,11 @@ class DistributorObj:
         session = session.get()
         uid = session.get_decoded().get('_auth_user_id')
         user = User.objects.get(pk=uid)
+        files = Files.objects.filter(user=user).all()
+        cars = SetTypeCar.objects.filter(user=user, car__isnull=False).all()
         return render(request, "distributor/index.html", {
             "username": user.username, "full_name": user.get_full_name(),
-            "session_key": session_key}
+            "session_key": session_key, "cars": cars, "files": files}
         )
 
     def auth(request):
@@ -491,6 +493,7 @@ class DistributorObj:
                     except Exception as e:
                         traceback.print_exc()
                 n+=1
+            Files.objects.create(file=file, user=user)
             sleep(1)
             return HttpResponse(json.dumps({"response": True}), content_type='application/json')
         except Exception as e:

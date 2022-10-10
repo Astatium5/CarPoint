@@ -1,4 +1,17 @@
+from os.path import splitext
+from uuid import uuid4
+from enum import Enum
+
+from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
+
+
+class UUIDFileStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        _, ext = splitext(name)
+        return F"{settings.MEDIA_ROOT}/profile_pictures/{uuid4().hex + ext}"
 
 
 class BotUser(models.Model):
@@ -28,6 +41,17 @@ class WebUser(models.Model):
     class Meta:
         verbose_name = "Пользователь сайта"
         verbose_name_plural = "Пользователи сайта"
+
+
+class Distributor(models.Model):
+    distributor = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Дистрибьютор")
+    title = models.CharField(max_length=255, verbose_name="Название")
+    image = models.ImageField(
+        upload_to="distributor/profile_images/", storage=UUIDFileStorage(), null=True, verbose_name="Логотип")
+
+    class Meta:
+        verbose_name = "Дистрибьютор"
+        verbose_name_plural = "Дистрибьюторы"
 
 
 class Mark(models.Model):
@@ -234,3 +258,20 @@ class SetTransmission(models.Model):
 class SetColor(models.Model):
     color = models.ForeignKey(Color, on_delete=models.PROTECT)
     car = models.ForeignKey(Car, on_delete=models.PROTECT)
+
+
+class SetTypeCar(models.Model):
+    class TYPES(Enum):
+        parser = ('parser', 'With the help to parser')
+        distributor = ('distributor', 'With the help to distributor')
+
+        @classmethod
+        def get_value(cls, member):
+            return cls[member].value[0]
+
+    type = models.CharField(max_length=128, choices=[x.value for x in TYPES], null=True, verbose_name="Тип загрузки")
+    car = models.ForeignKey(Car, on_delete=models.PROTECT, verbose_name="Автомобиль")
+
+    class Meta:
+        verbose_name = "Тип загрузки автомобиля"
+        verbose_name_plural = "Тип загрузки автомобилей"

@@ -487,7 +487,7 @@ class DistributorObj:
                             else:
                                 color_obj = color_obj.get()
                             SetColor.objects.create(car=car, color=color_obj)
-                            SetTypeCar.objects.create(type="distributor", car=car)
+                            SetTypeCar.objects.create(type="distributor", car=car, user=user)
                     except Exception as e:
                         traceback.print_exc()
                 n+=1

@@ -48,7 +48,7 @@ PRICE_RANGE: dict = {
 }  # Keys is ids price range.
 
 
-class API:
+class APIObj:
     class CreateBotUserView(ListAPIView):
         serializer_class: BotUser = BotUser  # Set serializer object.
 
@@ -277,7 +277,7 @@ class API:
                 return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
-class Web:
+class WebObj:
     def index(request) -> HttpResponse:
         CAPTCHA_PUBLIC_KEY = settings.CAPTCHA_PUBLIC_KEY
         cities = City.objects.all()  # Get cities
@@ -422,7 +422,7 @@ class Web:
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
-class Distributor:
+class DistributorObj:
     def distributor(request):
         if not request.user.is_authenticated:
             # Return auth page
@@ -458,6 +458,10 @@ class Distributor:
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
     def upload_file(request, n=0):
+        user = user_obj(request)
+        distributor = Distributor.objects.filter(distributor=user)
+        if not distributor.exists():
+            return HttpResponse(json.dumps({"response": False, "type": "NotDistribAccount"}), content_type='application/json')
         try:
             file = request.FILES.get("file")
             reader = csv.reader(codecs.iterdecode(file, 'utf-8'))
@@ -483,6 +487,7 @@ class Distributor:
                             else:
                                 color_obj = color_obj.get()
                             SetColor.objects.create(car=car, color=color_obj)
+                            SetTypeCar.objects.create(type="distributor", car=car)
                     except Exception as e:
                         traceback.print_exc()
                 n+=1
@@ -491,6 +496,34 @@ class Distributor:
         except Exception as e:
             traceback.print_exc()
             return HttpResponse(json.dumps({"response": False, "error_message": e}), content_type='application/json')
+
+    def profile(request):
+        if not request.user.is_authenticated:
+            # Return auth page
+            return render(request, "distributor/auth.html")
+        user = user_obj(request)
+        distributor = Distributor.objects.filter(distributor=user)
+        if distributor.exists():
+            distributor = distributor.get()
+        return render(request, "distributor/profile.html", {"username": user.username,
+            "date_joined": user.date_joined, "distributor": distributor})
+
+    def cars(request):
+        return render(request, "distributor/cars.html")
+
+    def save_data(request):
+        title = request.POST.get("title")
+        image = request.FILES.get("image")
+        user = user_obj(request)
+        distributor = Distributor.objects.filter(distributor=user)
+        if not distributor.exists():
+            Distributor.objects.create(distributor=user, title=title, image=image)
+        else:
+            distributor = distributor.get()
+            distributor.title = title
+            distributor.image = image
+            distributor.save()
+        return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
 def p_find_car(
@@ -551,3 +584,13 @@ def p_find_car(
             return dct_cars
         else:
             return []
+
+def user_obj(request):
+    session_key = request.COOKIES.get("sessionid")
+    session = Session.objects.filter(session_key=session_key)
+    if not session.exists():
+        return redirect("auth")
+    session = session.get()
+    uid = session.get_decoded().get('_auth_user_id')
+    user = User.objects.get(pk=uid)
+    return user

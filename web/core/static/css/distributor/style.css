@@ -337,3 +337,7 @@ input[type=file]::file-selector-button:hover {
   margin-left: 60px;
   margin-top: 5px;
 }
+
+#auth-container {
+  width: 350px;
+}

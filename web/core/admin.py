@@ -178,3 +178,20 @@ class Color(admin.ModelAdmin):
 class SetColor(admin.ModelAdmin):
     fields = ["car", "color"]
     list_display = ["car", "color"]
+
+@admin.register(Distributor)
+class Distributor(admin.ModelAdmin):
+    fields = ["distributor", "title", "image"]
+    readonly_fields = ("distributor",)
+    list_display = ["distributor", "title", "get_image"]
+    search_fields = ["title"]
+    search_help_text = "Для поиска введите название дистрибьютора"
+    list_per_page: int = 20
+
+    def get_image(self, obj) -> Any:
+        if obj.image:
+            return mark_safe(f"<img src='{obj.image.url}' wdith=70 height=70>")
+        else:
+            return obj.image
+
+    get_image.short_description = "Изображение"

@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Distributor
     path("distributor", DistributorObj.distributor, name="distributor"),
-    path("auth", DistributorObj.auth, name="auth"),
+    path("distributor/auth", DistributorObj.auth, name="auth"),
     path("logout", DistributorObj.logout_view, name="logout_view"),
     path("distributor/upload_file", DistributorObj.upload_file, name="upload_file"),
     path("distributor/profile", DistributorObj.profile, name="profile"),

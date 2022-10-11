@@ -475,7 +475,7 @@ class DistributorObj:
                         if not engine.exists():
                             engine = Engine.objects.create(volume=volume, power=power, type_fuel=type_fuel)
                         else:
-                            engine = engine.get()
+                            engine = engine.get().first()
                         car = Car.objects.filter(title=title, image=image, price=price, engine=engine,
                             transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
                         if not car.exists():

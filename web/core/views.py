@@ -426,7 +426,7 @@ class DistributorObj:
     def distributor(request, cars=None, files=None):
         if not request.user.is_authenticated:
             # Return auth page
-            return render(request, "distributor/auth.html")
+            return redirect("distributor/auth")
         session_key = request.COOKIES.get("sessionid")
         session = Session.objects.filter(session_key=session_key)
         if not session.exists():
@@ -453,7 +453,7 @@ class DistributorObj:
             if not user.is_superuser:
                 login(request, user)
                 return redirect("distributor")
-        return redirect("distributor")
+        return render(request, "distributor/auth.html")
 
     def logout_view(request):
         logout(request)

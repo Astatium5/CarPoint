@@ -1,4 +1,5 @@
 from os.path import splitext
+from time import time
 from uuid import uuid4
 from enum import Enum
 from django.utils import timezone
@@ -18,6 +19,18 @@ class CSVFileStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/csv/{uuid4().hex + ext}"
+
+
+class DistributorFileStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        _, ext = splitext(name)
+        return F"{settings.MEDIA_ROOT}/files/distributor/{uuid4().hex + ext}"
+
+
+class AdminFileStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        _, ext = splitext(name)
+        return F"{settings.MEDIA_ROOT}/files/admin/{uuid4().hex + ext}"
 
 
 class BotUser(models.Model):
@@ -207,13 +220,28 @@ class Entry(models.Model):
     name = models.CharField(max_length=255, verbose_name="Имя")
     address = models.CharField(max_length=255, verbose_name="Адрес")
     phone = models.BigIntegerField(verbose_name="Телефон")
+    created = models.DateTimeField(default=timezone.now, verbose_name="Дата и время создания")
 
     def __str__(self):
-        return str(self.id)
+        return f"Заявка #{self.id}"
 
     class Meta:
         verbose_name = "Заявка"
         verbose_name_plural = "Заявки"
+
+
+class SetEntry(models.Model):
+    distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, verbose_name="Дистрибьютор")
+    entry = models.ForeignKey(Entry, on_delete=models.PROTECT, verbose_name="Заявка")
+    distributor_file = models.ForeignKey('DistributorEntryFiles', on_delete=models.SET_NULL, null=True, verbose_name="Файлы дистрибьютора")
+    admin_file = models.ForeignKey('AdminEntryFiles', on_delete=models.SET_NULL, null=True, verbose_name="Файлы админа")
+
+    def __str__(self):
+        return f"Заявка дистрибьютора #{self.id}"
+
+    class Meta:
+        verbose_name = "Заявка дистрибьютора"
+        verbose_name_plural = "Заявки дистрибьюторов"
 
 
 class UserQuestion(models.Model):
@@ -265,6 +293,10 @@ class SetColor(models.Model):
     color = models.ForeignKey(Color, on_delete=models.PROTECT)
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        verbose_name = "Цветовое соотношение"
+        verbose_name_plural = "Цветовые соотношения"
+
 
 class SetTypeCar(models.Model):
     class TYPES(Enum):
@@ -284,7 +316,7 @@ class SetTypeCar(models.Model):
         verbose_name_plural = "Тип загрузки автомобилей"
 
 
-class Files(models.Model):
+class File(models.Model):
     file = models.FileField(upload_to="distributor/csv/", storage=CSVFileStorage(), verbose_name="CSV файл")
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Пользователь")
     created = models.DateTimeField(default=timezone.now)
@@ -293,3 +325,31 @@ class Files(models.Model):
         ordering = ["-created"]
         verbose_name = "CSV файл"
         verbose_name_plural = "CSV файлы"
+
+
+class DistributorEntryFiles(models.Model):
+    entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
+    act = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Акт")
+    agreement = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Соглашение")
+    bill = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Счёт")
+
+    def __str__(self):
+        return f"Заявка #{self.id}"
+
+    class Meta:
+        verbose_name = "Файл дистрибьютора"
+        verbose_name_plural = "Файлы дистрибьюторов"
+
+
+class AdminEntryFiles(models.Model):
+    entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
+    act = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Акт")
+    agreement = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Соглашение")
+    bill = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Счёт")
+
+    def __str__(self):
+        return f"Заявка #{self.id}"
+
+    class Meta:
+        verbose_name = "Файл админа"
+        verbose_name_plural = "Файлы админов"

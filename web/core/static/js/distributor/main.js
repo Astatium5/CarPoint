@@ -130,3 +130,50 @@ function saveCompanyData(){
     })
   }
 }
+
+function goBack(id){
+  let bodyFont = document.getElementById(id);
+  bodyFont.style.display = 'none';
+  let bodyBack = document.getElementById(`body-back-${id.replace("body-font-", "")}`);
+  bodyBack.style.display = 'block';
+}
+
+function goFont(id){
+  let bodyFont = document.getElementById(`body-font-${id.replace("body-back-", "")}`);
+  bodyFont.style.display = 'block';
+  let bodyBack = document.getElementById(id);
+  bodyBack.style.display = 'none';
+}
+
+function saveDsitributorDocuments(id){
+  let act = document.getElementById(`act-${id}`).files[0];
+  let agreement = document.getElementById(`agreement-${id}`).files[0];
+  let bill = document.getElementById(`bill-${id}`).files[0];
+  if (!act && !agreement && !bill){
+    alert("Нужно прикрепить документ!");
+  }else{
+    let data = new FormData();
+    data.append("id", id);
+    data.append("act", act);
+    data.append("agreement", agreement);
+    data.append("bill", bill);
+
+    fetch("upload_documents", {
+      method: "POST",
+      body: data,
+      contentType: 'application/json',
+      headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRFToken": $.cookie("csrftoken")
+      },
+    }).then(function (response) {
+      response.json().then(
+          function (data) {
+              if (data["response"]) {
+                window.location.replace("/distributor/orders");
+              }
+          }
+      )
+    })
+  }
+}

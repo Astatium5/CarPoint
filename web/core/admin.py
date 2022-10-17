@@ -195,3 +195,22 @@ class Distributor(admin.ModelAdmin):
             return obj.image
 
     get_image.short_description = "Изображение"
+
+
+@admin.register(AdminEntryFiles)
+class AdminEntryFiles(admin.ModelAdmin):
+    fields = ["entry", "act", "agreement", "bill"]
+    readonly_fields = ("entry",)
+    list_display = ["__str__", "act", "agreement", "bill"]
+
+@admin.register(DistributorEntryFiles)
+class DistributorEntryFiles(admin.ModelAdmin):
+    fields = ["entry", "act", "agreement", "bill"]
+    readonly_fields = ("entry",)
+    list_display = ["__str__", "act", "agreement", "bill"]
+
+@admin.register(SetEntry)
+class SetEntry(admin.ModelAdmin):
+    fields = ["distributor", "entry", "distributor_file", "admin_file"]
+    readonly_fields = ("distributor",)
+    list_display = ["__str__", "distributor", "entry", "distributor_file", "admin_file"]

@@ -17,9 +17,9 @@
                           <input id="act-{{order.pk}}" type="file" name="myfile"/>
                           <small class="act-text"></small>
                           {% if not order.distributor_file.act %}
-                            <small class="false-act-text"><i class="bi bi-file-earmark-excel"></i> Акт отсутствует</small>
+                            <small class="false-act-text"><i class="bi bi-file-earmark-excel false-icon"></i> Акт отсутствует</small>
                           {% else %}
-                            <small class="true-act-text"><i class="bi bi-file-earmark-check"></i> Акт присутствует</small>
+                            <small class="true-act-text"><i class="bi bi-file-earmark-check true-icon"></i> Акт присутствует</small>
                           {% endif %}
                         </div>
                     </li>
@@ -28,9 +28,9 @@
                             <button class="upload-file-btn">Загрузить соглашение</button>
                             <input id="agreement-{{order.pk}}" type="file" name="myfile"/>
                             {% if not order.distributor_file.agreement %}
-                              <small class="false-agreement-text"><i class="bi bi-file-earmark-excel"></i> Соглашение отсутствует</small>
+                              <small class="false-agreement-text"><i class="bi bi-file-earmark-excel false-icon"></i> Соглашение отсутствует</small>
                             {% else %}
-                              <small class="true-agreement-text"><i class="bi bi-file-earmark-check"></i> Соглашение присутствует</small>
+                              <small class="true-agreement-text"><i class="bi bi-file-earmark-check true-icon"></i> Соглашение присутствует</small>
                             {% endif %}
                         </div>
                     </li>
@@ -39,9 +39,9 @@
                             <button class="upload-file-btn">Загрузить счёт</button>
                             <input id="bill-{{order.pk}}" type="file" name="myfile"/>
                             {% if not order.distributor_file.bill %}
-                              <small class="false-bill-text"><i class="bi bi-file-earmark-excel"></i> Счёт отсутствует</small>
+                              <small class="false-bill-text"><i class="bi bi-file-earmark-excel false-icon"></i> Счёт отсутствует</small>
                             {% else %}
-                              <small class="false-bill-text"><i class="bi bi-file-earmark-check"></i> Счёт присутствует</small>
+                              <small class="false-bill-text"><i class="bi bi-file-earmark-check true-icon"></i> Счёт присутствует</small>
                             {% endif %}
                         </div>
                     </li>
@@ -58,31 +58,31 @@
                     <ul class="list-group list-group-flush">
                         {% if not order.admin_file.act %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-danger w-100"><i class="bi bi-file-earmark-excel"></i> Акт отсутствует</span>
+                                <span class="badge text-bg-danger w-100 bg-gradient"><i class="bi bi-file-earmark-excel"></i> Акт отсутствует</span>
                             </li>
                         {% else %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-success w-100"><i class="bi bi-file-earmark-check"></i> Акт присутствует</span>
+                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bi bi-file-earmark-check"></i> Акт присутствует</span>
                             </li>
                         {% endif %}
 
                         {% if not order.admin_file.agreement %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-danger w-100"><i class="bi bi-file-earmark-excel"></i> Соглашение отсутствует</span>
+                                <span class="badge text-bg-danger w-100 bg-gradient"><i class="bi bi-file-earmark-excel"></i> Соглашение отсутствует</span>
                             </li>
                         {% else %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-success w-100"><i class="bi bi-file-earmark-check"></i> Соглашение присутствует</span>
+                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bi bi-file-earmark-check"></i> Соглашение присутствует</span>
                             </li>
                         {% endif %}
 
                         {% if not order.admin_file.bill %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-danger w-100"><i class="bi bi-file-earmark-excel"></i> Счёт отсутствует</span>
+                                <span class="badge text-bg-danger w-100 bg-gradient"><i class="bi bi-file-earmark-excel"></i> Счёт отсутствует</span>
                             </li>
                         {% else %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-success w-100"><i class="bi bi-file-earmark-check"></i> Счёт присутствует</span>
+                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bi bi-file-earmark-check"></i> Счёт присутствует</span>
                             </li>
                         {% endif %}
                       </ul>

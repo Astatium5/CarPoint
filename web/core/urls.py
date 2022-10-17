@@ -21,10 +21,12 @@ urlpatterns = [
     path("distributor", DistributorObj.distributor, name="distributor"),
     path("distributor/auth", DistributorObj.auth, name="auth"),
     path("logout", DistributorObj.logout_view, name="logout_view"),
-    path("distributor/upload_file", DistributorObj.upload_file, name="upload_file"),
+    path("distributor/upload_csv_file", DistributorObj.upload_csv_file, name="upload_csv_file"),
     path("distributor/profile", DistributorObj.profile, name="profile"),
     path("distributor/cars",  DistributorObj.cars, name="cars"),
     path("distributor/save_data", DistributorObj.save_data, name="save_data"),
+    path("distributor/orders", DistributorObj.orders, name="orders"),
+    path("distributor/upload_documents", DistributorObj.upload_documents, name="upload_documents"),
 
     # ===API urls===
     path("api/create_user/<int:user_id>/<str:first_name>/<str:username>",

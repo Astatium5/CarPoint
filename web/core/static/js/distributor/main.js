@@ -28,7 +28,7 @@ function uploadFile(){
     let data = new FormData();
     data.append("file", file)
 
-    fetch("upload_file", {
+    fetch("upload_csv_file", {
       method: "POST",
       body: data,
       contentType: 'application/json',

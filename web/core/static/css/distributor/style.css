@@ -407,13 +407,13 @@ input[type=file]::file-selector-button:hover {
   margin-left: 18%;
 }
 
-.bi-file-earmark-check {
+.true-icon {
   color: white;
   background-color: green;
   border-radius: 0.15em;
 }
 
-.bi-file-earmark-excel {
+.false-icon {
   color: white;
   background-color: red;
   border-radius: 0.15em;

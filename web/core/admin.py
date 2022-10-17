@@ -201,13 +201,13 @@ class Distributor(admin.ModelAdmin):
 class AdminEntryFiles(admin.ModelAdmin):
     fields = ["entry", "act", "agreement", "bill"]
     readonly_fields = ("entry",)
-    list_display = ["__str__", "act", "agreement", "bill"]
+    list_display = ["__str__", "entry", "act", "agreement", "bill"]
 
 @admin.register(DistributorEntryFiles)
 class DistributorEntryFiles(admin.ModelAdmin):
     fields = ["entry", "act", "agreement", "bill"]
     readonly_fields = ("entry",)
-    list_display = ["__str__", "act", "agreement", "bill"]
+    list_display = ["__str__", "entry", "act", "agreement", "bill"]
 
 @admin.register(SetEntry)
 class SetEntry(admin.ModelAdmin):

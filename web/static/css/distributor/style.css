@@ -396,3 +396,25 @@ input[type=file]::file-selector-button:hover {
 .table-scroll-y {
   margin-bottom: 80px;
 }
+
+.true-act-text, .false-act-text, .true-bill-text, .false-bill-text {
+  padding: 0.15em;
+  margin-left: 27%;
+}
+
+.true-agreement-text, .false-agreement-text {
+  padding: 0.15em;
+  margin-left: 18%;
+}
+
+.bi-file-earmark-check {
+  color: white;
+  background-color: green;
+  border-radius: 0.15em;
+}
+
+.bi-file-earmark-excel {
+  color: white;
+  background-color: red;
+  border-radius: 0.15em;
+}

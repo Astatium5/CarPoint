@@ -334,7 +334,7 @@ class DistributorEntryFiles(models.Model):
     bill = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Счёт")
 
     def __str__(self):
-        return f"Заявка #{self.id}"
+        return f"#{self.id}"
 
     class Meta:
         verbose_name = "Файл дистрибьютора"
@@ -348,7 +348,7 @@ class AdminEntryFiles(models.Model):
     bill = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Счёт")
 
     def __str__(self):
-        return f"Заявка #{self.id}"
+        return f"#{self.id}"
 
     class Meta:
         verbose_name = "Файл админа"

@@ -17,9 +17,9 @@
                           <input id="act-{{order.pk}}" type="file" name="myfile"/>
                           <small class="act-text"></small>
                           {% if not order.distributor_file.act %}
-                            <small class="act-text"><i class="bi bi-file-earmark-excel"></i> Акт отсутствует</small>
+                            <small class="false-act-text"><i class="bi bi-file-earmark-excel"></i> Акт отсутствует</small>
                           {% else %}
-                            <small class="act-text"><i class="bi bi-file-earmark-check"></i> Акт присутствует</small>
+                            <small class="true-act-text"><i class="bi bi-file-earmark-check"></i> Акт присутствует</small>
                           {% endif %}
                         </div>
                     </li>
@@ -28,9 +28,9 @@
                             <button class="upload-file-btn">Загрузить соглашение</button>
                             <input id="agreement-{{order.pk}}" type="file" name="myfile"/>
                             {% if not order.distributor_file.agreement %}
-                              <small class="act-text"><i class="bi bi-file-earmark-excel"></i> Соглашение отсутствует</small>
+                              <small class="false-agreement-text"><i class="bi bi-file-earmark-excel"></i> Соглашение отсутствует</small>
                             {% else %}
-                              <small class="act-text"><i class="bi bi-file-earmark-check"></i> Соглашение присутствует</small>
+                              <small class="true-agreement-text"><i class="bi bi-file-earmark-check"></i> Соглашение присутствует</small>
                             {% endif %}
                         </div>
                     </li>
@@ -39,9 +39,9 @@
                             <button class="upload-file-btn">Загрузить счёт</button>
                             <input id="bill-{{order.pk}}" type="file" name="myfile"/>
                             {% if not order.distributor_file.bill %}
-                              <small class="act-text"><i class="bi bi-file-earmark-excel"></i> Счёт отсутствует</small>
+                              <small class="false-bill-text"><i class="bi bi-file-earmark-excel"></i> Счёт отсутствует</small>
                             {% else %}
-                              <small class="act-text"><i class="bi bi-file-earmark-check"></i> Счёт присутствует</small>
+                              <small class="false-bill-text"><i class="bi bi-file-earmark-check"></i> Счёт присутствует</small>
                             {% endif %}
                         </div>
                     </li>

@@ -272,8 +272,13 @@ class APIObj:
             if entry.exists():
                 return HttpResponse(json.dumps({"response": False}), content_type='application/json')
             else:
-                Entry.objects.create(user=user, username=username, car=car, email=email,
-                                     name=name, address=address, phone=phone)
+                entry = Entry.objects.create(user=user, username=username, car=car, email=email,
+                                             name=name, address=address, phone=phone)
+                setTypeCar = SetTypeCar.objects.filter(car=car)
+                if setTypeCar.exists():
+                    setTypeCar = setTypeCar.get()
+                    set_entry = SetEntry.objects.create(
+                        distributor=setTypeCar.user, entry=entry)
                 return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
@@ -307,8 +312,8 @@ class WebObj:
                             for car in cars_values])
 
         return render(request, "main/index.html", dict(cities=cities, CAPTCHA_PUBLIC_KEY=CAPTCHA_PUBLIC_KEY,
-                                                  new_cars=new_cars, questions=questions, cars=cars, image=image, min_price=min_price,
-                                                  main_length=main_length, mark=mark))
+                                                       new_cars=new_cars, questions=questions, cars=cars, image=image, min_price=min_price,
+                                                       main_length=main_length, mark=mark))
 
     def oferta(request) -> HttpResponse:
         return render(request, "main/oferta.html")
@@ -417,8 +422,19 @@ class WebObj:
             car = NewCar.objects.get(id=car_id)
         else:
             car = Car.objects.get(id=car_id)
-            Entry.objects.create(car=car, email=email,
+            entry = Entry.objects.create(car=car, email=email,
                                  name=name, address=address, phone=tel)
+            setTypeCar = SetTypeCar.objects.filter(car=car)
+            if setTypeCar.exists():
+                setTypeCar = setTypeCar.get()
+                distributor = Distributor.objects.get(distributor=setTypeCar.user)
+                set_entry = SetEntry.objects.create(
+                    distributor=distributor, entry=entry)
+                distributor_file = DistributorEntryFiles.objects.create(entry=entry)
+                admin_file = AdminEntryFiles.objects.create(entry=entry)
+                set_entry.distributor_file = distributor_file
+                set_entry.admin_file = admin_file
+                set_entry.save()
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
@@ -434,7 +450,7 @@ class DistributorObj:
         session = session.get()
         uid = session.get_decoded().get('_auth_user_id')
         user = User.objects.get(pk=uid)
-        files = Files.objects.filter(user=user).all()
+        files = File.objects.filter(user=user).all()
         cars = SetTypeCar.objects.filter(user=user, car__isnull=False).all()
         return render(request, "distributor/index.html", {
             "username": user.username, "full_name": user.get_full_name(),
@@ -459,7 +475,7 @@ class DistributorObj:
         logout(request)
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
-    def upload_file(request, n=0):
+    def upload_csv_file(request, n=0):
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user)
         if not distributor.exists():
@@ -471,29 +487,34 @@ class DistributorObj:
                 if n >= 1:
                     power, type_fuel, volume, transmission_id, wd_id, title, price, body, mark_id, image, color = r
                     try:
-                        engine = Engine.objects.filter(volume=volume, power=power, type_fuel=type_fuel)
+                        engine = Engine.objects.filter(
+                            volume=volume, power=power, type_fuel=type_fuel)
                         if not engine.exists():
-                            engine = Engine.objects.create(volume=volume, power=power, type_fuel=type_fuel)
+                            engine = Engine.objects.create(
+                                volume=volume, power=power, type_fuel=type_fuel)
                         else:
                             engine = engine.first()
                         car = Car.objects.filter(title=title, image=image, price=price, engine=engine,
-                            transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
+                                                 transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
                         if not car.exists():
-                            model = Model.objects.create(mark_id=mark_id, title=title, price=price, body=body, is_visible=True)
-                            set = Set.objects.create(model=model, title=title, image=image)
+                            model = Model.objects.create(
+                                mark_id=mark_id, title=title, price=price, body=body, is_visible=True)
+                            set = Set.objects.create(
+                                model=model, title=title, image=image)
                             car = Car.objects.create(title=title, set=set, image=image, price=price, engine=engine,
-                                transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
+                                                     transmission_id=transmission_id, wd_id=wd_id, mark_id=mark_id)
                             color_obj = Color.objects.filter(title=color)
                             if not color_obj.exists():
                                 color_obj = Color.objects.create(title=color)
                             else:
                                 color_obj = color_obj.get()
                             SetColor.objects.create(car=car, color=color_obj)
-                            SetTypeCar.objects.create(type="distributor", car=car, user=user)
+                            SetTypeCar.objects.create(
+                                type="distributor", car=car, user=user)
                     except Exception as e:
                         traceback.print_exc()
-                n+=1
-            Files.objects.create(file=file, user=user)
+                n += 1
+            File.objects.create(file=file, user=user)
             sleep(1)
             return HttpResponse(json.dumps({"response": True}), content_type='application/json')
         except Exception as e:
@@ -509,7 +530,7 @@ class DistributorObj:
         if distributor.exists():
             distributor = distributor.get()
         return render(request, "distributor/profile.html", {"username": user.username,
-            "date_joined": user.date_joined, "distributor": distributor})
+                                                            "date_joined": user.date_joined, "distributor": distributor})
 
     def cars(request):
         return render(request, "distributor/cars.html")
@@ -520,12 +541,33 @@ class DistributorObj:
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user)
         if not distributor.exists():
-            Distributor.objects.create(distributor=user, title=title, image=image)
+            Distributor.objects.create(
+                distributor=user, title=title, image=image)
         else:
             distributor = distributor.get()
             distributor.title = title
             distributor.image = image
             distributor.save()
+        return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+
+    def orders(request):
+        user = user_obj(request)
+        distributor = Distributor.objects.filter(distributor=user).get()
+        orders = SetEntry.objects.filter(distributor=distributor).all()
+        return render(request, "distributor/orders.html", {"orders": orders})
+
+    def upload_documents(request):
+        files = request.FILES
+        data = request.POST
+        id = data.get("id")
+        act = files.get("act")
+        agreement = files.get("agreement")
+        bill = files.get("bill")
+        dFile = DistributorEntryFiles.objects.get(entry=SetEntry.objects.get(id=id).entry)
+        dFile.act = act
+        dFile.agreement = agreement
+        dFile.bill = bill
+        dFile.save()
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
@@ -587,6 +629,7 @@ def p_find_car(
             return dct_cars
         else:
             return []
+
 
 def user_obj(request):
     session_key = request.COOKIES.get("sessionid")

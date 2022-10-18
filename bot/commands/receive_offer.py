@@ -386,9 +386,9 @@ async def inline_echo(query: InlineQuery) -> Any:
             price: Any = car.get("price")
             image: Any = car.get("image")
             mark_id = car.get("mark_id")
-            engine_volume: Any = car.get("engine_volume")
-            engine_power: Any = car.get("engine_power")
-            type_fuel: Any = car.get("engine_type_fuel")
+            engine_volume: Any = car.get("engine").get("volume")
+            engine_power: Any = car.get("engine").get("power")
+            type_fuel: Any = car.get("engine").get("type_fuel")
             wd: Any = car.get("wd")
             special = car.get("special")
             item: InlineQueryResultArticle = InlineQueryResultArticle(

@@ -277,8 +277,14 @@ class APIObj:
                 setTypeCar = SetTypeCar.objects.filter(car=car)
                 if setTypeCar.exists():
                     setTypeCar = setTypeCar.get()
+                    distributor = Distributor.objects.get(distributor=setTypeCar.user)
                     set_entry = SetEntry.objects.create(
-                        distributor=setTypeCar.user, entry=entry)
+                        distributor=distributor, entry=entry)
+                    distributor_file = DistributorEntryFiles.objects.create(entry=entry)
+                    admin_file = AdminEntryFiles.objects.create(entry=entry)
+                    set_entry.distributor_file = distributor_file
+                    set_entry.admin_file = admin_file
+                    set_entry.save()
                 return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 

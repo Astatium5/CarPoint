@@ -42,8 +42,9 @@ class WebUser(admin.ModelAdmin):
 
 @admin.register(Mark)
 class Mark(admin.ModelAdmin):
-    fields = ["title", "is_visible"]
-    list_display = ["title", "is_visible"]
+    fields = ["id", "title", "is_visible"]
+    list_display = ["title", "id", "is_visible"]
+    readonly_fields = ("id",)
     search_fields = ["title"]
     search_help_text = "Для поиска название марки"
     list_per_page: int = 15

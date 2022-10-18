@@ -1,15 +1,71 @@
 {% extends 'distributor/index.html' %}
 {% load static %}
+{% load define_action %}
 {% block title %}Заказы{% endblock%}
 {% block sidebar_body %}
+<div id="distribEntryInfoModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('distribEntryInfoModal')"></button>
+        </div>
+        <div class="modal-body">
+            <div id="EntryInfoCard" class="card mb-3 car-card w-100">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    {% if not car.image %}
+                      <img src="{% static 'img/distributor/thumb.jpg' %}" class="img-fluid rounded-start" width="320">
+                    {% else %}
+                      <img src="{{car.image}}" class="img-fluid rounded-start" width="170">
+                    {% endif %}
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{car.title}}</h5>
+                      <p class="card-text"></p>
+                      <p class="card-text price-text"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+</div>
+
 <div class="album py-2 my-custom-scrollbar">
     <div class="table-scroll-y">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
             {% for order in orders %}
+            {% if order.status == 'new' %}
+                {% define '1' as step %}
+            {% elif order.status == 'work' %}
+                {% define '2' as step %}
+            {% elif order.status == 'complete' %}
+                {% define '3' as step %}
+            {% endif %}
             <div id="d-order{{oder.pk}}" class="card order-card border-dark mb-3">
                 <div id="body-font-{{order.pk}}" class="card-body body-font">
-                  <button class="arrow-btn" onclick="goBack('body-font-{{order.pk}}')"><i class="bi bi-arrow-left-right"></i></button>
-                  <h5 class="card-title text-center">Заявка #{{order.entry.pk}}</h5>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="info-btn" onclick="distribEntryInfo('{{order.pk}}')"><i class="bi bi-info-circle"></i>
+                    <button class="arrow-btn" onclick="goBack('body-font-{{order.pk}}')"><i class="bi bi-arrow-left-right"></i></button>
+                  </div>
+                  <h5 class="card-title text-center">Заявка #{{order.pk}}</button></h5>
+                  <div class="form-group">
+                    <input id="{{order.pk}}" type="range" class="custom-range" min="1" max="3" step="1" value="{{step}}" onchange="changeEntryStatus(this.id, this.value)">
+                  </div>
+                  <div class="la">
+                    <div><span>
+                      Новая
+                    </span></div>
+                    <div><span>
+                      В работе
+                    </span></div>
+                    <div><span>
+                      Завершена
+                    </span></div>
+                  </div>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="upload-btn-wrapper">
@@ -53,7 +109,10 @@
                 </div>
 
                 <div id="body-back-{{order.pk}}" class="card-body body-back" style="display: none;">
-                    <button class="arrow-btn" onclick="goFont('body-back-{{order.pk}}')"><i class="bi bi-arrow-left-right"></i></button>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button class="info-btn" onclick="distribEntryInfo('{{order.pk}}')"><i class="bi bi-info-circle"></i>
+                      <button class="arrow-btn" onclick="goFont('body-back-{{order.pk}}')"><i class="bi bi-arrow-left-right"></i></button>
+                    </div>
                     <h5 class="card-title text-center">Администратор</h5>
                     <ul class="list-group list-group-flush">
                         {% if not order.admin_file.act %}

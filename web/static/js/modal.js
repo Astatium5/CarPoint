@@ -1,7 +1,14 @@
-function showLeaveRequestModal(car_id){
+function showLeaveRequestModal(car_id, title, image, subtitle, transmission, type_fuel, wd, engine_volume){
     var modal = $("#lr-modal");
+    modal.find(".auto-title").text(title);
+    modal.find(".auto-subtitle").text(subtitle);
+    modal.find("#transmission").text(transmission);
+    modal.find("#type_fuel").text(type_fuel);
+    modal.find("#wd").text(wd);
+    modal.find("#engine_volume").text(engine_volume.replace(",", "."));
+    modal.find("#auto-img").attr("src", image);
     var lv_btn = document.getElementById("leave-request-btn");
-    lv_btn.setAttribute( "onClick", `javascript: leaveRequest(${car_id});` );
+    lv_btn.setAttribute("onClick", `javascript: leaveRequest(${car_id});`);
     modal.modal("show");
 }
 

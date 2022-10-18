@@ -84,6 +84,10 @@ function closeToast(id){
   $(`#${id}`).toast("hide");
 }
 
+function closeModal(id){
+  $(`#${id}`).modal("toggle");
+}
+
 function refreshFileInput(){
   let modal = $(".modal");
   modal.modal("hide");
@@ -176,4 +180,59 @@ function saveDsitributorDocuments(id){
       )
     })
   }
+}
+
+function distribEntryInfo(id){
+    let data = new FormData();
+    data.append("id", id);
+
+    fetch("distrib_entry_info", {
+      method: "POST",
+      body: data,
+      contentType: 'application/json',
+      headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRFToken": $.cookie("csrftoken")
+      },
+    }).then(function (response) {
+      response.json().then(
+          function (data) {
+              if (data["response"]) {
+                let car = data["entry"]["car"];
+                let modal = $("#distribEntryInfoModal");
+                modal.find(".modal-title").text(`Заявка #${id}`);
+                modal.find("img").attr("src", car["image"]);
+                modal.find(".card-title").text(`${car["title"]}`);
+                modal.find(".card-text").text(`${car["body"]}; ${car["transmission"]}; ${car["engine"]["type_fuel"]}; ${car["engine"]["volume"]};
+                  ${car["engine"]["power"]}; ${car["wd"]}`);
+                modal.find(".price-text").text(`Цена: ${car["price"]}₽`);
+                modal.modal("show");
+              }
+          }
+      )
+    })
+}
+
+function changeEntryStatus(id, value){
+  let data = new FormData();
+  data.append("id", id);
+  data.append("value", value);
+
+  fetch("change_entry_status", {
+    method: "POST",
+    body: data,
+    contentType: 'application/json',
+    headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": $.cookie("csrftoken")
+    },
+  }).then(function (response) {
+    response.json().then(
+        function (data) {
+            if (data["response"]) {
+              
+            }
+        }
+    )
+  })
 }

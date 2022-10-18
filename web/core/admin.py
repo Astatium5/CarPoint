@@ -212,6 +212,6 @@ class DistributorEntryFiles(admin.ModelAdmin):
 
 @admin.register(SetEntry)
 class SetEntry(admin.ModelAdmin):
-    fields = ["distributor", "entry", "distributor_file", "admin_file"]
+    fields = ["distributor", "entry", "distributor_file", "admin_file", "status"]
     readonly_fields = ("distributor",)
-    list_display = ["__str__", "distributor", "entry", "distributor_file", "admin_file"]
+    list_display = ["__str__", "distributor", "entry", "distributor_file", "admin_file", "status"]

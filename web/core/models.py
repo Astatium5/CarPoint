@@ -1,9 +1,8 @@
 from os.path import splitext
-from time import time
 from uuid import uuid4
 from enum import Enum
-from django.utils import timezone
 
+from django.utils import timezone
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
@@ -124,6 +123,9 @@ class Engine(models.Model):
     type_fuel = models.CharField(
         max_length=255, verbose_name="Тип топлива", null=True)
 
+    def to_dict(self):
+        return dict(volume=self.volume, power=self.power, type_fuel=self.type_fuel)
+
     def __str__(self):
         return F"{self.volume} - {self.power}"
 
@@ -183,15 +185,14 @@ class Car(models.Model):
     mark = models.ForeignKey(
         Mark, on_delete=models.PROTECT, verbose_name="Марка")
 
-    def __str__(self):
-        return self.title
-
     def to_dict(self):
         return dict(
-            id=self.id, title=self.title, price=self.price, image=self.image, mark_id=self.mark_id,
-            engine_volume=self.engine.volume, engine_power=self.engine.power, engine_type_fuel=self.engine.type_fuel,
+            id=self.id, title=self.title, price=self.price, image=self.image, mark_id=self.mark_id, engine = self.engine.to_dict(),
             wd=self.wd.title, expenditure=self.expenditure, transmission=self.transmission.title, special=self.set.special,
             body=self.set.model.body, set_title=self.set.title, model_title=self.set.model.title)
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = "Автомобиль"
@@ -231,10 +232,25 @@ class Entry(models.Model):
 
 
 class SetEntry(models.Model):
+    class STATUS(Enum):
+        new = ("new", "Новая")
+        work = ("work", "В работе")
+        complete = ("complete", "Завершена")
+
+        @classmethod
+        def get_value(cls, member):
+            return cls[member].value[0]
+
+
     distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, verbose_name="Дистрибьютор")
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, verbose_name="Заявка")
     distributor_file = models.ForeignKey('DistributorEntryFiles', on_delete=models.SET_NULL, null=True, verbose_name="Файлы дистрибьютора")
     admin_file = models.ForeignKey('AdminEntryFiles', on_delete=models.SET_NULL, null=True, verbose_name="Файлы админа")
+    status = models.CharField(max_length=32, choices=[x.value for x in STATUS], default=STATUS.get_value("new"), verbose_name="Статус заявки")
+
+    def to_dict(self, is_distributor=False):
+        if is_distributor:
+            return dict(car=self.entry.car.to_dict())
 
     def __str__(self):
         return f"Заявка дистрибьютора #{self.id}"

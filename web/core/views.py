@@ -576,6 +576,24 @@ class DistributorObj:
         dFile.save()
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
+    def distribEntryInfo(request):
+        id = request.POST.get("id")
+        entry = SetEntry.objects.filter(pk=id).get().to_dict(is_distributor=True)
+        return HttpResponse(json.dumps({"response": True, "entry": entry}), content_type='application/json')
+
+    def changeEntryStatus(request):
+        id = request.POST.get("id")
+        value = request.POST.get("value")
+        if value == "1":
+            status = "new"
+        elif value == "2":
+            status = "work"
+        elif value == "3":
+            status = "complete"
+        setEntry = SetEntry.objects.get(id=id)
+        setEntry.status = status
+        setEntry.save()
+        return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 def p_find_car(
     pricerange: str, mark: str, transmission: str,
@@ -620,8 +638,8 @@ def p_find_car(
             dct_cars: dict = {}
             price_arr: list = []
             for car in cars:
-                pattern = {"id": car["id"], "title": car["title"], "price": car["price"], "image": car["image"], "engine_volume": car["engine_volume"],
-                           "engine_power": car["engine_power"], "engine_type_fuel": car["engine_type_fuel"],
+                pattern = {"id": car["id"], "title": car["title"], "price": car["price"], "image": car["image"], "engine_volume": car["engine"]["volume"],
+                           "engine_power": car["engine"]["power"], "engine_type_fuel": car["engine"]["type_fuel"],
                            "wd": car["wd"], "transmission": car["transmission"], "body": car["body"], "set_title": car["set_title"],
                            "special": car["special"]}
                 if not car["model_title"] in dct_cars:

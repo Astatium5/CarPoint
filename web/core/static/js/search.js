@@ -76,8 +76,8 @@ function get_cars(){
 
                     for (i = 0; i < cars.length; i++){
                         bodies.push(cars[i]['body']);
-                        type_fuel.push(cars[i]['engine_type_fuel']);
-                        engine_volume.push(cars[i]['engine_volume']);
+                        type_fuel.push(cars[i]['engine']['type_fuel']);
+                        engine_volume.push(cars[i]['engine']['volume']);
                         transmission.push(cars[i]['transmission']);
                     }
 
@@ -145,8 +145,8 @@ function get_cars_by_body(){
                     let transmission = [];
 
                     for (i = 0; i < cars.length; i++){
-                        type_fuel.push(cars[i]['engine_type_fuel']);
-                        engine_volume.push(cars[i]['engine_volume']);
+                        type_fuel.push(cars[i]['engine']['type_fuel']);
+                        engine_volume.push(cars[i]['engine']['volume']);
                         transmission.push(cars[i]['transmission']);
                     }
 
@@ -212,7 +212,7 @@ function get_cars_by_type_fuel(){
                     let transmission = [];
 
                     for (i = 0; i < cars.length; i++){
-                        engine_volume.push(cars[i]['engine_volume']);
+                        engine_volume.push(cars[i]['engine']['volume']);
                         transmission.push(cars[i]['transmission']);
                     }
 
@@ -278,7 +278,7 @@ function get_cars_by_transmission(){
                     var engine_volume = [];
 
                     for (i = 0; i < cars.length; i++){
-                        engine_volume.push(cars[i]['engine_volume']);
+                        engine_volume.push(cars[i]['engine']['volume']);
                     }
 
                     // Filter unique values.

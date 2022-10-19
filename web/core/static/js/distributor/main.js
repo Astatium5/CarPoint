@@ -1,7 +1,9 @@
 $(document).ready(function(){
     $('#upload_file').change(function () {
+      var _URL = window.URL || window.webkitURL;
       var preview = document.getElementById('company-image');
       var file = document.getElementById("upload_file").files[0];
+
       var reader = new FileReader();
 
       reader.onloadend = function () {
@@ -10,10 +12,31 @@ $(document).ready(function(){
 
       if (file) {
         reader.readAsDataURL(file);
+        reader.onload = function (e) {
+
+          //Initiate the JavaScript Image object.
+          var image = new Image();
+
+          //Set the Base64 string return from FileReader as source.
+          image.src = e.target.result;
+
+          //Validate the File Height and Width.
+          image.onload = function () {
+            var height = this.height;
+            var width = this.width;
+
+            if (height > 1280 || width > 1280) {
+              alert("Изображение не должно достигать больше 1280px");
+              return false;
+            }else{
+              preview.setAttribute("exp", "new")
+              return true;
+           }
+          };
+        };
       } else {
         preview.src = "";
       }
-      preview.setAttribute("exp", "new")
     })
 })
 

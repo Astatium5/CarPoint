@@ -142,9 +142,10 @@ form p{
 }
 
 #profile-logo, #company-image {
-  width: 170px;
-  height: 170px;
+  width: 180px;
+  height: 180px;
   border-radius: 0.35em;
+  margin-top: 30px;
 }
 
 #upload_file

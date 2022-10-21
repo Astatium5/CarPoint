@@ -446,9 +446,13 @@ class WebObj:
 
 class DistributorObj:
     def distributor(request, cars=None, files=None):
+        if request.user.is_superuser:
+            return redirect("/admin")
+
         if not request.user.is_authenticated:
             # Return auth page
             return redirect("distributor/auth")
+
         session_key = request.COOKIES.get("sessionid")
         session = Session.objects.filter(session_key=session_key)
         if not session.exists():
@@ -482,6 +486,10 @@ class DistributorObj:
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
     def upload_csv_file(request, n=0):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user)
         if not distributor.exists():
@@ -529,8 +537,9 @@ class DistributorObj:
 
     def profile(request):
         if not request.user.is_authenticated:
-            # Return auth page
-            return render(request, "distributor/auth.html")
+            # Return main page
+            return redirect("distributor")
+
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user)
         if distributor.exists():
@@ -539,9 +548,17 @@ class DistributorObj:
                                                             "date_joined": user.date_joined, "distributor": distributor})
 
     def cars(request):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         return render(request, "distributor/cars.html")
 
     def save_data(request):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         title = request.POST.get("title")
         image = request.FILES.get("image")
         user = user_obj(request)
@@ -557,12 +574,20 @@ class DistributorObj:
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
     def orders(request):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user).get()
         orders = SetEntry.objects.filter(distributor=distributor).all()
         return render(request, "distributor/orders.html", {"orders": orders})
 
     def upload_documents(request):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         files = request.FILES
         data = request.POST
         id = data.get("id")
@@ -577,11 +602,19 @@ class DistributorObj:
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
     def distribEntryInfo(request):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         id = request.POST.get("id")
         entry = SetEntry.objects.filter(pk=id).get().to_dict(is_distributor=True)
         return HttpResponse(json.dumps({"response": True, "entry": entry}), content_type='application/json')
 
     def changeEntryStatus(request):
+        if not request.user.is_authenticated:
+            # Return main page
+            return redirect("distributor")
+
         id = request.POST.get("id")
         value = request.POST.get("value")
         if value == "1":

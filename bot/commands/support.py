@@ -12,6 +12,7 @@ from states.states import *
 from log.logger import logger
 from . import receive_offer
 
+
 config: Config = Config()
 support_page: Any = globals.root.find("support")
 

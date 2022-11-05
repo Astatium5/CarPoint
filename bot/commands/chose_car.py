@@ -20,7 +20,6 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
         engine_power: Any = car.get("engine").get("power")
         engine_type_fuel: Any = car.get("engine").get("type_fuel")
         wd: Any = car.get("wd")
-        expenditure: Any = car.get("expenditure")
         transmission: Any = car.get("transmission")
         text_page: str = (F"Название: <b>{title}</b>\n"
                      F"Цена: {price}₽\n"
@@ -28,7 +27,6 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
                      F"Мощность двигателя: {engine_power}\n"
                      F"Тип двигателя: {engine_type_fuel}\n"
                      F"Привод: {wd}\n"
-                     F"Расход: {expenditure}\n"
                      F"Коробка: {transmission}")
         reply_markup: InlineKeyboardMarkup = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(

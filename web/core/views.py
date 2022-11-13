@@ -630,7 +630,8 @@ class DistributorTemp:
 
 
 class DealerTemp:
-    pass
+    def index(request):
+        return render(request, "dealer/dealer.html")
 
 
 def p_find_car(

@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block body %}
-<body>
+<body class="dealer">
 	<header>
 		<section class="header">
 			<div class="container">
@@ -50,10 +50,9 @@
 				<div class="header-baner">
 					<div class="row">
 						<div class="col-lg-7">
-							<h1>Автомобили от производителя</br>с доставкой и <span class="red">экономией</br>до
-									20%</span> от цены салона</h1>
-							<span class="subtitle">OneTwoCar - первый мультибрендовый официальный online дилер в России
-								с</br> честными ценами от производителя</span>
+							<h1>Онлайн-маркетплейс для
+                               </br>вашего <span class="red">автосалона</span></h1>
+							<span class="subtitle">Дополнительный источник клиентов без затрат со стороны дилера</span>
 							<a class="button" href="#podbor">Подобрать автомобиль</a>
 
 							<!-- Modal -->
@@ -81,8 +80,7 @@
 											</div>
 											<form class="modal-form" action="" method="post">
 												<input id="name" type="text" name="name" placeholder="Ваше имя">
-												<select id="city" list="datalistOptions" id="exampleDataList"
-													placeholder="Город">
+												<select id="city" list="datalistOptions" id="exampleDataList" placeholder="Город">
 													{% for city in cities %}
 													<option>{{city}}</option>
 													{% endfor %}
@@ -105,7 +103,7 @@
 							<!--<div class="modal fade modal-success" id="exampleModalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
+	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="img/close.svg" alt="Close"></button>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Найдено 1 234 566 вариантов</h5>
       </div>
@@ -123,7 +121,7 @@
 							<!--<div class="modal fade modal-success" id="exampleModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
+	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="img/close.svg" alt="Close"></button>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Автомобиль успешно забронирован</h5>
       </div>
@@ -146,24 +144,24 @@
 				<div class="header-info">
 					<div class="row">
 						<div class="col-lg-3">
-							<img src="{% static 'img/main/img1.svg' %}" alt="WOW Цена">
-							<h4>WOW Цена</h4>
-							<span>Честная цена от производителя, без накруток и навязанных услуг</span>
+							<img src="{% static 'img/main/img1.svg' %}" alt="Автосалон в смартфоне">
+							<h4>Автосалон в смартфоне</h4>
+							<span>Все сферы захватывают онлайн-рынок. Мы предлагаем сделать это раньше, чем Ваши конкуренты</span>
 						</div>
 						<div class="col-lg-3">
 							<img src="{% static 'img/main/img2.svg' %}" alt="Car">
-							<h4>Доставка на дом</h4>
-							<span>Мы привезем автомобиль и полный пакет документов прямо к вашему дому</span>
+							<h4>Без географических ограничений</h4>
+							<span>Маркетплейс работает онлайн по всей стране. А мы поможем организовать доставку прямо к дому клиента</span>
 						</div>
 						<div class="col-lg-3">
 							<img src="{% static 'img/main/img3.svg' %}" alt="Car">
-							<h4>Огромнейший выбор</h4>
-							<span>Большой выбор производителей и комплектаций и все в одном месте</span>
+							<h4>Простота покупки</h4>
+							<span>Маркетплейсы стали заменой оффлайн рынка товаров и услуг. А покупка в 3 клика - новой реальностью</span>
 						</div>
 						<div class="col-lg-3">
 							<img src="{% static 'img/main/img4.svg' %}" alt="Car">
 							<h4>Быстро. Просто. Безопасно</h4>
-							<span>Прозрачный цикл приобретения автомобиля. Покупка в 3 клика.</span>
+							<span>Прозрачный цикл приобретения автомобиля для покупателя и дилера. Личный кабинет, запись на тест-драйв и многое другое</span>
 						</div>
 					</div>
 				</div>
@@ -348,125 +346,69 @@
 		<div class="container">
 			<h2>Новинки<span class="new">new</span></h2>
 			<div class="slider-bl">
-				<div id="owl-demo" class="owl-carousel">
-					{% for car in new_cars %}
-					<div class="item">
-						<h3 class="">{{car.title}}</h3>
-						<div class="item-img"><img src="{{car.image.url}}" alt="Car"></div>
-						<div class="bottom-item"><span class="price">{{car.price|floatformat:"0"}} ₽</span>
-							<a onclick="showLeaveRequestModalNewCar('{{car.id}}', '{{car.title}}', '{{car.image.url}}', '{{car.price}}')">Купить</a>
-						</div>
-					</div>
-					{% endfor %}
-				</div>
-				<div class="customNavigation">
-					<a class="btn prev"><img src="{% static 'img/main/prev.svg' %}" alt="Previous"></a>
-					<a class="btn next"><img src="{% static 'img/main/next.svg' %}" alt="Next"></a>
-				</div>
+		  <div id="owl-demo" class="owl-carousel">
+    <div class="item"><h3 class="">Chery Tiggo 7 Pro Elite</h3><img src="{% static 'img/dealer/car1-1.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">2 649 900 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+    <div class="item"><h3 class="">HAVAL F7x Premium</h3><img src="{% static 'img/dealer/car2-2.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">2 154 000 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+    <div class="item"><h3 class="">Changan CS35 Plus</h3><img src="{% static 'img/dealer/car3-3.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">1 959 900 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+    <div class="item"><h3 class="">FAW Besturn X80 Luxury</h3><img src="{% static 'img/dealer/car4-4.jpeg' %}" alt="Car"><div class="bottom-item"><span class="price">1 729 000 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+		   </div>
+		   <div class="customNavigation">
+                <a class="btn prev"><img src="{% static 'img/main/prev.svg' %}" alt="Previous"></a>
+                <a class="btn next"><img src="{% static 'img/main/next.svg' %}" alt="Next"></a>
+            </div>
 			</div>
 		</div>
 	</section>
 	{% endif %}
-	<section id="order-work" class="order-work">
+	<section id="order-work" class="order-work dealer">
 		<div class="container">
 			<h2>Порядок работы</h2>
 			<div class="blocks">
 				<div class="block-1">
-					<span>Выбираете</br> автомобиль</span>
-					<span>Мы отправляем вам</br> электронный договор</span>
-					<span>Производитель в течение</br> 3-ех дней отгружает</br> автомобиль</span>
-					<span>Автомобиль прибывает к вам, вы</br> проводите осмотр и</br> подписываете акт приемки</span>
+					<span>Подключаетесь</br> к маркетплейсу OneTwoCar</span>
+					<span>Выгружаете автомобили</br> на наш сайт</span>
+					<span>Получаете заявки </br> на тест-драйв</span>
+					<span>Оплачиваете комиссию </br> от 3 до 7 тыс. руб. </br> за пришедшего покупателя</span>
 				</div>
 				<div class="block-2">
 					<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span>Наслаждайтесь!</span>
 				</div>
 				<div class="block-3">
-					<span>Оставляете заявку</br> на бронирование</span>
-					<span>После подписания договора</br> вы вносите предоплату 100%</br> напрямую производителю</span>
+					<span>Проводите тест-драйв </br> и осуществляете продажу</br> автомобиля</span>
+					<span>Оплачиваете 1-2% </br> от стоимости автомобиля</br> в случае совершения покупки</span>
 					<span>Доставка автомобиля до</br> вашего адреса</span>
 				</div>
 			</div>
+			<span class="text-center">Так же в качестве дополнительной опции мы мы можем организовать доставку автомобиля от дилера к клиенту за свой счет, а также снизить процент комиссии при оплате автомобиля ONLINE через наш маркетплейс.</span>
 		</div>
 	</section>
 	<section id="about" class="about">
 		<div class="container">
 			<h2>Кто такие OneTwoCar?</h2>
 			<span class="subtitle">
-				Онлайн-покупки стали неотъемлемой частью нашей жизни. Все больше сфер переходят в online. OneTwoCar -
-				это первый полностью дистанционный сервис покупки автомобилей напрямую у производителя, без накруток и
-				переплат.
+				Онлайн-покупки стали неотъемлемой частью нашей жизни. Все больше сфер переходят в online. OneTwoCar - это первый полностью дистанционный сервис покупки новых автомобилей из любого региона России, с доставкой на дом.
 			</span>
-			<h3>OneTwoCar vs. Дилер</h3>
-			<div class="table-grid-container">
-				<div class="table-grid">
-					<div class="col-one">
-						<strong class="head-title">Параметр</strong>
-						<span>Цена</span>
-						<span>Доставка</span>
-						<span>Выбор</span>
-						<span>Процесс поиска</span>
-						<span>Ассортимент</span>
-						<span>Дополнительные услуги</span>
-						<span>Общение с менеджерами</span>
-						<span>Бюрократия</span>
-						<span>Прозрачность сделки</span>
-						<span>Акции и скидки</span>
-					</div>
-					<div class="col-two">
-						<strong class="head-title">Покупка у OneTwoCar</strong>
-						<span>
-							<p>Честная цена от производителя.</br>Экономия <b>до 70%</b> от цены диллера</p>
-						</span>
-						<span>
-							<p><b>Доставка</b> автомобиля прямо <b>к дому</b></p>
-						</span>
-						<span>
-							<p><b>Огромный выбор</b> автомобилей. Возможность сравнить</br> актуальные цены и
-								комплектации сразу по всем производителям</p>
-						</span>
-						<span>
-							<p>Все марки и модели <b>в вашем смартфоне</b> - </br>выбирайте, не выходя из дома</p>
-						</span>
-						<span>
-							<p>Возможность найти <b>эксклюзивные</b> марки, модели и</br> комплектации, не
-								представленные в вашем городе</p>
-						</span>
-						<span>
-							<p>Опции и финансовые услуги <b>только по запросу</b> клиента</p>
-						</span>
-						<span>
-							<p><b>Не нужно</b> общаться с навязчивыми менеджерами</p>
-						</span>
-						<span>
-							<p>Максимальная <b>простота и скорость</b> покупки - вы выбираете</br> автомобиль, все
-								остальные вопросы мы решаем за вас</p>
-						</span>
-						<span>
-							<p><b>Прозрачность и безопасность</b> сделки,</br>возможность оформления смарт-контракта</p>
-						</span>
-						<span>
-							<p>Прозрачная цена, без нюансов. Вы можете воспользоваться <b>официальными акциями</b> от
-								дистрибьютора</p>
-						</span>
-					</div>
-					<div class="col-three">
-						<strong class="head-title">Покупка у дилера</strong>
-						<span>Необоснованно завышенные цены на автомобили</span>
-						<span>Многократные визиты в салон,</br>прежде чем вы сможете купить свой автомобиль</span>
-						<span>Очень трудно найти нужный</br>автомобиль в нужной комплектации</span>
-						<span>Нужно посетить всех дилеров в городе,</br>чтобы выбрать подходящий вам автомобиль</span>
-						<span>Скудный выбор марок, моделей и комплектаций, ограниченный дилерами, представленными в
-							вашем городе</span>
-						<span>Навязывание дополнительных опций, кредитов, пакетов и услуг</span>
-						<span>Менеджеры, которые упорно будут навязывать</br>покупку и надоедать звонками</span>
-						<span>Долгий цикл покупки, сопровождающийся бесконечной бумажной волокитой и многократными
-							визитами в салон</span>
-						<span>Дилеры, заинтересованные в получении максимальной прибыли, часто скрывают полные условия
-							сделки</span>
-						<span>Все скидки искусственны – дилер всегда компенсирует свои издержки.Официальные акции от
-							дистрибьютора чаще всего не афишируются</span>
-					</div>
-				</div>
+			<div class="list-container">
+			   <h3>Покупка у OneTwoCar - это:</h3>
+				<ul>
+				    <li>Честная цена без накруток</li>
+					<li><strong>Доставка</strong> автомобиля прямо к <strong>дому</strong></li>
+					<li><strong>Огромный выбор</strong> автомобилей</li>
+					<li>Все марки и модели <strong>в вашем смартфоне</strong></li>
+					<li>Покупка, не выходя из дома, в любом регионе страны</li>
+					<li>Возможность найти <strong>эксклюзивные</strong> марки, модели и
+комплектации, не представленные в вашем городе
+</li>
+					<li>Опции и финансовые услуги только по запросу клиента</li>
+					<li>Максимальная <strong>простота и скорость</strong> покупки - вы выбираете
+автомобиль, все остальные вопросы мы решаем за вас
+</li>
+					<li><strong>Прозрачность и безопасность</strong> сделки,
+возможность оформления смарт-контракта
+</li>
+<li>Прозрачная цена, без нюансов. <strong>Акции и подарки</strong>
+</li>
+				</ul>
 			</div>
 		</div>
 	</section>
@@ -579,7 +521,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<!--<script src="{% static 'owl-carousel/jquery.min.js' %}"></script>-->
+	<!--<script src="owl-carousel/jquery.min.js"></script>-->
 	<script src="{% static 'owl-carousel/owl.carousel.js' %}"></script>
 	<script>
 		$(document).ready(function () {
@@ -799,5 +741,4 @@
 		});
 	</script>
 </body>
-
 {% endblock %}

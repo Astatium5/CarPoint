@@ -54,6 +54,9 @@ urlpatterns = [
     path("api/create_entry/<int:user_id>/<str:username>/<int:car_id>/<str:email>/<str:name>/<str:address>/<str:phone>",
          APITemp.CreateEntryView.as_view(), name="create_entry"),
 
+     #===Dealer urls===
+     path("dealer", DealerTemp.index, name="dealer_index"),
+
     # ===WEB urls (JS)==
     path("get_cars/<int:min_price>/<int:max_price>/<str:mark>",
          WebTemp.get_cars, name="get_cars"),

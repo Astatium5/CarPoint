@@ -48,7 +48,7 @@ PRICE_RANGE: dict = {
 }  # Keys is ids price range.
 
 
-class APIObj:
+class APITemp:
     class CreateBotUserView(ListAPIView):
         serializer_class: BotUser = BotUser  # Set serializer object.
 
@@ -288,7 +288,7 @@ class APIObj:
                 return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
-class WebObj:
+class WebTemp:
     def index(request) -> HttpResponse:
         CAPTCHA_PUBLIC_KEY = settings.CAPTCHA_PUBLIC_KEY
         cities = City.objects.all()  # Get cities
@@ -444,7 +444,7 @@ class WebObj:
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
 
 
-class DistributorObj:
+class DistributorTemp:
     def distributor(request, cars=None, files=None):
         if request.user.is_superuser:
             return redirect("/admin")
@@ -627,6 +627,11 @@ class DistributorObj:
         setEntry.status = status
         setEntry.save()
         return HttpResponse(json.dumps({"response": True}), content_type='application/json')
+
+
+class DealerTemp:
+    pass
+
 
 def p_find_car(
     pricerange: str, mark: str, transmission: str,

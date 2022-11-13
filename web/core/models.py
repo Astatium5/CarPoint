@@ -14,6 +14,7 @@ class UUIDFileStorage(FileSystemStorage):
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/profile_pictures/{uuid4().hex + ext}"
 
+
 class CSVFileStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
         _, ext = splitext(name)
@@ -240,7 +241,6 @@ class SetEntry(models.Model):
         @classmethod
         def get_value(cls, member):
             return cls[member].value[0]
-
 
     distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, verbose_name="Дистрибьютор")
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, verbose_name="Заявка")

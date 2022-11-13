@@ -1,12 +1,12 @@
 @font-face {
     font-family: Manrope; /* Имя шрифта */
-    src: url(../fonts/Manrope-Regular.ttf); /* Путь к файлу со шрифтом */
+    src: url(../../fonts/Manrope-Regular.ttf); /* Путь к файлу со шрифтом */
    }
 body {
 	font-family: 'Manrope', sans-serif;
 }
 header {
-	background: url(../img/fon.svg) #151515;
+	background: url(../../img/main/fon.svg) #151515;
 	background-size: cover;
 	min-height: 750px;
 }
@@ -83,7 +83,7 @@ h1 {
 }
 .baner-img:after {
     content: "";
-    background: url(../img/red_img.svg);
+    background: url(../../img/main/red_img.svg);
     width: 289px;
     height: 289px;
     position: absolute;
@@ -124,7 +124,7 @@ button.close {
 .header-info {
     position: relative;
     z-index: 999;
-    top: 80px;
+    top: 170px;
 }
 .header-info span {
     font-style: normal;
@@ -177,106 +177,106 @@ button.close {
 	background-position: center center;
 }
 .logo-img .owl-item:nth-child(1n) .img {
-    background: url(../img/Frame125.svg) no-repeat;
+    background: url(../../img/main/Frame125.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(1n) .img:hover {
-    background: url(../img/Frame125_hv.svg)no-repeat;
+    background: url(../../img/main/Frame125_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(2n) .img {
-    background: url(../img/Frame127.svg) no-repeat;
+    background: url(../../img/main/Frame127.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(2n) .img:hover {
-    background: url(../img/Frame127_hv.svg)no-repeat;
+    background: url(../../img/main/Frame127_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(3n) .img {
-    background: url(../img/Frame128.svg) no-repeat;
+    background: url(../../img/main/Frame128.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(3n) .img:hover {
-    background: url(../img/Frame128_hv.svg)no-repeat;
+    background: url(../../img/main/Frame128_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(4n) .img {
-    background: url(../img/Frame129.svg) no-repeat;
+    background: url(../../img/main/Frame129.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(4n) .img:hover {
-    background: url(../img/Frame129_hv.svg)no-repeat;
+    background: url(../../img/main/Frame129_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(5n) .img {
-    background: url(../img/Frame130.svg) no-repeat;
+    background: url(../../img/main/Frame130.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(5n) .img:hover {
-    background: url(../img/Frame130_hv.svg)no-repeat;
+    background: url(../../img/main/Frame130_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(6n) .img {
-    background: url(../img/Frame131.svg) no-repeat;
+    background: url(../../img/main/Frame131.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(6n) .img:hover {
-    background: url(../img/Frame131_hv.svg)no-repeat;
+    background: url(../../img/main/Frame131_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(7n) .img {
-    background: url(../img/Frame132.svg) no-repeat;
+    background: url(../../img/main/Frame132.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(7n) .img:hover {
-    background: url(../img/Frame132_hv.svg)no-repeat;
+    background: url(../../img/main/Frame132_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(8n) .img {
-    background: url(../img/Frame126.svg) no-repeat;
+    background: url(../../img/main/Frame126.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(8n) .img:hover {
-    background: url(../img/Frame126_hv.svg)no-repeat;
+    background: url(../../img/main/Frame126_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(9n) .img {
-    background: url(../img/Frame9.svg) no-repeat;
+    background: url(../../img/main/Frame9.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(9n) .img:hover {
-    background: url(../img/Frame9_hv.svg)no-repeat;
+    background: url(../../img/main/Frame9_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(10n) .img {
-    background: url(../img/Frame10.svg) no-repeat;
+    background: url(../../img/main/Frame10.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(10n) .img:hover {
-    background: url(../img/Frame10_hv.svg)no-repeat;
+    background: url(../../img/main/Frame10_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(11n) .img {
-    background: url(../img/Frame11.svg) no-repeat;
+    background: url(../../img/main/Frame11.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(11n) .img:hover {
-    background: url(../img/Frame11_hv.svg)no-repeat;
+    background: url(../../img/main/Frame11_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(12n) .img {
-    background: url(../img/Frame12.svg) no-repeat;
+    background: url(../../img/main/Frame12.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(12n) .img:hover {
-    background: url(../img/Frame12_hv.svg)no-repeat;
+    background: url(../../img/main/Frame12_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(13n) .img {
-    background: url(../img/Frame13.svg) no-repeat;
+    background: url(../../img/main/Frame13.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(13n) .img:hover {
-    background: url(../img/Frame13_hv.svg)no-repeat;
+    background: url(../../img/main/Frame13_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(14n) .img {
-    background: url(../img/Frame14.svg) no-repeat;
+    background: url(../../img/main/Frame14.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(14n) .img:hover {
-    background: url(../img/Frame14_hv.svg)no-repeat;
+    background: url(../../img/main/Frame14_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(15n) .img {
-    background: url(../img/Frame15.svg) no-repeat;
+    background: url(../../img/main/Frame15.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(15n) .img:hover {
-    background: url(../img/Frame15_hv.svg)no-repeat;
+    background: url(../../img/main/Frame15_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(16n) .img {
-    background: url(../img/Frame16.svg) no-repeat;
+    background: url(../../img/main/Frame16.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(16n) .img:hover {
-    background: url(../img/Frame16_hv.svg)no-repeat;
+    background: url(../../img/main/Frame16_hv.svg)no-repeat;
 }
 .logo-img .owl-item:nth-child(17n) .img {
-    background: url(../img/Frame17.svg) no-repeat;
+    background: url(../../img/main/Frame17.svg) no-repeat;
 }
 .logo-img .owl-item:nth-child(17n) .img:hover {
-    background: url(../img/Frame17_hv.svg)no-repeat;
+    background: url(../../img/main/Frame17_hv.svg)no-repeat;
 }
 .podbor {
     background: #F5F6F8;
@@ -310,7 +310,7 @@ button.close {
     color: #818B99;
     font-size: 16px;
     line-height: 38px;
-	background: url(../img/arrow-down.svg) #fff no-repeat right 0.75rem center;
+	background: url(../../img/main/arrow-down.svg) #fff no-repeat right 0.75rem center;
 }
 /*.form-select-open {
 	background: url(../img/arrow_up.png) #fff no-repeat right 0.75rem center;
@@ -575,46 +575,46 @@ h2 {
     top: 16px;
 }
 .order-work .block-2 span:nth-child(1n) {
-    background: url(../img/pr1.svg) no-repeat;
+    background: url(../../img/main/pr1.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(1n) {
-    background: url(../img/pr1_1.svg) no-repeat;
+    background: url(../../img/main/pr1_1.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(2n) {
-    background: url(../img/pr2.svg) no-repeat;
+    background: url(../../img/main/pr2.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(2n) {
-    background: url(../img/pr2_2.svg) no-repeat;
+    background: url(../../img/main/pr2_2.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(3n) {
-    background: url(../img/pr3.svg) no-repeat;
+    background: url(../../img/main/pr3.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(3n) {
-    background: url(../img/pr3_3.svg) no-repeat;
+    background: url(../../img/main/pr3_3.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(4n) {
-    background: url(../img/pr4.svg) no-repeat;
+    background: url(../../img/main/pr4.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(4n) {
-    background: url(../img/pr4_4.svg) no-repeat;
+    background: url(../../img/main/pr4_4.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(5n) {
-    background: url(../img/pr5.svg) no-repeat;
+    background: url(../../img/main/pr5.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(5n) {
-    background: url(../img/pr5_5.svg) no-repeat;
+    background: url(../../img/main/pr5_5.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(6n) {
-    background: url(../img/pr6.svg) no-repeat;
+    background: url(../../img/main/pr6.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(6n) {
-    background: url(../img/pr6_6.svg) no-repeat;
+    background: url(../../img/main/pr6_6.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(7n) {
-    background: url(../img/pr7.svg) no-repeat;
+    background: url(../../img/main/pr7.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(7n) {
-    background: url(../img/pr7_7.svg) no-repeat;
+    background: url(../../img/main/pr7_7.svg) no-repeat;
 }
 .order-work .block-2 span:last-child {
     font-family: 'Manrope';
@@ -641,12 +641,12 @@ h2 {
 .order-work .block-2 span:nth-child(8n) {
     height: 55px;
     width: 55px;
-    background: url(../img/pr8.svg) no-repeat;
+    background: url(../../img/main/pr8.svg) no-repeat;
     display: block;
 	margin-right: 0;
 }
 .order-work .block-2 span:hover:nth-child(8n) {
-    background: url(../img/pr8_8.svg) no-repeat;
+    background: url(../../img/main/pr8_8.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(8n):after {
     display:none;
@@ -785,7 +785,7 @@ h3 {
     box-shadow: 0 0 !important;
 }
 .accordion-button::after {
-    background-image: url(../img/ico1.svg)!important;
+    background-image: url(../../img/main/ico1.svg)!important;
 	background-position: center;
 }
 .accordion-body {
@@ -800,7 +800,7 @@ h3 {
 	margin-bottom: 100px;
 }
 .question .wrap {
-	background: url(../img/quation.svg) no-repeat!important;
+	background: url(../../img/main/quation.svg) no-repeat!important;
     display: flex;
     justify-content: flex-end;
 	padding-bottom: 12px;
@@ -1131,7 +1131,7 @@ footer {
     content: "";
 	width:43px;
 	height:43px;
-	background: url(../img/plus.svg);
+	background: url(../../img/main/plus.svg);
 	background-size: contain;
     background-repeat: no-repeat;
 	cursor: pointer;
@@ -1140,7 +1140,7 @@ footer {
     content: "";
 	width:43px;
 	height:43px;
-	background: url(../img/minus.svg);
+	background: url(../../img/main/minus.svg);
 	background-size: contain;
     background-repeat: no-repeat;
 	cursor: pointer;
@@ -1214,7 +1214,7 @@ footer {
     margin-top: 0;
 }
 .form-check-input:checked[type=checkbox] {
-    background-image: url(../img/cheked.svg);
+    background-image: url(../../img/main/cheked.svg);
     background-size: 10px;
 }
 .form-check-input:focus {
@@ -1404,7 +1404,7 @@ footer .bot a {
     position: absolute;
     right: 10px;
     top: 10px;
-	background: url(../img/burger.svg);
+	background: url(../../img/main/burger.svg);
 }
 .mobile-open .burger {
 	width: 50px;
@@ -1412,7 +1412,7 @@ footer .bot a {
     position: absolute;
     right: 10px;
     top: 10px;
-	background: url(../img/close_burger.svg) no-repeat center;
+	background: url(../../img/main/close_burger.svg) no-repeat center;
 }
 .menu-bl {
 	display:none;
@@ -1484,7 +1484,7 @@ footer .bot a {
 }
 .baner-img:after {
     content: "";
-    background: url(../img/red_img.svg) no-repeat;
+    background: url(../../img/main/red_img.svg) no-repeat;
     width: 151px;
     height: 151px;
     position: absolute;
@@ -1546,25 +1546,25 @@ footer .bot a {
     z-index: 9;
 }
 .order-work .block-1 span:nth-child(1n):after {
-    background: url(../img/pr1.svg) no-repeat;
+    background: url(../../img/main/pr1.svg) no-repeat;
 }
 .order-work .block-1 span:nth-child(2n):after {
-    background: url(../img/pr2.svg) no-repeat;
+    background: url(../../img/main/pr2.svg) no-repeat;
 }
 .order-work .block-1 span:nth-child(3n):after {
-    background: url(../img/pr3.svg) no-repeat;
+    background: url(../../img/main/pr3.svg) no-repeat;
 }
 .order-work .block-1 span:nth-child(4n):after {
-    background: url(../img/pr4.svg) no-repeat;
+    background: url(../../img/main/pr4.svg) no-repeat;
 }
 .order-work .block-3 span:nth-child(1n):after {
-    background: url(../img/pr5.svg) no-repeat;
+    background: url(../../img/main/pr5.svg) no-repeat;
 }
 .order-work .block-3 span:nth-child(2n):after {
-    background: url(../img/pr6.svg) no-repeat;
+    background: url(../../img/main/pr6.svg) no-repeat;
 }
 .order-work .block-3 span:nth-child(3n):after {
-    background: url(../img/pr7.svg) no-repeat;
+    background: url(../../img/main/pr7.svg) no-repeat;
 }
 .order-work .block-2 span {
     display: none;
@@ -1608,7 +1608,7 @@ footer .bot a {
 }
 .order-work .block-1 span:before {
     content: "";
-    background-image: url(../img/Line.svg);
+    background-image: url(../../img/main/Line.svg);
     position: absolute;
     left: 15px;
     top: calc( 50% + 12px );
@@ -1617,7 +1617,7 @@ footer .bot a {
 }
 .order-work .block-3 span:before {
     content: "";
-    background: url(../img/Line.svg) repeat;
+    background: url(../../img/main/Line.svg) repeat;
     position: absolute;
     left: 15px;
     top: calc( 50% + 12px );

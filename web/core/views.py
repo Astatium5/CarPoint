@@ -631,7 +631,8 @@ class DistributorTemp:
 
 class DealerTemp:
     def index(request):
-        return render(request, "dealer/dealer.html")
+        new_cars = NewCar.objects.all()  # Get new cars
+        return render(request, "dealer/dealer.html", dict(new_cars=new_cars))
 
 
 def p_find_car(

@@ -310,7 +310,7 @@ button.close {
     color: #818B99;
     font-size: 16px;
     line-height: 38px;
-	background: url(../img/arrow-down.svg) #fff no-repeat right 0.75rem center;
+	background: url(../../img/main/arrow-down.svg) #fff no-repeat right 0.75rem center;
 }
 /*.form-select-open {
 	background: url(../img/arrow_up.png) #fff no-repeat right 0.75rem center;
@@ -597,46 +597,46 @@ h2 {
     top: 16px;
 }
 .order-work .block-2 span:nth-child(1n) {
-    background: url(../img/pr1.svg) no-repeat;
+    background: url(../../img/main/pr1.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(1n) {
-    background: url(../img/pr1_1.svg) no-repeat;
+    background: url(../../img/main/pr1_1.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(2n) {
-    background: url(../img/pr2.svg) no-repeat;
+    background: url(../../img/main/pr2.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(2n) {
-    background: url(../img/pr2_2.svg) no-repeat;
+    background: url(../../img/main/pr2_2.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(3n) {
-    background: url(../img/pr3.svg) no-repeat;
+    background: url(../../img/main/pr3.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(3n) {
-    background: url(../img/pr3_3.svg) no-repeat;
+    background: url(../../img/main/pr3_3.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(4n) {
-    background: url(../img/pr4.svg) no-repeat;
+    background: url(../../img/main/pr4.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(4n) {
-    background: url(../img/pr4_4.svg) no-repeat;
+    background: url(../../img/main/pr4_4.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(5n) {
-    background: url(../img/pr5.svg) no-repeat;
+    background: url(../../img/main/pr5.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(5n) {
-    background: url(../img/pr5_5.svg) no-repeat;
+    background: url(../../img/main/pr5_5.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(6n) {
-    background: url(../img/pr6.svg) no-repeat;
+    background: url(../../img/main/pr6.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(6n) {
-    background: url(../img/pr6_6.svg) no-repeat;
+    background: url(../../img/main/pr6_6.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(7n) {
-    background: url(../img/pr7.svg) no-repeat;
+    background: url(../../img/main/pr7.svg) no-repeat;
 }
 .order-work .block-2 span:hover:nth-child(7n) {
-    background: url(../img/pr7_7.svg) no-repeat;
+    background: url(../../img/main/pr7_7.svg) no-repeat;
 }
 .order-work .block-2 span:last-child {
     font-family: 'Manrope';
@@ -663,12 +663,12 @@ h2 {
 .order-work .block-2 span:nth-child(8n) {
     height: 55px;
     width: 55px;
-    background: url(../img/pr8.svg) no-repeat;
+    background: url(../../img/main/pr8.svg) no-repeat;
     display: block;
 	margin-right: 0;
 }
 .order-work .block-2 span:hover:nth-child(8n) {
-    background: url(../img/pr8_8.svg) no-repeat;
+    background: url(../../img/main/pr8_8.svg) no-repeat;
 }
 .order-work .block-2 span:nth-child(8n):after {
     display:none;
@@ -1153,7 +1153,7 @@ footer {
     content: "";
 	width:43px;
 	height:43px;
-	background: url(../img/plus.svg);
+	background: url(../../img/main/plus.svg);
 	background-size: contain;
     background-repeat: no-repeat;
 	cursor: pointer;
@@ -1162,7 +1162,7 @@ footer {
     content: "";
 	width:43px;
 	height:43px;
-	background: url(../img/minus.svg);
+	background: url(../../img/main/minus.svg);
 	background-size: contain;
     background-repeat: no-repeat;
 	cursor: pointer;
@@ -1236,7 +1236,7 @@ footer {
     margin-top: 0;
 }
 .form-check-input:checked[type=checkbox] {
-    background-image: url(../img/cheked.svg);
+    background-image: url(../../img/main/cheked.svg);
     background-size: 10px;
 }
 .form-check-input:focus {
@@ -1426,7 +1426,7 @@ footer .bot a {
     position: absolute;
     right: 10px;
     top: 10px;
-	background: url(../img/burger.svg);
+	background: url(../../img/main/burger.svg);
 }
 .mobile-open .burger {
 	width: 50px;
@@ -1434,7 +1434,7 @@ footer .bot a {
     position: absolute;
     right: 10px;
     top: 10px;
-	background: url(../img/close_burger.svg) no-repeat center;
+	background: url(../../img/main/close_burger.svg) no-repeat center;
 }
 .menu-bl {
 	display:none;
@@ -1525,7 +1525,7 @@ footer .bot a {
 }
 .baner-img:after {
     content: "";
-    background: url(../img/red_img.svg) no-repeat;
+    background: url(../../img/main/red_img.svg) no-repeat;
     width: 151px;
     height: 151px;
     position: absolute;
@@ -1587,25 +1587,25 @@ footer .bot a {
     z-index: 9;
 }
 .order-work .block-1 span:nth-child(1n):after {
-    background: url(../img/pr1.svg) no-repeat;
+    background: url(../../img/main/pr1.svg) no-repeat;
 }
 .order-work .block-1 span:nth-child(2n):after {
-    background: url(../img/pr2.svg) no-repeat;
+    background: url(../../img/main/pr2.svg) no-repeat;
 }
 .order-work .block-1 span:nth-child(3n):after {
-    background: url(../img/pr3.svg) no-repeat;
+    background: url(../../img/main/pr3.svg) no-repeat;
 }
 .order-work .block-1 span:nth-child(4n):after {
-    background: url(../img/pr4.svg) no-repeat;
+    background: url(../../img/main/pr4.svg) no-repeat;
 }
 .order-work .block-3 span:nth-child(1n):after {
-    background: url(../img/pr5.svg) no-repeat;
+    background: url(../../img/main/pr5.svg) no-repeat;
 }
 .order-work .block-3 span:nth-child(2n):after {
-    background: url(../img/pr6.svg) no-repeat;
+    background: url(../../img/main/pr6.svg) no-repeat;
 }
 .order-work .block-3 span:nth-child(3n):after {
-    background: url(../img/pr7.svg) no-repeat;
+    background: url(../../img/main/pr7.svg) no-repeat;
 }
 .order-work .block-2 span {
     display: none;
@@ -1649,7 +1649,7 @@ footer .bot a {
 }
 .order-work .block-1 span:before {
     content: "";
-    background-image: url(../img/Line.svg);
+    background-image: url(../../img/main/Line.svg);
     position: absolute;
     left: 15px;
     top: calc( 50% + 12px );
@@ -1658,7 +1658,7 @@ footer .bot a {
 }
 .order-work .block-3 span:before {
     content: "";
-    background: url(../img/Line.svg) repeat;
+    background: url(../../img/main/Line.svg) repeat;
     position: absolute;
     left: 15px;
     top: calc( 50% + 12px );

@@ -1466,6 +1466,9 @@ footer .bot a {
 .list-container ul li {
     padding-top: 10px;
 }
+.list-container ul {
+    padding-left: 0;
+}
 .list-container h3 {
     padding-bottom: 20px;
 }

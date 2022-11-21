@@ -59,12 +59,10 @@ class APITemp:
             user: QuerySet = BotUser.objects.filter(user_id=user_id)
 
             if not user.exists():
-                BotUser.objects.create(
-                    user_id=user_id, first_name=first_name, username=username)
+                BotUser.objects.create(user_id=user_id, first_name=first_name, username=username)
                 return JsonResponse({"response": True})
             user = user.get()
-            return JsonResponse({"response": False, "name": user.name,
-                                 "city": user.city_id})
+            return JsonResponse({"response": False, "name": user.name, "city": user.city_id})
 
     class SetNameView(ListAPIView):
         serializer_class: BotUser = BotUser
@@ -86,8 +84,7 @@ class APITemp:
             else:
                 city = city.get()
                 queryset.update(city_id=city.pk)
-                return JsonResponse({"response": True, "message":
-                                    city.message})
+                return JsonResponse({"response": True, "message": city.message})
 
     class CheckPhoneView(ListAPIView):
         serializer_class: BotUser = BotUser
@@ -123,8 +120,7 @@ class APITemp:
     class GetAllBodiesView(ListAPIView):
         serializer_class: Model = Model
 
-        def get(self, request: HttpRequest, mark: str, min_price: int,
-                max_price: int) -> JsonResponse:
+        def get(self, request: HttpRequest, mark: str, min_price: int, max_price: int) -> JsonResponse:
             if mark != "any":
                 mark = Mark.objects.get(title=mark)
             else:
@@ -153,8 +149,7 @@ class APITemp:
     class GetAllFuelTypesView(ListAPIView):
         serializer_class: Engine = Engine
 
-        def get(self, request: HttpRequest, mark: str, body: str,
-                min_price: int, max_price: int) -> JsonResponse:
+        def get(self, request: HttpRequest, mark: str, body: str, min_price: int, max_price: int) -> JsonResponse:
             if max_price == 0:
                 if mark == "any":
                     cars: QuerySet = Car.objects.filter(price__lte=min_price).all()
@@ -205,14 +200,11 @@ class APITemp:
                             if mark:
                                 mark = Mark.objects.filter(title=mark).get()
                                 cars = [car.to_dict() for car in cars
-                                        if car.engine.type_fuel == fuel_type
-                                        and car.mark_id == mark.pk]
+                                        if car.engine.type_fuel == fuel_type and car.mark_id == mark.pk]
                             else:
-                                cars = [car.to_dict() for car in cars
-                                        if car.engine.type_fuel == fuel_type]
+                                cars = [car.to_dict() for car in cars if car.engine.type_fuel == fuel_type]
                                 is_any = True
-                        return JsonResponse({"response": True,
-                                            "is_any": is_any, "cars": cars})
+                        return JsonResponse({"response": True, "is_any": is_any, "cars": cars})
                 elif str_to_bool(headers.get("Is-Power")):
                     min_power: int = int(headers.get("Min-Power"))
                     max_power: int = int(headers.get("Max-Power"))
@@ -229,8 +221,7 @@ class APITemp:
                         if str_to_bool(headers.get("Is-Any-Fuel-Type")):
                             if mark:
                                 mark = Mark.objects.filter(title=mark).get()
-                                cars = [car.to_dict() for car in cars
-                                        if car.mark_id == mark.pk]
+                                cars = [car.to_dict() for car in cars if car.mark_id == mark.pk]
                             else:
                                 cars = [car.to_dict() for car in cars]
                                 is_any = True
@@ -238,14 +229,11 @@ class APITemp:
                             if mark:
                                 mark = Mark.objects.filter(title=mark).get()
                                 cars = [car.to_dict() for car in cars
-                                        if car.engine.type_fuel == fuel_type
-                                        and car.mark_id == mark.pk]
+                                        if car.engine.type_fuel == fuel_type and car.mark_id == mark.pk]
                             else:
-                                cars = [car.to_dict() for car in cars
-                                        if car.engine.type_fuel == fuel_type]
+                                cars = [car.to_dict() for car in cars if car.engine.type_fuel == fuel_type]
                                 is_any = True
-                        return JsonResponse({"response": True,
-                                            "is_any": is_any, "cars": cars})
+                        return JsonResponse({"response": True, "is_any": is_any, "cars": cars})
             except Exception as e:
                 logger.error(e)
                 return JsonResponse({"response": True, "cars": []})
@@ -260,21 +248,17 @@ class APITemp:
     class CreateEntryView(ListAPIView):
         serializer_class: Entry = Entry
 
-        def get(self,
-                request: HttpRequest, user_id: int, username: str, car_id: int,
-                email: str, name: str, address: str, phone: int
-                ) -> JsonResponse:
+        def get(self, request: HttpRequest, user_id: int, username: str, car_id: int,
+                email: str, name: str, address: str, phone: int) -> JsonResponse:
             user = BotUser.objects.get(user_id=user_id)
             car = Car.objects.get(id=car_id)
-            entry = Entry.objects.filter(user=user, username=username, car=car,
-                                         email=email, name=name,
-                                         address=address, phone=phone)
+            entry = Entry.objects.filter(user=user, username=username, car=car, email=email,
+                                         name=name, address=address, phone=phone)
             if entry.exists():
                 return JsonResponse({"response": False})
             else:
-                entry = Entry.objects.create(user=user, username=username,
-                                             car=car, email=email, name=name,
-                                             address=address, phone=phone)
+                entry = Entry.objects.create(user=user, username=username, car=car, email=email,
+                                             name=name, address=address, phone=phone)
                 setTypeCar = SetTypeCar.objects.filter(car=car)
                 if setTypeCar.exists():
                     setTypeCar = setTypeCar.get()
@@ -323,8 +307,7 @@ class WebTemp:
     def oferta(request) -> JsonResponse:
         return render(request, "main/oferta.html")
 
-    def get_cars(request, min_price: int, max_price: int,
-                 mark: str) -> JsonResponse:
+    def get_cars(request, min_price: int, max_price: int, mark: str) -> JsonResponse:
         mark = Mark.objects.get(title=mark)  # Get mark obj
         if max_price == 0:
             min_price, max_price = increase_price(min_price)
@@ -335,8 +318,7 @@ class WebTemp:
         cars = [car.to_dict() for car in cars]
         return JsonResponse({"response": True, "cars": cars})
 
-    def get_cars_by_body(request, min_price: int, max_price: int,
-                         mark: str, body: str) -> JsonResponse:
+    def get_cars_by_body(request, min_price: int, max_price: int, mark: str, body: str) -> JsonResponse:
         mark = Mark.objects.get(title=mark)  # Get mark obj
         if max_price == 0:
             min_price, max_price = increase_price(min_price)
@@ -349,10 +331,8 @@ class WebTemp:
         cars = [car.to_dict() for car in cars]
         return JsonResponse({"response": True, "cars": cars})
 
-    def get_cars_by_type_fuel(
-        request, min_price: int, max_price: int, mark: str,
-        body: str, type_fuel: str
-    ) -> JsonResponse:
+    def get_cars_by_type_fuel(request, min_price: int, max_price: int,
+                              mark: str, body: str, type_fuel: str) -> JsonResponse:
         mark = Mark.objects.get(title=mark)  # Get mark obj
         if max_price == 0:
             min_price, max_price = increase_price(min_price)
@@ -365,10 +345,8 @@ class WebTemp:
         cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return JsonResponse({"response": True, "cars": cars})
 
-    def get_cars_by_transmission(
-        request, min_price: int, max_price: int, mark: str, body: str,
-        type_fuel: str, transmission: str
-    ) -> JsonResponse:
+    def get_cars_by_transmission(request, min_price: int, max_price: int, mark: str, body: str,
+                                 type_fuel: str, transmission: str) -> JsonResponse:
         mark = Mark.objects.get(title=mark)  # Get mark obj
         if max_price == 0:
             min_price, max_price = increase_price(min_price)
@@ -378,14 +356,11 @@ class WebTemp:
             cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price],
                                       set__model__body=body, transmission__title=transmission).all()
         cars = sort_cars(cars, is_price=True)
-        cars = [car.to_dict()
-                for car in cars if car.engine.type_fuel == type_fuel]
+        cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return JsonResponse({"response": True, "cars": cars})
 
-    def get_cars_by_engine_volume(
-        request, min_price: int, max_price: int, mark: str, body: str,
-        type_fuel: str, transmission: str, engine_volume: str
-    ) -> JsonResponse:
+    def get_cars_by_engine_volume(request, min_price: int, max_price: int, mark: str, body: str,
+                                  type_fuel: str, transmission: str, engine_volume: str) -> JsonResponse:
         mark = Mark.objects.get(title=mark)  # Get mark obj
         if max_price == 0:
             min_price, max_price = increase_price(min_price)
@@ -396,8 +371,7 @@ class WebTemp:
             cars = Car.objects.filter(mark=mark, price__range=[min_price, max_price], set__model__body=body,
                                       transmission__title=transmission, engine__volume__lte=engine_volume).all()
         cars = sort_cars(cars, is_price=True)
-        cars = [car.to_dict()
-                for car in cars if car.engine.type_fuel == type_fuel]
+        cars = [car.to_dict() for car in cars if car.engine.type_fuel == type_fuel]
         return JsonResponse({"response": True, "cars": cars})
 
     def send_question(request) -> HttpResponsePermanentRedirect:

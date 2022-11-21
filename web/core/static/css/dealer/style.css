@@ -519,7 +519,7 @@ h2 {
     margin-left: 150px;
 }
 .dealer .block-1 span:nth-child(1n) {
-    margin-left: -50px;
+    margin-left: 0px;
 }
 .dealer .block-1 span:nth-child(2n) {
     margin-left: 88px;

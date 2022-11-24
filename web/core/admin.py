@@ -215,3 +215,8 @@ class SetEntry(admin.ModelAdmin):
     fields = ["distributor", "entry", "distributor_file", "admin_file", "status"]
     readonly_fields = ("distributor",)
     list_display = ["__str__", "distributor", "entry", "distributor_file", "admin_file", "status"]
+
+@admin.register(Agreements)
+class Agreements(admin.ModelAdmin):
+    fields = ["user", "distributor", "agreement"]
+    list_display = ["__str__", "distributor", "agreement"]

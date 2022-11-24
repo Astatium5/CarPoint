@@ -20,7 +20,7 @@ from core.models import (Car, BotUser, City, Model, Mark, Engine, Entry,
                          SetTypeCar, Distributor, SetEntry,
                          DistributorEntryFiles, AdminEntryFiles, NewCar,
                          Question, WebUser, UserQuestion, File, Set, Color,
-                         SetColor, Transmission)
+                         SetColor, Transmission, Agreements)
 from core.converts import str_to_bool, str_to_null
 from core.tg.request import sendQuestion, leaveRequest
 from core.utils.ip import get_client_ip
@@ -566,12 +566,16 @@ class DistributorTemp:
         act = files.get("act")
         agreement = files.get("agreement")
         bill = files.get("bill")
+        entry = entry=SetEntry.objects.get(id=id)
+        entry.status = "shipped"
+        entry.save()
         dFile = DistributorEntryFiles.objects.get(
-            entry=SetEntry.objects.get(id=id).entry)
+            entry=entry.entry)
         dFile.act = act
         dFile.agreement = agreement
         dFile.bill = bill
         dFile.save()
+
         return JsonResponse({"response": True})
 
     def distribEntryInfo(request):
@@ -601,6 +605,12 @@ class DistributorTemp:
         setEntry.status = status
         setEntry.save()
         return JsonResponse({"response": True})
+
+    def agreements(request):
+        user = user_obj(request)
+        distributor = Distributor.objects.filter(distributor=user).get()
+        agreements = Agreements.objects.filter(distributor=distributor).all()
+        return render(request, "distributor/agreements.html", {"agreements": agreements})
 
 
 class DealerTemp:

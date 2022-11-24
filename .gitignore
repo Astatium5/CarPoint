@@ -4,6 +4,7 @@ __pycache__
 env/
 csv/
 profile_pictures/
+migrations/
 
 files/
 

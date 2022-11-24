@@ -302,7 +302,7 @@ input[type=file]::file-selector-button:hover {
   margin-top: 5px;
 }
 
-#download-history {
+#download-history, #agreements {
   width: 572px;
   height: 500px;
   border-radius: 0.5em;
@@ -436,7 +436,7 @@ input[type=file]::file-selector-button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 2.4rem;
+  padding: 15px 0.5rem;
   position: relative;
 }
 
@@ -446,7 +446,7 @@ input[type=file]::file-selector-button:hover {
   top: -.5rem;
   width: 25%;
   text-align: center;
-  font-size: 15px;
+  font-size: 25px;
 }
 
 @media (max-width: 768px) {

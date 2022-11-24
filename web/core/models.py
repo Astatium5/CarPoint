@@ -10,27 +10,33 @@ from django.core.files.storage import FileSystemStorage
 
 
 class UUIDFileStorage(FileSystemStorage):
-    def get_available_name(self, name, max_length=None):
+    def get_available_name(self, name, max_length=None) -> str:
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/profile_pictures/{uuid4().hex + ext}"
 
 
 class CSVFileStorage(FileSystemStorage):
-    def get_available_name(self, name, max_length=None):
+    def get_available_name(self, name, max_length=None) -> str:
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/csv/{uuid4().hex + ext}"
 
 
 class DistributorFileStorage(FileSystemStorage):
-    def get_available_name(self, name, max_length=None):
+    def get_available_name(self, name, max_length=None) -> str:
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/files/distributor/{uuid4().hex + ext}"
 
 
 class AdminFileStorage(FileSystemStorage):
-    def get_available_name(self, name, max_length=None):
+    def get_available_name(self, name, max_length=None) -> str:
         _, ext = splitext(name)
         return F"{settings.MEDIA_ROOT}/files/admin/{uuid4().hex + ext}"
+
+
+class DealerFileStorage(FileSystemStorage):
+    def get_available_name(self, name: str, max_length=None) -> str:
+        _, ext = splitext(name)
+        return F"{settings.MEDIA_ROOT}/files/agreements/{uuid4().hex + ext}"
 
 
 class BotUser(models.Model):
@@ -67,6 +73,9 @@ class Distributor(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     image = models.ImageField(
         upload_to="distributor/profile_images/", storage=UUIDFileStorage(), null=True, verbose_name="Логотип")
+
+    def __str__(self):
+        return f"{self.title}"
 
     class Meta:
         verbose_name = "Дистрибьютор"
@@ -234,9 +243,12 @@ class Entry(models.Model):
 
 class SetEntry(models.Model):
     class STATUS(Enum):
-        new = ("new", "Новая")
-        work = ("work", "В работе")
-        complete = ("complete", "Завершена")
+        new = ("new", "Ожидает")
+        shipped = ("shipped", "Отгружен")
+        road = ("road", "В пути")
+        client = ("client", "Передан клиенту")
+        payment = ("payment", "Ожидает оплаты")
+        complete = ("complete", "Закрыто")
 
         @classmethod
         def get_value(cls, member):
@@ -345,9 +357,9 @@ class File(models.Model):
 
 class DistributorEntryFiles(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
-    act = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Акт")
-    agreement = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Соглашение")
-    bill = models.FileField(upload_to="distributor/files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Счёт")
+    act = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Акт")
+    agreement = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Соглашение")
+    bill = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Счёт")
 
     def __str__(self):
         return f"#{self.id}"
@@ -359,9 +371,9 @@ class DistributorEntryFiles(models.Model):
 
 class AdminEntryFiles(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
-    act = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Акт")
-    agreement = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Соглашение")
-    bill = models.FileField(upload_to="distributor/files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Счёт")
+    act = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Акт")
+    agreement = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Соглашение")
+    bill = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Счёт")
 
     def __str__(self):
         return f"#{self.id}"
@@ -369,3 +381,16 @@ class AdminEntryFiles(models.Model):
     class Meta:
         verbose_name = "Файл админа"
         verbose_name_plural = "Файлы админов"
+
+
+class Agreements(models.Model):
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, verbose_name="Дилер")
+    distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, null=True, verbose_name="Дистрибьютор")
+    agreement = models.FileField(upload_to="files/agreements", storage=DealerFileStorage(), blank=True, default=None, verbose_name="Соглашение")
+
+    def __str__(self):
+        return f"#{self.id}"
+
+    class Meta:
+        verbose_name = "Соглашение"
+        verbose_name_plural = "Соглашения"

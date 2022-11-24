@@ -38,13 +38,19 @@
     <div class="table-scroll-y">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
             {% for order in orders %}
-            {% if order.status == 'new' %}
+              {% if order.status == 'new' %}
                 {% define '1' as step %}
-            {% elif order.status == 'work' %}
+              {% elif order.status == 'shipped' %}
                 {% define '2' as step %}
-            {% elif order.status == 'complete' %}
+              {% elif order.status == 'road' %}
                 {% define '3' as step %}
-            {% endif %}
+              {% elif order.status == 'client' %}
+                {% define '4' as step %}
+              {% elif order.status == 'payment' %}
+                {% define '5' as step %}
+              {% elif order.status == 'complete' %}
+                {% define '6' as step %}
+              {% endif %}
             <div id="d-order{{oder.pk}}" class="card order-card border-dark mb-3">
                 <div id="body-font-{{order.pk}}" class="card-body body-font">
                   <div class="btn-group" role="group" aria-label="Basic example">
@@ -53,17 +59,26 @@
                   </div>
                   <h5 class="card-title text-center">Заявка #{{order.pk}}</button></h5>
                   <div class="form-group">
-                    <input id="{{order.pk}}" type="range" class="custom-range" min="1" max="3" step="1" value="{{step}}" onchange="changeEntryStatus(this.id, this.value)">
+                    <input id="{{order.pk}}" type="range" class="custom-range" min="1" max="6" step="1" value="{{step}}" disabled>
                   </div>
                   <div class="la">
                     <div><span>
-                      Новая
+                      <i class="bi bi-hourglass-split" title="Ожидает"></i>
                     </span></div>
                     <div><span>
-                      В работе
+                      <i class="bi bi-box-seam" title="Отгружен"></i>
                     </span></div>
                     <div><span>
-                      Завершена
+                      <i class="bi bi-car-front" title="В пути"></i>
+                    </span></div>
+                    <div><span>
+                      <i class="bi bi-person-check" title="Передан клиенту"></i>
+                    </span></div>
+                    <div><span>
+                      <i class="bi bi-credit-card" title="Ожидает оплаты"></i>
+                    </span></div>
+                    <div><span>
+                      <i class="bi bi-bag-check" title="Закрыто"></i>
                     </span></div>
                   </div>
                   <ul class="list-group list-group-flush">

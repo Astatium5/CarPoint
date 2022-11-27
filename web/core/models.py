@@ -384,7 +384,7 @@ class AdminEntryFiles(models.Model):
 
 
 class Agreements(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, verbose_name="Дилер")
+    user = models.ForeignKey(User, limit_choices_to={'groups__id': 2}, on_delete=models.PROTECT, null=True, verbose_name="Дилер")
     distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, null=True, verbose_name="Дистрибьютор")
     agreement = models.FileField(upload_to="files/agreements", storage=DealerFileStorage(), blank=True, default=None, verbose_name="Соглашение")
 

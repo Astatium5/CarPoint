@@ -619,8 +619,7 @@ class DealerTemp:
         return render(request, "dealer/dealer.html", dict(new_cars=new_cars))
 
 
-def p_find_car(
-    pricerange: str, mark: str, transmission: str,
+def p_find_car(pricerange: str, mark: str, transmission: str,
     body: str, type_fuel: str, volume: str, power: str
 ) -> list:
     if not pricerange or not mark or not transmission or not body or not type_fuel:

@@ -219,4 +219,12 @@ class SetEntry(admin.ModelAdmin):
 @admin.register(Agreements)
 class Agreements(admin.ModelAdmin):
     fields = ["user", "distributor", "agreement"]
-    list_display = ["__str__", "distributor", "agreement"]
+    list_display = ["__str__", "get_dealer", "distributor", "agreement"]
+
+    def get_dealer(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return request.user.username
+
+    get_dealer.short_description = "Дилер"

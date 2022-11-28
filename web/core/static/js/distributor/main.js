@@ -235,27 +235,3 @@ function distribEntryInfo(id){
       )
     })
 }
-
-function changeEntryStatus(id, value){
-  let data = new FormData();
-  data.append("id", id);
-  data.append("value", value);
-
-  fetch("change_entry_status", {
-    method: "POST",
-    body: data,
-    contentType: 'application/json',
-    headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "X-CSRFToken": $.cookie("csrftoken")
-    },
-  }).then(function (response) {
-    response.json().then(
-        function (data) {
-            if (data["response"]) {
-              
-            }
-        }
-    )
-  })
-}

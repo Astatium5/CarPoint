@@ -588,24 +588,6 @@ class DistributorTemp:
             pk=id).get().to_dict(is_distributor=True)
         return JsonResponse({"response": True, "entry": entry})
 
-    def changeEntryStatus(request):
-        if not request.user.is_authenticated:
-            # Return main page
-            return redirect("distributor")
-
-        id = request.POST.get("id")
-        value = request.POST.get("value")
-        if value == "1":
-            status = "new"
-        elif value == "2":
-            status = "work"
-        elif value == "3":
-            status = "complete"
-        setEntry = SetEntry.objects.get(id=id)
-        setEntry.status = status
-        setEntry.save()
-        return JsonResponse({"response": True})
-
     def agreements(request):
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user).get()

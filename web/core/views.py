@@ -551,8 +551,12 @@ class DistributorTemp:
             return redirect("distributor")
 
         user = user_obj(request)
-        distributor = Distributor.objects.filter(distributor=user).get()
-        orders = SetEntry.objects.filter(distributor=distributor).all()
+        distributor = Distributor.objects.filter(distributor=user)
+        if not distributor.exists():
+            orders = []
+        else:
+            distributor = distributor.get()
+            orders = SetEntry.objects.filter(distributor=distributor).all()
         return render(request, "distributor/orders.html", {"orders": orders})
 
     def upload_documents(request):
@@ -590,8 +594,12 @@ class DistributorTemp:
 
     def agreements(request):
         user = user_obj(request)
-        distributor = Distributor.objects.filter(distributor=user).get()
-        agreements = Agreements.objects.filter(distributor=distributor).all()
+        distributor = Distributor.objects.filter(distributor=user)
+        if not distributor.exists():
+            agreements = []
+        else:
+            distributor = distributor.get()
+            agreements = Agreements.objects.filter(distributor=distributor).all()
         return render(request, "distributor/agreements.html", {"agreements": agreements})
 
 

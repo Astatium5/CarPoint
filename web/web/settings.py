@@ -31,9 +31,10 @@ DEBUG = int(os.getenv('DEBUG'))
 
 ALLOWED_HOSTS = ["*"]
 
-
 CAPTCHA_PUBLIC_KEY = os.getenv('CAPTCHA_PUBLIC_KEY')
 CAPTCHA_SECRET_KEY = os.getenv('CAPTCHA_SECRET_KEY')
+
+APPEND_SLASH = False
 
 
 # Application definition

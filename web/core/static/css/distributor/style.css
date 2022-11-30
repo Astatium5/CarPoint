@@ -295,11 +295,12 @@ input[type=file]::file-selector-button:hover {
 }
 
 #cars {
-  width: 700px;
-  height: 600px;
+  width: 575px;
+  height: 500px;
   border-radius: 0.5em;
   background-color: white;
   margin-top: 5px;
+  overflow-x: hidden;
 }
 
 #download-history, #agreements {
@@ -335,7 +336,7 @@ input[type=file]::file-selector-button:hover {
 
 .car-card {
   height: 150px;
-  margin-left: 60px;
+  margin-left: 7px;
   margin-top: 5px;
 }
 

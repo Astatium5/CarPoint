@@ -5,8 +5,8 @@
 <div class="container text-center">
   <div class="row">
     <div class="col">
-      <div class="shadow p-1 bg-body rounded"><strong>Ваш список автомобилей</strong></div>
       <div id="cars" class="container-fluid my-custom-scrollbar">
+        <div class="shadow p-1 bg-body rounded"><strong>Ваш список автомобилей</strong></div>
         {% if not cars %}
           <div class="alert alert-dark" role="alert">
             <i class="bi bi-dash-square-dotted"></i> Отсутствует
@@ -14,7 +14,7 @@
         {% else %}
           {% for car in cars %}
           {% with car=car.car %}
-          <div class="card mb-3 car-card w-100">
+          <div class="card car-card mb-3 w-100">
             <div class="row g-0">
               <div class="col-md-4">
                 {% if not car.image %}
@@ -38,22 +38,22 @@
       </div>
     </div>
     <div class="col">
-      <div class="shadow p-1 bg-body rounded"><strong>Загруженные файлы</strong></div>
       <div id="download-history" class="container-fluid my-custom-scrollbar">
-        {% if not files %}
-          <div class="alert alert-dark" role="alert">
-            <i class="bi bi-dash-square-dotted"></i> Отсутствуют
-          </div>
-        {% else %}
-          {% for file in files %}
-            <div class="alert alert-primary" role="alert">
-              <a href="{{file.file.url}}">{{file.file}}</a>
-              <div class="text-muted">
-                {{file.created}}
-              </div>
+          <div class="shadow p-1 bg-body rounded"><strong>Загруженные файлы</strong></div>
+          {% if not files %}
+            <div class="alert alert-dark" role="alert">
+              <i class="bi bi-dash-square-dotted"></i> Отсутствуют
             </div>
-          {% endfor %}
-        {% endif %}
+          {% else %}
+            {% for file in files %}
+              <div class="alert alert-primary" role="alert">
+                <a href="{{file.file.url}}">{{file.file}}</a>
+                <div class="text-muted">
+                  {{file.created}}
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
       </div>
     </div>
   </div>

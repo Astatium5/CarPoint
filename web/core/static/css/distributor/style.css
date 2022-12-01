@@ -321,7 +321,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 .my-custom-scrollbar {
-  max-height: 100vh;
+  max-height: 88vh;
   overflow: auto;
 }
 

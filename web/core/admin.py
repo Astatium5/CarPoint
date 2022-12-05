@@ -228,3 +228,19 @@ class Agreements(admin.ModelAdmin):
         return request.user.username
 
     get_dealer.short_description = "Дилер"
+
+    def get_form(self, request, obj=None, **kwargs):
+
+        form = super().get_form(request, obj, **kwargs)
+        user = form.base_fields["user"]
+        distributor = form.base_fields['distributor']
+
+        user.widget.can_add_related = False
+        user.widget.can_delete_related = False
+        user.widget.can_change_related = False
+
+        distributor.widget.can_add_related = False
+        distributor.widget.can_delete_related = False
+        distributor.widget.can_change_related = False
+
+        return form

@@ -8,14 +8,12 @@ from aiogram.utils.exceptions import ChatNotFound
 from objects.globals import dp, bot
 from objects import globals
 from config.config import Config
-from states.states import *
+from states.states import Support
 from log.logger import logger
 from . import receive_offer
 
-
 config: Config = Config()
 support_page: Any = globals.root.find("support")
-
 
 @dp.callback_query_handler(lambda query: query.data == "support")
 async def support(query: CallbackQuery):

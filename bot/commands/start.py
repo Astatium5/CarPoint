@@ -13,7 +13,6 @@ from keyboard.keyboard import *
 
 api_requests: Requests = Requests()
 
-
 @dp.message_handler(commands="start", state="*")
 async def start(message: Message, state: FSMContext) -> Union[Message, None]:
     if message.chat.type != "group":
@@ -36,8 +35,7 @@ async def start(message: Message, state: FSMContext) -> Union[Message, None]:
                     await message.answer(welcome_page.find("is_not_city").text)
                     return await Meeting.city.set()
                 else:
-                    return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name),
-                                                reply_markup=choice_markup)
+                    return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name))
             else:
                 await message.answer(welcome_page.find("is_empty").text.format(bot_info.first_name))
             return await Meeting.name.set()

@@ -13,7 +13,6 @@ from log.logger import logger
 from utils.api.requests import Requests
 from . import receive_offer
 
-
 api_requests: Requests = Requests()  # Init Requests object.
 config: Config = Config()
 
@@ -21,7 +20,6 @@ config: Config = Config()
 globals.leave_request_metadata: LeaveRequestMetaData = LeaveRequestMetaData()
 # Get receive_offer tag from xml data.
 leave_request_page: Any = globals.root.find("leave_request")
-
 
 @dp.callback_query_handler(lambda query: query.data.startswith(("leave_request#")))
 async def leave_request(query: CallbackQuery) -> None:
@@ -34,7 +32,7 @@ async def leave_request(query: CallbackQuery) -> None:
 
 @dp.message_handler(state=LeaveRequest.email)
 async def get_email(message: Message) -> None:
-    _email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
+    _email: str = re.sub(r"[^@]+@[^@]+\.[^@]+", "", message.text)
     if _email:
         return await message.answer("Почта не является валидной!")
     email = message.text
@@ -69,19 +67,19 @@ async def get_phone(message: Message, state: FSMContext) -> Message:
     user_id: int = message.from_user.id
     username: str = F"@{message.from_user.username}" if message.from_user.username else "Отсутствует"
     _leave_request_page: str = (
-        F"<b>Новая заявка. (BOT)</b>\n"
-        F"ID пользователя: <code>{user_id}</code>\n"
-        F"Имя пользователя: {username}\n"
-        F"ID автомобиля: <code>{_.car_id}</code>\n"
-        F"Эл. почта: <code>{_.email}</code>\n"
-        F"Полное имя: <code>{_.full_name}</code>\n"
-        F"Адрес: <code>{_.address}</code>\n"
-        F"Номер телефона: <code>{_.phone}</code>\n"
-        F"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>"
+        f"<b>Новая заявка. (BOT)</b>\n"
+        f"ID пользователя: <code>{user_id}</code>\n"
+        f"Имя пользователя: {username}\n"
+        f"ID автомобиля: <code>{_.car_id}</code>\n"
+        f"Эл. почта: <code>{_.email}</code>\n"
+        f"Полное имя: <code>{_.full_name}</code>\n"
+        f"Адрес: <code>{_.address}</code>\n"
+        f"Номер телефона: <code>{_.phone}</code>\n"
+        f"Подробная информация об автомобиле: <code>http://{config.host}/admin/core/car/{_.car_id}/change</code>"
     )
     await state.finish()
     response: dict = api_requests.create_entry(user_id=user_id, username=username, car_id=_.car_id, email=_.email,
-        name=_.full_name, address=_.address, phone=_.phone)
+                                               name=_.full_name, address=_.address, phone=_.phone)
     if not response.get("response"):
         return await message.answer("Такая заявка уже существует!")
     else:

@@ -14,7 +14,6 @@ from . import start
 
 api_requests: Requests = Requests()
 
-
 @dp.message_handler(state=Meeting.name)
 async def get_name(message: Message):
     name: str = re.sub("[^a-zA-Zа-яА-Я]", "", message.text)

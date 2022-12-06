@@ -50,7 +50,6 @@ offer_page: Any = globals.root.find("receive_offer")
 globals.offer_metadata: OfferMetaData = OfferMetaData()
 config: Config = Config()
 
-
 @dp.message_handler(lambda message: message.text == "Получить предложение", state="*")
 async def receive_offer(message: Message, state: FSMContext) -> Message:
     await state.finish()

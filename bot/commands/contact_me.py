@@ -15,7 +15,6 @@ from . import receive_offer
 config: Config = Config()
 contact_me_page: Any = globals.root.find("contact_me")
 
-
 @dp.callback_query_handler(lambda query: query.data == "contact_me")
 async def contact_me(query: CallbackQuery):
     await query.message.answer(contact_me_page.find("name").text)

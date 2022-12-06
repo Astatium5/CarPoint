@@ -7,7 +7,6 @@ from objects.globals import dp, bot
 
 api_requests: Requests = Requests()  # Init Requests object.
 
-
 @dp.chosen_inline_handler(lambda chosen_inline_result: True)
 async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any:
     if chosen_result.result_id != -1:
@@ -35,7 +34,8 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
         reply_markup.add(InlineKeyboardButton(
             text="Начать поиск сначала", callback_data="new_search"))
         try:
-            return await bot.send_photo(chosen_result.from_user.id, photo=image, caption=text_page, reply_markup=reply_markup)
+            return await bot.send_photo(chosen_result.from_user.id, photo=image, caption=text_page,
+                                        reply_markup=reply_markup)
         except:
             text_page += image
             return await bot.send_message(chosen_result.from_user.id, text_page, reply_markup=reply_markup)

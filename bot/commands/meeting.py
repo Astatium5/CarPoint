@@ -10,12 +10,13 @@ from states.states import Meeting
 from utils.api.requests import Requests
 from keyboard.keyboard import *
 from . import receive_offer
+from . import start
 
 api_requests: Requests = Requests()
 
 
 @dp.message_handler(state=Meeting.name)
-async def get_name(message: Message) -> None:
+async def get_name(message: Message):
     name: str = re.sub("[^a-zA-Zа-яА-Я]", "", message.text)
     response: dict = api_requests.set_name(user_id=message.from_user.id, name=name)
 
@@ -40,4 +41,4 @@ async def get_city(message: Message, state: FSMContext) -> Message:
         else:
             await state.finish()
             await message.answer(response.get("message"))
-            return await message.answer(welcome_page.find("is_city").text, reply_markup=choice_markup)
+            return await message.answer(welcome_page.find("is_city").text)

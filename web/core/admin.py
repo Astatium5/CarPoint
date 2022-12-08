@@ -167,6 +167,7 @@ class NewCar(admin.ModelAdmin):
 
     get_image.short_description = "Изображение"
 
+
 @admin.register(Color)
 class Color(admin.ModelAdmin):
     fields = ["title"]
@@ -175,10 +176,12 @@ class Color(admin.ModelAdmin):
     search_help_text = "Для поиска введите название цвета"
     list_per_page: int = 20
 
+
 @admin.register(SetColor)
 class SetColor(admin.ModelAdmin):
     fields = ["car", "color"]
     list_display = ["car", "color"]
+
 
 @admin.register(Distributor)
 class Distributor(admin.ModelAdmin):
@@ -198,23 +201,26 @@ class Distributor(admin.ModelAdmin):
     get_image.short_description = "Изображение"
 
 
-@admin.register(AdminEntryFiles)
-class AdminEntryFiles(admin.ModelAdmin):
+@admin.register(AdminEntryFile)
+class AdminEntryFile(admin.ModelAdmin):
     fields = ["entry", "act", "agreement", "bill"]
     readonly_fields = ("entry",)
     list_display = ["__str__", "entry", "act", "agreement", "bill"]
 
-@admin.register(DistributorEntryFiles)
-class DistributorEntryFiles(admin.ModelAdmin):
+
+@admin.register(DistributorEntryFile)
+class DistributorEntryFile(admin.ModelAdmin):
     fields = ["entry", "act", "agreement", "bill"]
     readonly_fields = ("entry",)
     list_display = ["__str__", "entry", "act", "agreement", "bill"]
+
 
 @admin.register(SetEntry)
 class SetEntry(admin.ModelAdmin):
     fields = ["distributor", "entry", "distributor_file", "admin_file", "status"]
     readonly_fields = ("distributor",)
     list_display = ["__str__", "distributor", "entry", "distributor_file", "admin_file", "status"]
+
 
 @admin.register(Agreements)
 class Agreements(admin.ModelAdmin):

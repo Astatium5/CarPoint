@@ -16,11 +16,7 @@ from rest_framework.generics import ListAPIView
 from django.contrib.sessions.models import Session
 from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponsePermanentRedirect
 
-from core.models import (Car, BotUser, City, Model, Mark, Engine, Entry,
-                         SetTypeCar, Distributor, SetEntry,
-                         DistributorEntryFiles, AdminEntryFiles, NewCar,
-                         Question, WebUser, UserQuestion, File, Set, Color,
-                         SetColor, Transmission, Agreements)
+from core.models import *
 from core.converts import str_to_bool, str_to_null
 from core.tg.request import sendQuestion, leaveRequest
 from core.utils.ip import get_client_ip
@@ -259,13 +255,13 @@ class APITemp:
             else:
                 entry = Entry.objects.create(user=user, username=username, car=car, email=email,
                                              name=name, address=address, phone=phone)
-                setTypeCar = SetTypeCar.objects.filter(car=car)
+                setTypeCar = SetCarType.objects.filter(car=car)
                 if setTypeCar.exists():
                     setTypeCar = setTypeCar.get()
                     distributor = Distributor.objects.get(distributor=setTypeCar.user)
                     set_entry = SetEntry.objects.create(distributor=distributor, entry=entry)
-                    distributor_file = DistributorEntryFiles.objects.create(entry=entry)
-                    admin_file = AdminEntryFiles.objects.create(entry=entry)
+                    distributor_file = DistributorEntryFile.objects.create(entry=entry)
+                    admin_file = AdminEntryFile.objects.create(entry=entry)
                     set_entry.distributor_file = distributor_file
                     set_entry.admin_file = admin_file
                     set_entry.save()
@@ -404,13 +400,13 @@ class WebTemp:
             car = Car.objects.get(id=car_id)
             entry = Entry.objects.create(car=car, email=email,
                                          name=name, address=address, phone=tel)
-            setTypeCar = SetTypeCar.objects.filter(car=car)
+            setTypeCar = SetCarType.objects.filter(car=car)
             if setTypeCar.exists():
                 setTypeCar = setTypeCar.get()
                 distributor = Distributor.objects.get(distributor=setTypeCar.user)
                 set_entry = SetEntry.objects.create(distributor=distributor, entry=entry)
-                distributor_file = DistributorEntryFiles.objects.create(entry=entry)
-                admin_file = AdminEntryFiles.objects.create(entry=entry)
+                distributor_file = DistributorEntryFile.objects.create(entry=entry)
+                admin_file = AdminEntryFile.objects.create(entry=entry)
                 set_entry.distributor_file = distributor_file
                 set_entry.admin_file = admin_file
                 set_entry.save()
@@ -434,7 +430,7 @@ class DistributorTemp:
         uid = session.get_decoded().get('_auth_user_id')
         user = User.objects.get(pk=uid)
         files = File.objects.filter(user=user).all()
-        cars = SetTypeCar.objects.filter(user=user, car__isnull=False).all()
+        cars = SetCarType.objects.filter(user=user, car__isnull=False).all()
         return render(request, "distributor/index.html",
                       {"username": user.username, "full_name": user.get_full_name(),
                        "session_key": session_key, "cars": cars, "files": files})
@@ -496,7 +492,7 @@ class DistributorTemp:
                             else:
                                 color_obj = color_obj.get()
                             SetColor.objects.create(car=car, color=color_obj)
-                            SetTypeCar.objects.create(
+                            SetCarType.objects.create(
                                 type="distributor", car=car, user=user)
                     except Exception as e:
                         logger.error(e)
@@ -570,10 +566,10 @@ class DistributorTemp:
         act = files.get("act")
         agreement = files.get("agreement")
         bill = files.get("bill")
-        entry = entry=SetEntry.objects.get(id=id)
+        entry = SetEntry.objects.get(id=id)
         entry.status = "shipped"
         entry.save()
-        dFile = DistributorEntryFiles.objects.get(
+        dFile = DistributorEntryFile.objects.get(
             entry=entry.entry)
         dFile.act = act
         dFile.agreement = agreement
@@ -609,9 +605,8 @@ class DealerTemp:
         return render(request, "dealer/dealer.html", dict(new_cars=new_cars))
 
 
-def p_find_car(pricerange: str, mark: str, transmission: str,
-    body: str, type_fuel: str, volume: str, power: str
-) -> list:
+def p_find_car(pricerange: str, mark: str, transmission: str, body: str,
+               type_fuel: str, volume: str, power: str) -> list:
     if not pricerange or not mark or not transmission or not body or not type_fuel:
         return []
     else:
@@ -650,8 +645,7 @@ def p_find_car(pricerange: str, mark: str, transmission: str,
                                           transmission=transmission, set__model__body=body, engine__power__lte=power,
                                           engine__volume__gte=volume).all()
         if cars:
-            cars = [car.to_dict()
-                    for car in cars if car.set.model.body == body]
+            cars = [car.to_dict() for car in cars if car.set.model.body == body]
             dct_cars: dict = {}
             price_arr: list = []
             for car in cars:

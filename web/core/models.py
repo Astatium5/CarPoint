@@ -55,6 +55,7 @@ class BotUser(models.Model):
         return F"Пользователь #{self.id}"
 
     class Meta:
+        db_table = "bot_users"
         verbose_name = "Пользователь бота"
         verbose_name_plural = "Пользователи бота"
 
@@ -64,6 +65,7 @@ class WebUser(models.Model):
     is_blocked = models.BooleanField(default=False, verbose_name="Блокировка")
 
     class Meta:
+        db_table = "web_users"
         verbose_name = "Пользователь сайта"
         verbose_name_plural = "Пользователи сайта"
 
@@ -78,6 +80,7 @@ class Distributor(models.Model):
         return f"{self.title}"
 
     class Meta:
+        db_table = "distributors"
         verbose_name = "Дистрибьютор"
         verbose_name_plural = "Дистрибьюторы"
 
@@ -90,6 +93,7 @@ class Mark(models.Model):
         return self.title
 
     class Meta:
+        db_table = "marks"
         verbose_name = "Марка"
         verbose_name_plural = "Марки"
         ordering = ['title']
@@ -107,6 +111,7 @@ class Model(models.Model):
         return self.body
 
     class Meta:
+        db_table = "models"
         verbose_name = "Модель"
         verbose_name_plural = "Модели"
 
@@ -123,6 +128,7 @@ class Set(models.Model):
         return self.model.body
 
     class Meta:
+        db_table = "sets"
         verbose_name = "Характеристика"
         verbose_name_plural = "Характеристики"
 
@@ -140,6 +146,7 @@ class Engine(models.Model):
         return F"{self.volume} - {self.power}"
 
     class Meta:
+        db_table = "engines"
         verbose_name = "Двигатель"
         verbose_name_plural = "Двигатели"
 
@@ -151,6 +158,7 @@ class Transmission(models.Model):
         return self.title
 
     class Meta:
+        db_table = "transmissions"
         verbose_name = "Трансмиссия"
         verbose_name_plural = "Трансмиссии"
 
@@ -162,6 +170,7 @@ class Wd(models.Model):
         return self.title
 
     class Meta:
+        db_table = "wds"
         verbose_name = "Привод"
         verbose_name_plural = "Приводы"
 
@@ -174,6 +183,7 @@ class City(models.Model):
         return self.title
 
     class Meta:
+        db_table = "cities"
         verbose_name = "Город"
         verbose_name_plural = "Города"
         ordering = ['title']
@@ -205,6 +215,7 @@ class Car(models.Model):
         return self.title
 
     class Meta:
+        db_table = "cars"
         verbose_name = "Автомобиль"
         verbose_name_plural = "Автомобили"
 
@@ -216,6 +227,7 @@ class Color(models.Model):
         return self.title
 
     class Meta:
+        db_table = "colors"
         verbose_name = "Цвет"
         verbose_name_plural = "Цвета"
 
@@ -237,6 +249,7 @@ class Entry(models.Model):
         return f"Заявка #{self.id}"
 
     class Meta:
+        db_table = "entries"
         verbose_name = "Заявка"
         verbose_name_plural = "Заявки"
 
@@ -256,8 +269,8 @@ class SetEntry(models.Model):
 
     distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, verbose_name="Дистрибьютор")
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, verbose_name="Заявка")
-    distributor_file = models.ForeignKey('DistributorEntryFiles', on_delete=models.SET_NULL, null=True, verbose_name="Файлы дистрибьютора")
-    admin_file = models.ForeignKey('AdminEntryFiles', on_delete=models.SET_NULL, null=True, verbose_name="Файлы админа")
+    distributor_file = models.ForeignKey('DistributorEntryFile', on_delete=models.SET_NULL, null=True, verbose_name="Файлы дистрибьютора")
+    admin_file = models.ForeignKey('AdminEntryFile', on_delete=models.SET_NULL, null=True, verbose_name="Файлы админа")
     status = models.CharField(max_length=32, choices=[x.value for x in STATUS], default=STATUS.get_value("new"), verbose_name="Статус заявки")
 
     def to_dict(self, is_distributor=False):
@@ -268,6 +281,7 @@ class SetEntry(models.Model):
         return f"Заявка дистрибьютора #{self.id}"
 
     class Meta:
+        db_table = "set_entries"
         verbose_name = "Заявка дистрибьютора"
         verbose_name_plural = "Заявки дистрибьюторов"
 
@@ -284,6 +298,7 @@ class UserQuestion(models.Model):
     question = models.TextField(verbose_name="Вопрос")
 
     class Meta:
+        db_table = "user_questions"
         verbose_name = "Вопрос пользователя"
         verbose_name_plural = "Вопросы пользователей"
 
@@ -293,6 +308,7 @@ class Question(models.Model):
     answer = models.TextField(verbose_name="Ответ")
 
     class Meta:
+        db_table = "questions"
         verbose_name = "Вопрос"
         verbose_name_plural = "Вопросы"
 
@@ -303,6 +319,7 @@ class NewCar(models.Model):
     price = models.FloatField(verbose_name="Цена")
 
     class Meta:
+        db_table = "new_cars"
         verbose_name = "Новинка"
         verbose_name_plural = "Новинки"
 
@@ -311,10 +328,16 @@ class SetEngine(models.Model):
     set = models.ForeignKey(Set, on_delete=models.PROTECT)
     engine = models.ForeignKey(Engine, on_delete=models.PROTECT)
 
+    class Meta:
+        db_table = "set_engines"
+
 
 class SetTransmission(models.Model):
     set = models.ForeignKey(Set, on_delete=models.PROTECT)
     transmission = models.ForeignKey(Transmission, on_delete=models.PROTECT)
+
+    class Meta:
+        db_table = "set_transmissions"
 
 
 class SetColor(models.Model):
@@ -322,11 +345,12 @@ class SetColor(models.Model):
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
 
     class Meta:
+        db_table = "set_colors"
         verbose_name = "Цветовое соотношение"
         verbose_name_plural = "Цветовые соотношения"
 
 
-class SetTypeCar(models.Model):
+class SetCarType(models.Model):
     class TYPES(Enum):
         parser = ('parser', 'With the help to parser')
         distributor = ('distributor', 'With the help to distributor')
@@ -338,8 +362,10 @@ class SetTypeCar(models.Model):
     type = models.CharField(max_length=128, choices=[x.value for x in TYPES], null=True, verbose_name="Тип загрузки")
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, verbose_name="Автомобиль")
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, verbose_name="Пользователь")
+    count = models.IntegerField(default=1)
 
     class Meta:
+        db_table = "set_car_types"
         verbose_name = "Тип загрузки автомобиля"
         verbose_name_plural = "Тип загрузки автомобилей"
 
@@ -350,12 +376,13 @@ class File(models.Model):
     created = models.DateTimeField(default=timezone.now)
 
     class Meta:
+        db_table = "files"
         ordering = ["-created"]
         verbose_name = "CSV файл"
         verbose_name_plural = "CSV файлы"
 
 
-class DistributorEntryFiles(models.Model):
+class DistributorEntryFile(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
     act = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Акт")
     agreement = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Соглашение")
@@ -365,11 +392,12 @@ class DistributorEntryFiles(models.Model):
         return f"#{self.id}"
 
     class Meta:
+        db_table = "distributor_entry_files"
         verbose_name = "Файл дистрибьютора"
         verbose_name_plural = "Файлы дистрибьюторов"
 
 
-class AdminEntryFiles(models.Model):
+class AdminEntryFile(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
     act = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Акт")
     agreement = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Соглашение")
@@ -379,6 +407,7 @@ class AdminEntryFiles(models.Model):
         return f"#{self.id}"
 
     class Meta:
+        db_table = "admin_entry_files"
         verbose_name = "Файл админа"
         verbose_name_plural = "Файлы админов"
 
@@ -392,5 +421,6 @@ class Agreements(models.Model):
         return f"#{self.id}"
 
     class Meta:
+        db_table = "agreements"
         verbose_name = "Соглашение"
         verbose_name_plural = "Соглашения"

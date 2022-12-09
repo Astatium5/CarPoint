@@ -29,6 +29,8 @@ urlpatterns = [
     path("distributor/upload_documents", DistributorTemp.upload_documents, name="upload_documents"),
     path("distributor/distrib_entry_info", DistributorTemp.distribEntryInfo, name="distrib_entry_info"),
     path('distributor/agreements', DistributorTemp.agreements, name='agreements'),
+    path('distributor/car_increase', DistributorTemp.car_increase, name='car_increase'),
+    path('distributor/car_decrease', DistributorTemp.car_decrease, name='car_decrease'),
 
     # ===API urls===
     path("api/create_user/<int:user_id>/<str:first_name>/<str:username>",

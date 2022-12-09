@@ -477,7 +477,14 @@ input[type=file]::file-selector-button:hover {
 }
 
 .inc-btn, .dec-btn {
-  padding: 6px;
+  padding: 4px;
+  max-height: 23px;
+  font-size: 11px;
+}
+
+.dec-inc-input {
+  max-height: 23px;
+  max-width: 40px;
 }
 
 .img-fluid {
@@ -487,5 +494,5 @@ input[type=file]::file-selector-button:hover {
   width:170px;
   margin-bottom: 10px;
   float:left;
-  height: 70px;
+  height: 85px;
 }

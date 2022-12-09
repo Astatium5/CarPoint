@@ -421,7 +421,7 @@ class WebTemp:
 class DistributorTemp:
     def distributor(request, cars=None, files=None):
         if request.user.is_superuser:
-            return redirect("/admin")
+            return redirect("/admin/")
 
         if not request.user.is_authenticated:
             # Return auth page

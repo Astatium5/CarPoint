@@ -479,3 +479,13 @@ input[type=file]::file-selector-button:hover {
 .inc-btn, .dec-btn {
   padding: 6px;
 }
+
+.img-fluid {
+  float:left;
+  overflow:hidden;
+  position:relative;
+  width:170px;
+  margin-bottom: 10px;
+  float:left;
+  height: 70px;
+}

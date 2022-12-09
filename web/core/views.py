@@ -393,7 +393,6 @@ class WebTemp:
         tel = re.sub("[^0-9]", "", request.POST.get("tel"))
         email = request.POST.get("email")
         address = request.POST.get("address")
-        leaveRequest(car_id, name, city, tel, email, address, is_new)
         if is_new:
             car = NewCar.objects.get(id=car_id)
         else:
@@ -403,14 +402,20 @@ class WebTemp:
             setTypeCar = SetCarType.objects.filter(car=car)
             if setTypeCar.exists():
                 setTypeCar = setTypeCar.get()
-                distributor = Distributor.objects.get(distributor=setTypeCar.user)
-                set_entry = SetEntry.objects.create(distributor=distributor, entry=entry)
-                distributor_file = DistributorEntryFile.objects.create(entry=entry)
-                admin_file = AdminEntryFile.objects.create(entry=entry)
-                set_entry.distributor_file = distributor_file
-                set_entry.admin_file = admin_file
-                set_entry.save()
-        return JsonResponse({"response": True})
+                if setTypeCar.count == 0:
+                    return JsonResponse({"response": False})
+                else:
+                    leaveRequest(car_id, name, city, tel, email, address, is_new)
+                    distributor = Distributor.objects.get(distributor=setTypeCar.user)
+                    set_entry = SetEntry.objects.create(distributor=distributor, entry=entry)
+                    distributor_file = DistributorEntryFile.objects.create(entry=entry)
+                    admin_file = AdminEntryFile.objects.create(entry=entry)
+                    set_entry.distributor_file = distributor_file
+                    set_entry.admin_file = admin_file
+                    set_entry.save()
+                    setTypeCar.count = setTypeCar.count - 1
+                    setTypeCar.save()
+                    return JsonResponse({"response": True})
 
 
 class DistributorTemp:

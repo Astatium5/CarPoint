@@ -43,6 +43,8 @@ function leaveRequest(car_id){
                     var modal = $("#lr-modal");
                     modal.modal("hide");
                     return alert("Заявка успешно отправлена!");
+                }else{
+                    return alert('Количество авто равно 0');
                 }
             }
         )

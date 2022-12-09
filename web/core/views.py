@@ -598,6 +598,23 @@ class DistributorTemp:
             agreements = Agreements.objects.filter(distributor=distributor).all()
         return render(request, "distributor/agreements.html", {"agreements": agreements})
 
+    def car_increase(request):
+        car_id = request.POST.get('car_id')
+        car = SetCarType.objects.get(car_id=car_id)
+        car_count = car.count + 1
+        car.count = car_count
+        car.save()
+        return JsonResponse({"response": True, "car_count": car_count})
+
+    def car_decrease(request):
+        car_id = request.POST.get('car_id')
+        car = SetCarType.objects.get(car_id=car_id)
+        car_count = car.count - 1
+        if car_count - 1 <= 0:
+            car_count = 0
+        car.count = car_count
+        car.save()
+        return JsonResponse({"response": True, "car_count": car_count})
 
 class DealerTemp:
     def index(request):

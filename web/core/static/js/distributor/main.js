@@ -235,3 +235,51 @@ function distribEntryInfo(id){
       )
     })
 }
+
+function car_decrease(car_id){
+  let data = new FormData();
+  data.append("car_id", car_id);
+
+  fetch("distributor/car_decrease", {
+    method: "POST",
+    body: data,
+    contentType: 'application/json',
+    headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": $.cookie("csrftoken")
+    },
+  }).then(function (response) {
+    response.json().then(
+        function (data) {
+            if (data["response"]) {
+              car_count = data['car_count']
+              $(`#value_${car_id}`).val(car_count);
+            }
+        }
+    )
+  })
+}
+
+function car_increase(car_id){
+  let data = new FormData();
+  data.append("car_id", car_id);
+
+  fetch("distributor/car_increase", {
+    method: "POST",
+    body: data,
+    contentType: 'application/json',
+    headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": $.cookie("csrftoken")
+    },
+  }).then(function (response) {
+    response.json().then(
+        function (data) {
+            if (data["response"]) {
+              car_count = data['car_count']
+              $(`#value_${car_id}`).val(car_count);
+            }
+        }
+    )
+  })
+}

@@ -239,6 +239,10 @@ class APITemp:
 
         def get(self, request: HttpRequest, id: int) -> HttpResponse:
             car = Car.objects.get(id=id)
+            setTypeCar = SetCarType.objects.filter(car=car).get()
+            if setTypeCar.count == 0:
+                return JsonResponse({"response": False, "error": {"type": "WrongCount",
+                                     "message": "Количество авто равно 0"}})
             return JsonResponse({"response": True, "car": car.to_dict()})
 
     class CreateEntryView(ListAPIView):
@@ -251,7 +255,8 @@ class APITemp:
             entry = Entry.objects.filter(user=user, username=username, car=car, email=email,
                                          name=name, address=address, phone=phone)
             if entry.exists():
-                return JsonResponse({"response": False})
+                return JsonResponse({"response": False, "error": {"type": "EntryExists",
+                                     "message": "Такая завявка уже существует"}})
             else:
                 entry = Entry.objects.create(user=user, username=username, car=car, email=email,
                                              name=name, address=address, phone=phone)
@@ -265,7 +270,7 @@ class APITemp:
                     set_entry.distributor_file = distributor_file
                     set_entry.admin_file = admin_file
                     set_entry.save()
-                return JsonResponse({"response": True})
+                    return JsonResponse({"response": True})
 
 
 class WebTemp:

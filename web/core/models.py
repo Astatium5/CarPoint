@@ -360,7 +360,7 @@ class SetCarType(models.Model):
             return cls[member].value[0]
 
     type = models.CharField(max_length=128, choices=[x.value for x in TYPES], null=True, verbose_name="Тип загрузки")
-    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, verbose_name="Автомобиль")
+    car = models.ForeignKey(Car, on_delete=models.PROTECT, null=True, verbose_name="Автомобиль")
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, verbose_name="Пользователь")
     count = models.IntegerField(default=1)
 

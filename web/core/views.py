@@ -478,7 +478,7 @@ class DistributorTemp:
             for r in reader:
                 if n >= 1:
                     (power, type_fuel, volume, transmission_id, wd_id, title,
-                     price, body, mark_id, image, color) = r
+                     price, body, mark_id, image, color, count) = r
                     try:
                         engine = Engine.objects.filter(volume=volume, power=power, type_fuel=type_fuel)
                         if not engine.exists():
@@ -502,8 +502,7 @@ class DistributorTemp:
                             else:
                                 color_obj = color_obj.get()
                             SetColor.objects.create(car=car, color=color_obj)
-                            SetCarType.objects.create(
-                                type="distributor", car=car, user=user)
+                            SetCarType.objects.create(type="distributor", car=car, user=user, count=count)
                     except Exception as e:
                         logger.error(e)
                 n += 1

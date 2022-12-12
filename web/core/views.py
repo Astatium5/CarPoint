@@ -430,7 +430,7 @@ class DistributorTemp:
 
         if not request.user.is_authenticated:
             # Return auth page
-            return redirect("distributor/auth")
+            return redirect("/distributor/auth")
 
         session_key = request.COOKIES.get("sessionid")
         session = Session.objects.filter(session_key=session_key)

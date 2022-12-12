@@ -18,7 +18,7 @@ urlpatterns = [
     path("leave_request", WebTemp.leave_request, name="leave_request"),
 
     # ===Distributor urls==
-    path("distributor", DistributorTemp.distributor, name="distributor"),
+    path("distributor/", DistributorTemp.distributor, name="distributor"),
     path("distributor/auth", DistributorTemp.auth, name="auth"),
     path("logout", DistributorTemp.logout_view, name="logout_view"),
     path("distributor/upload_csv_file", DistributorTemp.upload_csv_file, name="upload_csv_file"),

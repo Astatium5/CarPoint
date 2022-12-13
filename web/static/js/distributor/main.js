@@ -240,7 +240,7 @@ function car_decrease(car_id){
   let data = new FormData();
   data.append("car_id", car_id);
 
-  fetch("distributor/car_decrease", {
+  fetch("/distributor/car_decrease", {
     method: "POST",
     body: data,
     contentType: 'application/json',
@@ -264,7 +264,7 @@ function car_increase(car_id){
   let data = new FormData();
   data.append("car_id", car_id);
 
-  fetch("distributor/car_increase", {
+  fetch("/distributor/car_increase", {
     method: "POST",
     body: data,
     contentType: 'application/json',

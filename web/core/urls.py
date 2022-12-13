@@ -12,22 +12,22 @@ register_converter(BooleanUrlParameterConverter, "bool")
 urlpatterns = [
     # ===WEB urls==
     # Main urls.
-    path("", WebTemp.index, name="index"),
-    path("oferta", WebTemp.oferta, name="oferta"),
-    path("send_question", WebTemp.send_question, name="send_question"),
-    path("leave_request", WebTemp.leave_request, name="leave_request"),
+    path('', WebTemp.index, name='index'),
+    path('oferta', WebTemp.oferta, name="oferta"),
+    path('send_question', WebTemp.send_question, name='send_question'),
+    path('leave_request', WebTemp.leave_request, name='leave_request'),
 
     # ===Distributor urls==
-    path("distributor/", DistributorTemp.distributor, name="distributor"),
-    path("distributor/auth", DistributorTemp.auth, name="auth"),
-    path("logout", DistributorTemp.logout_view, name="logout_view"),
-    path("distributor/upload_csv_file", DistributorTemp.upload_csv_file, name="upload_csv_file"),
-    path("distributor/profile", DistributorTemp.profile, name="profile"),
-    path("distributor/cars",  DistributorTemp.cars, name="cars"),
-    path("distributor/save_data", DistributorTemp.save_data, name="save_data"),
-    path("distributor/orders", DistributorTemp.orders, name="orders"),
-    path("distributor/upload_documents", DistributorTemp.upload_documents, name="upload_documents"),
-    path("distributor/distrib_entry_info", DistributorTemp.distribEntryInfo, name="distrib_entry_info"),
+    path('distributor/', DistributorTemp.distributor, name="distributor"),
+    path('distributor/auth', DistributorTemp.auth, name="auth"),
+    path('logout', DistributorTemp.logout_view, name="logout_view"),
+    path('distributor/upload_csv_file', DistributorTemp.upload_csv_file, name="upload_csv_file"),
+    path('distributor/profile', DistributorTemp.profile, name="profile"),
+    path('distributor/cars', DistributorTemp.cars, name="cars"),
+    path('distributor/save_data', DistributorTemp.save_data, name="save_data"),
+    path('distributor/orders', DistributorTemp.orders, name="orders"),
+    path('distributor/upload_documents', DistributorTemp.upload_documents, name="upload_documents"),
+    path('distributor/distrib_entry_info', DistributorTemp.distribEntryInfo, name="distrib_entry_info"),
     path('distributor/agreements', DistributorTemp.agreements, name='agreements'),
     path('distributor/car_increase', DistributorTemp.car_increase, name='car_increase'),
     path('distributor/car_decrease', DistributorTemp.car_decrease, name='car_decrease'),
@@ -66,10 +66,13 @@ urlpatterns = [
          WebTemp.get_cars_by_body, name="get_cars_by_body"),
     path("get_cars_by_type_fuel/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>",
          WebTemp.get_cars_by_type_fuel, name="get_cars_by_type_fuel"),
-    path("get_cars_by_transmission/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>/<str:transmission>",
+    path('get_cars_by_transmission/<int:min_price>/<int:max_price>/<str:mark>/'
+          '<str:body>/<str:type_fuel>/<str:transmission>',
           WebTemp.get_cars_by_transmission, name="get_cars_by_transmission"),
-    path("get_cars_by_engine_volume/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>/<str:transmission>/<str:engine_volume>",
+    path('get_cars_by_engine_volume/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>'
+         '/<str:transmission>/<str:engine_volume>',
           WebTemp.get_cars_by_engine_volume, name="get_cars_engine_volume"),
 
     path('mailru-verificationefe11e8fecf3da53', WebTemp.mailru_verification, name="mailru_verification")
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,5 +1,6 @@
 from typing import Any, Union
 
+from loguru import logger
 from aiogram.types import ChosenInlineResult, InlineKeyboardMarkup, InlineKeyboardButton
 
 from utils.api.requests import Requests
@@ -39,6 +40,7 @@ async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any
         try:
             return await bot.send_photo(chosen_result.from_user.id, photo=image, caption=text_page,
                                         reply_markup=reply_markup)
-        except:
+        except Exception as e:
+            logger.error(e)
             text_page += image
             return await bot.send_message(chosen_result.from_user.id, text_page, reply_markup=reply_markup)

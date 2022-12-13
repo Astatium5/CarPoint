@@ -207,9 +207,10 @@ class Car(models.Model):
 
     def to_dict(self):
         return dict(
-            id=self.id, title=self.title, price=self.price, image=self.image, mark_id=self.mark_id, engine = self.engine.to_dict(),
-            wd=self.wd.title, expenditure=self.expenditure, transmission=self.transmission.title, special=self.set.special,
-            body=self.set.model.body, set_title=self.set.title, model_title=self.set.model.title)
+            id=self.id, title=self.title, price=self.price, image=self.image, mark_id=self.mark_id,
+            engine=self.engine.to_dict(), wd=self.wd.title, expenditure=self.expenditure,
+            transmission=self.transmission.title, special=self.set.special, body=self.set.model.body,
+            set_title=self.set.title, model_title=self.set.model.title)
 
     def __str__(self):
         return self.title
@@ -269,9 +270,11 @@ class SetEntry(models.Model):
 
     distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, verbose_name="Дистрибьютор")
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, verbose_name="Заявка")
-    distributor_file = models.ForeignKey('DistributorEntryFile', on_delete=models.SET_NULL, null=True, verbose_name="Файлы дистрибьютора")
+    distributor_file = models.ForeignKey('DistributorEntryFile', on_delete=models.SET_NULL, null=True,
+                                         verbose_name="Файлы дистрибьютора")
     admin_file = models.ForeignKey('AdminEntryFile', on_delete=models.SET_NULL, null=True, verbose_name="Файлы админа")
-    status = models.CharField(max_length=32, choices=[x.value for x in STATUS], default=STATUS.get_value("new"), verbose_name="Статус заявки")
+    status = models.CharField(max_length=32, choices=[x.value for x in STATUS], default=STATUS.get_value("new"),
+                              verbose_name="Статус заявки")
 
     def to_dict(self, is_distributor=False):
         if is_distributor:
@@ -384,9 +387,12 @@ class File(models.Model):
 
 class DistributorEntryFile(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
-    act = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Акт")
-    agreement = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Соглашение")
-    bill = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None, verbose_name="Счёт")
+    act = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True, default=None,
+                           verbose_name="Акт")
+    agreement = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True,
+                                 default=None, verbose_name="Соглашение")
+    bill = models.FileField(upload_to="files/distributor", storage=DistributorFileStorage(), blank=True,
+                            default=None, verbose_name="Счёт")
 
     def __str__(self):
         return f"#{self.id}"
@@ -399,9 +405,12 @@ class DistributorEntryFile(models.Model):
 
 class AdminEntryFile(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.PROTECT, null=True, verbose_name="Заявка")
-    act = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Акт")
-    agreement = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Соглашение")
-    bill = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None, verbose_name="Счёт")
+    act = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None,
+                           verbose_name="Акт")
+    agreement = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None,
+                                 verbose_name="Соглашение")
+    bill = models.FileField(upload_to="files/admin", storage=AdminFileStorage(), blank=True, default=None,
+                            verbose_name="Счёт")
 
     def __str__(self):
         return f"#{self.id}"
@@ -413,9 +422,11 @@ class AdminEntryFile(models.Model):
 
 
 class Agreements(models.Model):
-    user = models.ForeignKey(User, limit_choices_to={'groups__id': 2}, on_delete=models.PROTECT, null=True, verbose_name="Дилер")
+    user = models.ForeignKey(User, limit_choices_to={'groups__id': 2}, on_delete=models.PROTECT, null=True,
+                             verbose_name="Дилер")
     distributor = models.ForeignKey(Distributor, on_delete=models.PROTECT, null=True, verbose_name="Дистрибьютор")
-    agreement = models.FileField(upload_to="files/agreements", storage=DealerFileStorage(), blank=True, default=None, verbose_name="Соглашение")
+    agreement = models.FileField(upload_to="files/agreements", storage=DealerFileStorage(), blank=True, default=None,
+                                 verbose_name="Соглашение")
 
     def __str__(self):
         return f"#{self.id}"

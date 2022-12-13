@@ -619,7 +619,7 @@ class DistributorTemp:
         car_id = request.POST.get('car_id')
         car = SetCarType.objects.get(car_id=car_id)
         car_count = car.count - 1
-        if car_count - 1 <= 0:
+        if car_count <= 0:
             car_count = 0
         car.count = car_count
         car.save()

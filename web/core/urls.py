@@ -56,7 +56,7 @@ urlpatterns = [
     path("api/create_entry/<int:user_id>/<str:username>/<int:car_id>/<str:email>/<str:name>/<str:address>/<str:phone>",
          APITemp.CreateEntryView.as_view(), name="create_entry"),
 
-     #===Dealer urls===
+     # ===Dealer urls===
      path("dealer", DealerTemp.index, name="dealer_index"),
 
     # ===WEB urls (JS)==
@@ -69,5 +69,7 @@ urlpatterns = [
     path("get_cars_by_transmission/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>/<str:transmission>",
           WebTemp.get_cars_by_transmission, name="get_cars_by_transmission"),
     path("get_cars_by_engine_volume/<int:min_price>/<int:max_price>/<str:mark>/<str:body>/<str:type_fuel>/<str:transmission>/<str:engine_volume>",
-          WebTemp.get_cars_by_engine_volume, name="get_cars_engine_volume")
+          WebTemp.get_cars_by_engine_volume, name="get_cars_engine_volume"),
+
+    path('mailru-verificationefe11e8fecf3da53', WebTemp.mailru_verification, name="mailru_verification")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

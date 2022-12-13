@@ -422,6 +422,9 @@ class WebTemp:
                     setTypeCar.save()
                     return JsonResponse({"response": True})
 
+    def mailru_verification(request):
+        return render(request, "main/mailru-verificationefe11e8fecf3da53.html")
+
 
 class DistributorTemp:
     def distributor(request, cars=None, files=None):

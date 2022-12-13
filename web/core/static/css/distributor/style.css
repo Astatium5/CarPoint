@@ -160,7 +160,7 @@ form p{
 }
 
 .upload-btn {
-    -moz-user-select: none;
+    user-select: none;
     border: 1px solid transparent;
     border-radius: 0.25rem;
     display: inline-block;

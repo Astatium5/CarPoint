@@ -272,7 +272,7 @@ class APITemp:
                     set_entry.distributor_file = distributor_file
                     set_entry.admin_file = admin_file
                     set_entry.save()
-                    return JsonResponse({"response": True})
+                return JsonResponse({"response": True})
 
 
 class WebTemp:

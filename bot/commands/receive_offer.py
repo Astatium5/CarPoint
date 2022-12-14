@@ -373,7 +373,7 @@ async def inline_echo(query: InlineQuery) -> Any:
     transmission: str = query.query
     n: int = 0
     items: list = []
-    price_arr: dict = []
+    prices: dict = []
     mark_ids: list = []
     if not globals.response:
         return not_found(query)
@@ -399,15 +399,15 @@ async def inline_echo(query: InlineQuery) -> Any:
                              F"{wd}"),
                 hide_url=True, thumb_url=image)
             if is_any:
-                if not price in price_arr and not mark_id in mark_ids:
+                if price not in prices and mark_id not in mark_ids:
                     mark_ids.append(mark_id)
                     items.append(item)
                     n += 1
             else:
-                if not price in price_arr:
+                if price not in prices:
                     items.append(item)
                     n += 1
-            price_arr.append(price)
+            prices.append(price)
             if n == MAX_SHOW:
                 break
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)

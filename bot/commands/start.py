@@ -9,7 +9,7 @@ from objects import globals
 from utils.api.requests import Requests
 from .meeting import *
 from states.states import *
-from keyboard.keyboard import *
+from keyboard.keyboard import choice_markup
 
 api_requests: Requests = Requests()
 
@@ -17,7 +17,7 @@ api_requests: Requests = Requests()
 async def start(message: Message, state: FSMContext) -> Union[Message, None]:
     if message.chat.type != "group":
         globals.start = start
-        # Init OfferMetaData and set to vatiable
+        # Init OfferMetaData and set to variable
         globals.offer_metadata = OfferMetaData()
         await state.finish()
         response: dict = api_requests.create_user(user_id=message.from_user.id, first_name=message.from_user.first_name,
@@ -35,7 +35,8 @@ async def start(message: Message, state: FSMContext) -> Union[Message, None]:
                     await message.answer(welcome_page.find("is_not_city").text)
                     return await Meeting.city.set()
                 else:
-                    return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name))
+                    return await message.answer(welcome_page.find("is_not_empty").text.format(bot_info.first_name),
+                                                reply_markup=choice_markup)
             else:
                 await message.answer(welcome_page.find("is_empty").text.format(bot_info.first_name))
             return await Meeting.name.set()

@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.getenv('DEBUG'))
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 CAPTCHA_PUBLIC_KEY = os.getenv('CAPTCHA_PUBLIC_KEY')
 CAPTCHA_SECRET_KEY = os.getenv('CAPTCHA_SECRET_KEY')
@@ -137,11 +137,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR,"static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'parser/static'),
-    os.path.join(BASE_DIR,'core/static')
+    os.path.join(BASE_DIR, 'parser/static'),
+    os.path.join(BASE_DIR, 'core/static')
 ]
 
 

@@ -31,7 +31,7 @@ async def get_name(message: Message):
 
 @dp.message_handler(state=Support.email)
 async def get_email(message: Message):
-    _email: str = re.sub("[^@]+@[^@]+\.[^@]+", "", message.text)
+    _email: str = re.sub(r"[^@]+@[^@]+\.[^@]+", "", message.text)
     if _email:
         return await message.answer("Почта не является валидной!")
     email: str = message.text

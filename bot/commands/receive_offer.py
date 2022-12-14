@@ -22,24 +22,24 @@ from . import start  # Use handler
 MAX_SHOW: int = 20
 
 PRICE_RANGE: dict = {
-    "87506fd2b91be8b7ab7b59d069c42d40": {
-        "min": 500000,
-        "max": 2000000
+    '87506fd2b91be8b7ab7b59d069c42d40': {
+        'min': 500000,
+        'max': 2000000
     },
 
-    "1ee1876784dfba4421dfbc93272053a8": {
-        "min": 2000000,
-        "max": 4000000
+    '1ee1876784dfba4421dfbc93272053a8': {
+        'min': 2000000,
+        'max': 4000000
     },
 
-    "af499ea026c3e952d324d7af4cf7aaee": {
-        "min": 4000000,
-        "max": 6000000
+    'af499ea026c3e952d324d7af4cf7aaee': {
+        'min': 4000000,
+        'max': 6000000
     },
 
-    "2a3225e2decd960cebe8c4de135f59a0": {
-        "min": 6000000,
-        "max": 0
+    '2a3225e2decd960cebe8c4de135f59a0': {
+        'min': 6000000,
+        'max': 0
     },
 }  # Keys is ids price range.
 
@@ -50,7 +50,7 @@ offer_page: Any = globals.root.find("receive_offer")
 globals.offer_metadata: OfferMetaData = OfferMetaData()
 config: Config = Config()
 
-@dp.message_handler(lambda message: message.text == "Получить предложение", state="*")
+@dp.message_handler(lambda message: message.text == 'Получить предложение', state='*')
 async def receive_offer(message: Message, state: FSMContext) -> Message:
     await state.finish()
     # Send check user phone request.
@@ -208,8 +208,8 @@ async def get_mark(query: CallbackQuery) -> Union[Message, None]:
     else:
         globals.offer_metadata.Mark = mark
 
-    response: dict = api_requests.get_all_bodies(mark=mark,
-                                                 min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+    response: dict = api_requests.get_all_bodies(mark=mark, min_price=globals.offer_metadata.MinPrice,
+                                                 max_price=globals.offer_metadata.MaxPrice)
     bodies: Union[Any, None] = response.get("all_bodies")
 
     reply_markup = InlineKeyboardMarkup()
@@ -236,9 +236,9 @@ async def get_body(query: CallbackQuery):
     mark = globals.offer_metadata.Mark
     globals.offer_metadata.Body = body
     response: dict = api_requests.get_all_fuel_types(mark=mark if mark else "any", body=body,
-                                                     min_price=globals.offer_metadata.MinPrice, max_price=globals.offer_metadata.MaxPrice)
+                                                     min_price=globals.offer_metadata.MinPrice,
+                                                     max_price=globals.offer_metadata.MaxPrice)
     fuel_types = response.get("all_fuel_types")
-
     reply_markup = InlineKeyboardMarkup()
 
     if fuel_types:
@@ -413,7 +413,7 @@ async def inline_echo(query: InlineQuery) -> Any:
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)
 
 
-@dp.callback_query_handler(lambda query: query.data == "new_search")
+@dp.callback_query_handler(lambda query: query.data == 'new_search')
 async def new_search(query: CallbackQuery) -> Message:
     globals.offer_metadata: OfferMetaData = OfferMetaData()
     # Get receive_offer tag from xml data.
@@ -425,7 +425,8 @@ async def new_search(query: CallbackQuery) -> Message:
             await bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
         except Exception as e:
             logger.error(e)
-        return await bot.send_message(chat_id=query.message.chat.id, text=offer_page.find("select_price").text, reply_markup=choice_price_markup)
+        return await bot.send_message(chat_id=query.message.chat.id, text=offer_page.find("select_price").text,
+                                      reply_markup=choice_price_markup)
 
 
 async def find_car() -> Union[Any, None]:

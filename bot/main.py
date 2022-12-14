@@ -14,7 +14,7 @@ TEXT_PATH = Path(__file__).resolve().parent
 
 
 async def main():
-    globals.bot: Bot = Bot(token=config.token, parse_mode="HTML")
+    globals.bot: Bot = Bot(token=config.token, parse_mode='HTML')
     globals.dp: Dispatcher = Dispatcher(globals.bot, storage=MemoryStorage())
 
     bot_info: dict = await globals.bot.get_me()
@@ -32,4 +32,4 @@ if __name__ == "__main__":
         main_loop = asyncio.get_event_loop()
         main_loop.run_until_complete(main())
     except KeyboardInterrupt:
-        logger.info("Bot stopped")
+        logger.info('Bot stopped')

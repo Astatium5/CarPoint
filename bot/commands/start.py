@@ -13,7 +13,7 @@ from keyboard.keyboard import choice_markup
 
 api_requests: Requests = Requests()
 
-@dp.message_handler(commands="start", state="*")
+@dp.message_handler(commands='start', state='*')
 async def start(message: Message, state: FSMContext) -> Union[Message, None]:
     if message.chat.type != "group":
         globals.start = start

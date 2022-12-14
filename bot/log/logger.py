@@ -14,7 +14,7 @@ class CustomAdapter(logging.LoggerAdapter):
 
 logging.basicConfig(
     level=logging.INFO,
-    format=f"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
+    format=r"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
     handlers=handlers)
 logger = logging.getLogger(__name__)
 custom_logger = CustomAdapter(logger, {"session_name": None})

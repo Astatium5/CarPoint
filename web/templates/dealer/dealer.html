@@ -99,41 +99,6 @@
 									</div>
 								</div>
 							</div>
-							<!-- Modal -->
-							<!--<div class="modal fade modal-success" id="exampleModalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="img/close.svg" alt="Close"></button>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Найдено 1 234 566 вариантов</h5>
-      </div>
-      <div class="modal-body">
-        <p> Пожалуйста, укажите дополнительные параметры для сужения поиска</p>
-      </div>
-	  <div class="modal-form">
-	     <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Хорошо</button>
-	     <button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>
-	  </div>
-    </div>
-  </div>
-</div>-->
-							<!-- Modal -->
-							<!--<div class="modal fade modal-success" id="exampleModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="img/close.svg" alt="Close"></button>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Автомобиль успешно забронирован</h5>
-      </div>
-      <div class="modal-body">
-        <p>На указанный вами e-mail выслан электронный договор, подпишите его и вышлете ответным письмом. После этого мы вышлем вам детали для оплаты.</p>
-      </div>
-	  <div class="modal-form">
-	     <button type="button" class="button" data-bs-dismiss="modal">Закрыть</button>
-	  </div>
-    </div>
-  </div>
-</div>-->
 						</div>
 						<div class="col-lg-5">
 							<div class="baner-img"><a href="/"><img src="{% static 'img/main/car.svg' %}" alt="Car"></a>
@@ -320,12 +285,6 @@
 							<strong>{{w_car.title}}</strong>
 							<span>{{w_car.body}}, {{w_car.transmission}}, {{w_car.engine_type_fuel}},
 								{{w_car.engine_volume}}, {{w_car.engine_power}}, {{w_car.wd}}</span>
-							<!--<div class="variant-color"><span>Выбрать цвет:</span>
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-							</div>-->
 						</div>
 						<div class="item-auto-price">
 							<span>{{w_car.price|add:"0"}} ₽</span>
@@ -346,13 +305,13 @@
 		<div class="container">
 			<h2>Новинки<span class="new">new</span></h2>
 			<div class="slider-bl">
-		  <div id="owl-demo" class="owl-carousel">
-    <div class="item"><h3 class="">Chery Tiggo 7 Pro Elite</h3><img src="{% static 'img/dealer/car1-1.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">2 649 900 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
-    <div class="item"><h3 class="">HAVAL F7x Premium</h3><img src="{% static 'img/dealer/car2-2.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">2 154 000 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
-    <div class="item"><h3 class="">Changan CS35 Plus</h3><img src="{% static 'img/dealer/car3-3.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">1 959 900 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
-    <div class="item"><h3 class="">FAW Besturn X80 Luxury</h3><img src="{% static 'img/dealer/car4-4.jpeg' %}" alt="Car"><div class="bottom-item"><span class="price">1 729 000 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
-		   </div>
-		   <div class="customNavigation">
+			<div id="owl-demo" class="owl-carousel">
+			  <div class="item"><h3 class="">Chery Tiggo 7 Pro Elite</h3><img src="{% static 'img/dealer/car1-1.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">2 649 900 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+			  <div class="item"><h3 class="">HAVAL F7x Premium</h3><img src="{% static 'img/dealer/car2-2.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">2 154 000 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+			  <div class="item"><h3 class="">Changan CS35 Plus</h3><img src="{% static 'img/dealer/car3-3.jpg' %}" alt="Car"><div class="bottom-item"><span class="price">1 959 900 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+			  <div class="item"><h3 class="">FAW Besturn X80 Luxury</h3><img src="{% static 'img/dealer/car4-4.jpeg' %}" alt="Car"><div class="bottom-item"><span class="price">1 729 000 ₽</span><a href="/" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Купить</a></div></div>
+		      </div>
+		    <div class="customNavigation">
                 <a class="btn prev"><img src="{% static 'img/main/prev.svg' %}" alt="Previous"></a>
                 <a class="btn next"><img src="{% static 'img/main/next.svg' %}" alt="Next"></a>
             </div>
@@ -396,18 +355,11 @@
 					<li><strong>Огромный выбор</strong> автомобилей</li>
 					<li>Все марки и модели <strong>в вашем смартфоне</strong></li>
 					<li>Покупка, не выходя из дома, в любом регионе страны</li>
-					<li>Возможность найти <strong>эксклюзивные</strong> марки, модели и
-комплектации, не представленные в вашем городе
-</li>
+					<li>Возможность найти <strong>эксклюзивные</strong> марки, модели и комплектации, не представленные в вашем городе</li>
 					<li>Опции и финансовые услуги только по запросу клиента</li>
-					<li>Максимальная <strong>простота и скорость</strong> покупки - вы выбираете
-автомобиль, все остальные вопросы мы решаем за вас
-</li>
-					<li><strong>Прозрачность и безопасность</strong> сделки,
-возможность оформления смарт-контракта
-</li>
-<li>Прозрачная цена, без нюансов. <strong>Акции и подарки</strong>
-</li>
+					<li>Максимальная <strong>простота и скорость</strong> покупки - вы выбираете автомобиль, все остальные вопросы мы решаем за вас</li>
+					<li><strong>Прозрачность и безопасность</strong> сделки, возможность оформления смарт-контракта</li>
+					<li>Прозрачная цена, без нюансов. <strong>Акции и подарки</strong></li>
 				</ul>
 			</div>
 		</div>

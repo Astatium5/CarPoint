@@ -79,12 +79,9 @@ class OfferMetaData:
     # Transmission
     Transmission: str
 
-    def __init__(self,
-                 MinPrice=0, MaxPrice=0,
-                 IsAnyMark=False, Mark="", Body="", IsAnyFuelType=False, FuelType="",
+    def __init__(self, MinPrice=0, MaxPrice=0, IsAnyMark=False, Mark='', Body='', IsAnyFuelType=False, FuelType='',
                  IsVolume=False, IsPower=False, MinVolume=0.0, MaxVolume=0.0, MinPower=0, MaxPower=0,
-                 Transmission=""
-                 ):
+                 Transmission=''):
 
         self.MinPrice = MinPrice
         self.MaxPrice = MaxPrice
@@ -109,10 +106,10 @@ class OfferMetaData:
         self.Transmission = Transmission
 
     def to_header(self):
-        return {"Min-Price": self.MinPrice, "Max-Price": self.MaxPrice, "Is-Any-Fuel-Type": self.IsAnyFuelType,
-                "Is-Any-Mark": self.IsAnyMark, "Mark": self.Mark, "Is-Volume": self.IsVolume,
-                "Is-Power": self.IsPower, "Min-Volume": self.MinVolume, "Max-Volume": self.MaxVolume,
-                "Min-Power": self.MinPower, "Max-Power": self.MaxPower}
+        return {'Min-Price': self.MinPrice, 'Max-Price': self.MaxPrice, 'Is-Any-Fuel-Type': self.IsAnyFuelType,
+                'Is-Any-Mark': self.IsAnyMark, 'Mark': self.Mark, 'Is-Volume': self.IsVolume,
+                'Is-Power': self.IsPower, 'Min-Volume': self.MinVolume, 'Max-Volume': self.MaxVolume,
+                'Min-Power': self.MinPower, 'Max-Power': self.MaxPower}
 
 
 @dataclass
@@ -123,7 +120,7 @@ class LeaveRequestMetaData:
     address: str
     phone: str
 
-    def __init__(self, car_id=0, email="", full_name="", address="", phone=""):
+    def __init__(self, car_id=0, email='', full_name='', address='', phone=''):
         self.car_id = car_id
         self.email = email
         self.full_name = full_name
@@ -138,7 +135,7 @@ class SupportMetaData:
     phone: str
     question: str
 
-    def __init__(self, name="", email="", phone="", question=""):
+    def __init__(self, name='', email='', phone='', question=''):
         self.name = name
         self.email = email
         self.phone = phone
@@ -151,7 +148,7 @@ class ContactMeMetaData:
     email: str
     phone: str
 
-    def __init__(self, name="", email="", phone=""):
+    def __init__(self, name='', email='', phone=''):
         self.name = name
         self.email = email
         self.phone = phone

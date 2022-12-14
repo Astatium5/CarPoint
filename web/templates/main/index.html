@@ -101,41 +101,6 @@
 									</div>
 								</div>
 							</div>
-							<!-- Modal -->
-							<!--<div class="modal fade modal-success" id="exampleModalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Найдено 1 234 566 вариантов</h5>
-      </div>
-      <div class="modal-body">
-        <p> Пожалуйста, укажите дополнительные параметры для сужения поиска</p>
-      </div>
-	  <div class="modal-form">
-	     <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-bs-dismiss="modal">Хорошо</button>
-	     <button type="button" class="btn-otmena" data-bs-dismiss="modal">Отмена</button>
-	  </div>
-    </div>
-  </div>
-</div>-->
-							<!-- Modal -->
-							<!--<div class="modal fade modal-success" id="exampleModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-	<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static 'img/close.svg' %}" alt="Close"></button>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Автомобиль успешно забронирован</h5>
-      </div>
-      <div class="modal-body">
-        <p>На указанный вами e-mail выслан электронный договор, подпишите его и вышлете ответным письмом. После этого мы вышлем вам детали для оплаты.</p>
-      </div>
-	  <div class="modal-form">
-	     <button type="button" class="button" data-bs-dismiss="modal">Закрыть</button>
-	  </div>
-    </div>
-  </div>
-</div>-->
 						</div>
 						<div class="col-lg-5">
 							<div class="baner-img"><a href="/"><img src="{% static 'img/main/car.svg' %}" alt="Car"></a>
@@ -322,12 +287,6 @@
 							<strong>{{w_car.title}}</strong>
 							<span>{{w_car.body}}, {{w_car.transmission}}, {{w_car.engine_type_fuel}},
 								{{w_car.engine_volume}}, {{w_car.engine_power}}, {{w_car.wd}}</span>
-							<!--<div class="variant-color"><span>Выбрать цвет:</span>
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-								<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-							</div>-->
 						</div>
 						<div class="item-auto-price">
 							<span>{{w_car.price|add:"0"}} ₽</span>
@@ -421,15 +380,13 @@
 							<p><b>Доставка</b> автомобиля прямо <b>к дому</b></p>
 						</span>
 						<span>
-							<p><b>Огромный выбор</b> автомобилей. Возможность сравнить</br> актуальные цены и
-								комплектации сразу по всем производителям</p>
+							<p><b>Огромный выбор</b> автомобилей. Возможность сравнить</br> актуальные цены и комплектации сразу по всем производителям</p>
 						</span>
 						<span>
 							<p>Все марки и модели <b>в вашем смартфоне</b> - </br>выбирайте, не выходя из дома</p>
 						</span>
 						<span>
-							<p>Возможность найти <b>эксклюзивные</b> марки, модели и</br> комплектации, не
-								представленные в вашем городе</p>
+							<p>Возможность найти <b>эксклюзивные</b> марки, модели и</br> комплектации, не представленные в вашем городе</p>
 						</span>
 						<span>
 							<p>Опции и финансовые услуги <b>только по запросу</b> клиента</p>
@@ -438,15 +395,13 @@
 							<p><b>Не нужно</b> общаться с навязчивыми менеджерами</p>
 						</span>
 						<span>
-							<p>Максимальная <b>простота и скорость</b> покупки - вы выбираете</br> автомобиль, все
-								остальные вопросы мы решаем за вас</p>
+							<p>Максимальная <b>простота и скорость</b> покупки - вы выбираете</br> автомобиль, все остальные вопросы мы решаем за вас</p>
 						</span>
 						<span>
 							<p><b>Прозрачность и безопасность</b> сделки,</br>возможность оформления смарт-контракта</p>
 						</span>
 						<span>
-							<p>Прозрачная цена, без нюансов. Вы можете воспользоваться <b>официальными акциями</b> от
-								дистрибьютора</p>
+							<p>Прозрачная цена, без нюансов. Вы можете воспользоваться <b>официальными акциями</b> от дистрибьютора</p>
 						</span>
 					</div>
 					<div class="col-three">
@@ -455,16 +410,12 @@
 						<span>Многократные визиты в салон,</br>прежде чем вы сможете купить свой автомобиль</span>
 						<span>Очень трудно найти нужный</br>автомобиль в нужной комплектации</span>
 						<span>Нужно посетить всех дилеров в городе,</br>чтобы выбрать подходящий вам автомобиль</span>
-						<span>Скудный выбор марок, моделей и комплектаций, ограниченный дилерами, представленными в
-							вашем городе</span>
+						<span>Скудный выбор марок, моделей и комплектаций, ограниченный дилерами, представленными в вашем городе</span>
 						<span>Навязывание дополнительных опций, кредитов, пакетов и услуг</span>
 						<span>Менеджеры, которые упорно будут навязывать</br>покупку и надоедать звонками</span>
-						<span>Долгий цикл покупки, сопровождающийся бесконечной бумажной волокитой и многократными
-							визитами в салон</span>
-						<span>Дилеры, заинтересованные в получении максимальной прибыли, часто скрывают полные условия
-							сделки</span>
-						<span>Все скидки искусственны – дилер всегда компенсирует свои издержки.Официальные акции от
-							дистрибьютора чаще всего не афишируются</span>
+						<span>Долгий цикл покупки, сопровождающийся бесконечной бумажной волокитой и многократными визитами в салон</span>
+						<span>Дилеры, заинтересованные в получении максимальной прибыли, часто скрывают полные условия сделки</span>
+						<span>Все скидки искусственны – дилер всегда компенсирует свои издержки.Официальные акции от дистрибьютора чаще всего не афишируются</span>
 					</div>
 				</div>
 			</div>

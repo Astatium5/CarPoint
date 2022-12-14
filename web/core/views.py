@@ -239,10 +239,12 @@ class APITemp:
 
         def get(self, request: HttpRequest, id: int) -> HttpResponse:
             car = Car.objects.get(id=id)
-            setTypeCar = SetCarType.objects.filter(car=car).get()
-            if setTypeCar.count == 0:
-                return JsonResponse({"response": False, "error": {"type": "WrongCount",
-                                     "message": "Количество авто равно 0"}})
+            setTypeCar = SetCarType.objects.filter(car=car)
+            if setTypeCar.exists():
+                setTypeCar = setTypeCar.get()
+                if setTypeCar.count == 0:
+                    return JsonResponse({"response": False, "error": {"type": "WrongCount",
+                                        "message": "Количество авто равно 0"}})
             return JsonResponse({"response": True, "car": car.to_dict()})
 
     class CreateEntryView(ListAPIView):

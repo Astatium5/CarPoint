@@ -12,7 +12,6 @@ api_requests: Requests = Requests()  # Init Requests object.
 async def chosen_inline_result_handler(chosen_result: ChosenInlineResult) -> Any:
     if chosen_result.result_id != -1:
         response: dict = api_requests.get_car_info(id=chosen_result.result_id)
-        print(response)
         if not response.get("response"):
             return await bot.send_message(chosen_result.from_user.id, text=response.get("error").get("message"))
         car: Union[Any, None] = response.get("car")

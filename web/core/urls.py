@@ -73,6 +73,6 @@ urlpatterns = [
          '/<str:transmission>/<str:engine_volume>',
           WebTemp.get_cars_by_engine_volume, name="get_cars_engine_volume"),
 
-    path('mailru-verificationefe11e8fecf3da53', WebTemp.mailru_verification, name="mailru_verification")
+    path('mailru-verificationefe11e8fecf3da53.html', WebTemp.mailru_verification, name="mailru_verification")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

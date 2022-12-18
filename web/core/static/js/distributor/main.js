@@ -2,12 +2,14 @@ $(document).ready(function(){
     $('#upload_file').change(function () {
       var _URL = window.URL || window.webkitURL;
       var preview = document.getElementById('company-image');
+      var head_preview = document.getElementById('head-company-image');
       var file = document.getElementById("upload_file").files[0];
 
       var reader = new FileReader();
 
       reader.onloadend = function () {
         preview.src = reader.result;
+        head_preview.src = reader.result;
       }
 
       if (file) {
@@ -45,8 +47,8 @@ function uploadFile(){
   if (!file){
     alert("Нужно выбрать файл для загрузки!");
   }else{
-    let modal = $(".modal")
-    modal.modal("show");
+    let shine_btn = document.getElementById('shine-button');
+    shine_btn.innerHTML = ' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
 
     let data = new FormData();
     data.append("file", file)
@@ -68,9 +70,8 @@ function uploadFile(){
               }
               refreshFileInput();
               if (data["response"]) {
-                const myToast = document.getElementById('doneToast');
-                let bsToast = new bootstrap.Toast(myToast, option);
-                bsToast.show();
+                shine_btn.innerHTML = 'Загрузить';
+                return alert('Файл успешно загружен!');
               }else{
                 if (data["type"] == "NotDistribAccount"){
                   const myToast = document.getElementById('failToast');
@@ -144,13 +145,7 @@ function saveCompanyData(){
       response.json().then(
           function (data) {
               if (data["response"]) {
-                let option  = {
-                  animation: true,
-                  delay: 5000
-                }
-                const myToast = document.getElementById('doneSaveCompanyDataToast');
-                let bsToast = new bootstrap.Toast(myToast, option);
-                bsToast.show();
+               return alert('Данные успешно сохранены!');
               }
           }
       )
@@ -283,3 +278,41 @@ function car_increase(car_id){
     )
   })
 }
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)
+  
+  // Validate that all variables exist
+  if(toggle && nav && bodypd && headerpd){
+  toggle.addEventListener('click', ()=>{
+  // show navbar
+  nav.classList.toggle('show')
+  // change icon
+  toggle.classList.toggle('bx-x')
+  // add padding to body
+  bodypd.classList.toggle('body-pd')
+  // add padding to header
+  headerpd.classList.toggle('body-pd')
+  })
+  }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header')
+  
+  /*===== LINK ACTIVE =====*/
+  const linkColor = document.querySelectorAll('.nav_link')
+  
+  function colorLink(){
+  if(linkColor){
+  linkColor.forEach(l=> l.classList.remove('active'))
+  this.classList.add('active')
+  }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+  
+   // Your code to run since DOM is loaded and ready
+  });

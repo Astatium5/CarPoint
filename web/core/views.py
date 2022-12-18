@@ -455,13 +455,16 @@ class DistributorTemp:
             # Return main page
             return redirect("distributor")
 
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if not user.is_superuser:
-                login(request, user)
-                return redirect("distributor")
+        if request.POST:
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if not user.is_superuser:
+                    login(request, user)
+                    return redirect("distributor")
+            else:
+                return render(request, "distributor/auth.html", {"message": "Неверные данные"})
         return render(request, "distributor/auth.html")
 
     def logout_view(request):

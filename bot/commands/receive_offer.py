@@ -12,14 +12,13 @@ from aiogram.utils.exceptions import MessageNotModified, BadRequest
 from objects.globals import dp, bot
 from objects import globals
 from utils.api.requests import Requests
+from utils.utils import filter
 from states.states import *
 from log.logger import logger
 from utils.converter import *
 from keyboard.keyboard import *
 from config.config import Config
 from . import start  # Use handler
-
-MAX_SHOW: int = 20
 
 PRICE_RANGE: dict = {
     '87506fd2b91be8b7ab7b59d069c42d40': {
@@ -370,46 +369,11 @@ async def get_max_power(message: Message, state: FSMContext) -> Message:
 
 @dp.inline_handler()
 async def inline_echo(query: InlineQuery) -> Any:
-    transmission: str = query.query
-    n: int = 0
-    items: list = []
-    prices: dict = []
-    mark_ids: list = []
     if not globals.response:
         return not_found(query)
-    is_any: Any = globals.response.get("is_any")
-    for car in globals.cars:
-        if car.get("transmission") == transmission:
-            id: Any = car.get("id")
-            title: Any = car.get("title")
-            price: Any = car.get("price")
-            image: Any = car.get("image")
-            mark_id = car.get("mark_id")
-            engine_volume: Any = car.get("engine").get("volume")
-            engine_power: Any = car.get("engine").get("power")
-            type_fuel: Any = car.get("engine").get("type_fuel")
-            wd: Any = car.get("wd")
-            special = car.get("special")
-            item: InlineQueryResultArticle = InlineQueryResultArticle(
-                id=id, title=title, input_message_content=InputTextMessageContent(title),
-                description=(F"Цена: {int(price)}₽\t"
-                             F"Объем: {engine_volume}\t"
-                             F"Мощность: {engine_power}\t"
-                             F"Тип: {type_fuel},\t"
-                             F"{wd}"),
-                hide_url=True, thumb_url=image)
-            if is_any:
-                if price not in prices and mark_id not in mark_ids:
-                    mark_ids.append(mark_id)
-                    items.append(item)
-                    n += 1
-            else:
-                if price not in prices:
-                    items.append(item)
-                    n += 1
-            prices.append(price)
-            if n == MAX_SHOW:
-                break
+    transmission: str = query.query
+    is_any: bool = globals.response.get("is_any")
+    items = filter(globals.cars, transmission, is_any)
     return await globals.bot.answer_inline_query(query.id, items, cache_time=3)
 
 

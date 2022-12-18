@@ -54,7 +54,7 @@
             <div id="d-order{{oder.pk}}" class="card order-card border-dark mb-2">
                 <div id="body-font-{{order.pk}}" class="card-body body-font">
                   <div class="btn-group" role="group" aria-label="Basic example">
-                    <button class="info-btn" onclick="distribEntryInfo('{{order.pk}}')"><i class="bi bi-info-circle"></i>
+                    <button class="info-btn" onclick="distribEntryInfo('{{order.pk}}')"><i class="bx bx-info-circle"></i>
                     <!--<button class="arrow-btn" onclick="goBack('body-font-{{order.pk}}')"><i class="bi bi-arrow-left-right"></i></button>-->
                   </div>
                   <h5 class="card-title text-center">Заявка #{{order.pk}}</button></h5>
@@ -63,34 +63,34 @@
                   </div>
                   <div class="la">
                     <div><span>
-                      <i class="bi bi-hourglass-split" title="Ожидает"></i>
+                      <i class="bx bx-hourglass" title="Ожидает"></i>
                     </span></div>
                     <div><span>
-                      <i class="bi bi-box-seam" title="Отгружен"></i>
+                      <i class="bx bx-package" title="Отгружен"></i>
                     </span></div>
                     <div><span>
-                      <i class="bi bi-car-front" title="В пути"></i>
+                      <i class="bx bx-car" title="В пути"></i>
                     </span></div>
                     <div><span>
-                      <i class="bi bi-person-check" title="Передан клиенту"></i>
+                      <i class="bx bx-user" title="Передан клиенту"></i>
                     </span></div>
                     <div><span>
-                      <i class="bi bi-credit-card" title="Ожидает оплаты"></i>
+                      <i class="bx bx-credit-card" title="Ожидает оплаты"></i>
                     </span></div>
                     <div><span>
-                      <i class="bi bi-bag-check" title="Закрыто"></i>
+                      <i class="bx bx-shopping-bag" title="Закрыто"></i>
                     </span></div>
                   </div>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="upload-btn-wrapper">
-                          <button class="upload-file-btn">Загрузить акт</button>
+                          <button class="upload-file-btn">Загрузить акт</button>  
                           <input id="act-{{order.pk}}" type="file" name="myfile"/>
                           <small class="act-text"></small>
                           {% if not order.distributor_file.act %}
-                            <small class="false-act-text"><i class="bi bi-file-earmark-excel false-icon"></i> Акт отсутствует</small>
+                            <small class="false-act-text text-bg-danger border rounded"><i class="bx bx-bookmark-alt-minus"></i> Акт отсутствует</small>
                           {% else %}
-                            <small class="true-act-text"><i class="bi bi-file-earmark-check true-icon"></i> Акт присутствует</small>
+                            <small class="true-act-text text-bg-success border rounded"><i class="bx bx-bookmark-alt-plus"></i> Акт присутствует</small>
                           {% endif %}
                         </div>
                     </li>
@@ -99,9 +99,9 @@
                             <button class="upload-file-btn">Загрузить соглашение</button>
                             <input id="agreement-{{order.pk}}" type="file" name="myfile"/>
                             {% if not order.distributor_file.agreement %}
-                              <small class="false-agreement-text"><i class="bi bi-file-earmark-excel false-icon"></i> Соглашение отсутствует</small>
+                              <small class="false-agreement-text text-bg-danger border rounded"><i class="bx bx-bookmark-alt-minus"></i> Соглашение отсутствует</small>
                             {% else %}
-                              <small class="true-agreement-text"><i class="bi bi-file-earmark-check true-icon"></i> Соглашение присутствует</small>
+                              <small class="true-agreement-text text-bg-success border rounded"><i class="bx bx-bookmark-alt-plus"></i> Соглашение присутствует</small>
                             {% endif %}
                         </div>
                     </li>
@@ -110,9 +110,9 @@
                             <button class="upload-file-btn">Загрузить счёт</button>
                             <input id="bill-{{order.pk}}" type="file" name="myfile"/>
                             {% if not order.distributor_file.bill %}
-                              <small class="false-bill-text"><i class="bi bi-file-earmark-excel false-icon"></i> Счёт отсутствует</small>
+                              <small class="false-bill-text text-bg-danger border rounded"><i class="bx bx-bookmark-alt-minus"></i> Счёт отсутствует</small>
                             {% else %}
-                              <small class="false-bill-text"><i class="bi bi-file-earmark-check true-icon"></i> Счёт присутствует</small>
+                              <small class="false-bill-text text-bg-success border rounded"><i class="bx bx-bookmark-alt-plus"></i> Счёт присутствует</small>
                             {% endif %}
                         </div>
                     </li>
@@ -129,11 +129,11 @@
                     <ul class="list-group list-group-flush">
                         {% if not order.admin_file.act %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-danger w-100 bg-gradient"><i class="bi bi-file-earmark-excel"></i> Акт отсутствует</span>
+                                <span class="badge text-bg-danger w-100 bg-gradient"><i class="bx bx-bookmark-alt-minus"></i> Акт отсутствует</span>
                             </li>
                         {% else %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bi bi-file-earmark-check"></i> Акт присутствует</span>
+                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bx bx-bookmark-alt-plus"></i> Акт присутствует</span>
                             </li>
                         {% endif %}
 
@@ -143,7 +143,7 @@
                             </li>
                         {% else %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bi bi-file-earmark-check"></i> Соглашение присутствует</span>
+                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bx bx-bookmark-alt-plus"></i> Соглашение присутствует</span>
                             </li>
                         {% endif %}
 
@@ -153,7 +153,7 @@
                             </li>
                         {% else %}
                             <li class="list-group-item">
-                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bi bi-file-earmark-check"></i> Счёт присутствует</span>
+                                <span class="badge text-bg-success w-100 bg-gradient"><i class="bx bx-bookmark-alt-plus"></i> Счёт присутствует</span>
                             </li>
                         {% endif %}
                       </ul>

@@ -429,7 +429,7 @@ class WebTemp:
 
 
 class DistributorTemp:
-    def distributor(request, cars=None, files=None):
+    def distributor(request, cars=None, files=None, is_home=True):
         if request.user.is_superuser:
             return redirect("/admin/")
 
@@ -446,9 +446,11 @@ class DistributorTemp:
         user = User.objects.get(pk=uid)
         files = File.objects.filter(user=user).all()
         cars = SetCarType.objects.filter(user=user, car__isnull=False).all()
+        distributor = Distributor.objects.filter(distributor=user).get()
         return render(request, "distributor/index.html",
                       {"username": user.username, "full_name": user.get_full_name(),
-                       "session_key": session_key, "cars": cars, "files": files})
+                       "session_key": session_key, "cars": cars, "files": files,
+                       "distributor": distributor, "is_home": is_home})
 
     def auth(request):
         if request.user.is_authenticated:
@@ -469,7 +471,8 @@ class DistributorTemp:
 
     def logout_view(request):
         logout(request)
-        return JsonResponse({"response": True})
+        return redirect('distributor')
+        # return JsonResponse({"response": True})
 
     def upload_csv_file(request, n=0):
         if not request.user.is_authenticated:
@@ -533,12 +536,13 @@ class DistributorTemp:
         return render(request, "distributor/profile.html",
                       {"username": user.username, "date_joined": user.date_joined, "distributor": distributor})
 
-    def cars(request):
+    def cars(request, is_car=True):
         if not request.user.is_authenticated:
             # Return main page
             return redirect("distributor")
-
-        return render(request, "distributor/cars.html")
+        user = user_obj(request)
+        distributor = Distributor.objects.filter(distributor=user).get()
+        return render(request, "distributor/cars.html", {"distributor": distributor, "is_car": is_car})
 
     def save_data(request):
         if not request.user.is_authenticated:
@@ -558,7 +562,7 @@ class DistributorTemp:
             distributor.save()
         return JsonResponse({"response": True})
 
-    def orders(request):
+    def orders(request, is_order=True):
         if not request.user.is_authenticated:
             # Return main page
             return redirect("distributor")
@@ -570,7 +574,7 @@ class DistributorTemp:
         else:
             distributor = distributor.get()
             orders = SetEntry.objects.filter(distributor=distributor).all()
-        return render(request, "distributor/orders.html", {"orders": orders})
+        return render(request, "distributor/orders.html", {"orders": orders, "distributor": distributor, "is_order": is_order})
 
     def upload_documents(request):
         if not request.user.is_authenticated:
@@ -605,7 +609,7 @@ class DistributorTemp:
             pk=id).get().to_dict(is_distributor=True)
         return JsonResponse({"response": True, "entry": entry})
 
-    def agreements(request):
+    def agreements(request, is_agreement=True):
         user = user_obj(request)
         distributor = Distributor.objects.filter(distributor=user)
         if not distributor.exists():
@@ -613,7 +617,8 @@ class DistributorTemp:
         else:
             distributor = distributor.get()
             agreements = Agreements.objects.filter(distributor=distributor).all()
-        return render(request, "distributor/agreements.html", {"agreements": agreements})
+        return render(request, "distributor/agreements.html", {"agreements": agreements, "distributor": distributor,
+                                                               "is_agreement": is_agreement})
 
     def car_increase(request):
         car_id = request.POST.get('car_id')

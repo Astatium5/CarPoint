@@ -1,4 +1,5 @@
 {% load static %}
+{% load define_action %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +10,15 @@
 
     <!-- Bootstrap -->
 	<link href="{% static 'css/distributor/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="{% static 'css/distributor/style.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark w-100">
+    <!--<nav class="navbar navbar-dark bg-dark w-100">
         <div class="container-fluid">
           <a class="navbar-brand">Distributor</a>
           <form class="d-flex" role="search" action="/distributor/profile" method="post">
@@ -51,10 +56,46 @@
             </div>
           </div>
           <div class="col py-3">
-            {% block sidebar_body %}{% endblock %}
           </div>
         </div>
-      </div>
+      </div>-->
+      <body id="body-pd">
+        <header class="header" id="header">
+            <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+            <div class="header_img"> 
+              <form class="d-flex" role="search" action="/distributor/profile" method="post">
+                {% csrf_token %}
+                <button id="profile-btn" type="submit"><img id="head-company-image" src="{{distributor.image.url}}"></button>
+              </form>
+            </div>
+        </header>
+        <div class="l-navbar" id="nav-bar">
+            <nav class="nav">
+                <div> <a href="" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Distributor</span> </a>
+                  {% if is_home %}
+                    {% define 'active' as is_home %}
+                  {% elif is_car %}
+                    {% define 'active' as is_car %}
+                  {% elif is_order %}
+                    {% define 'active' as is_order %}
+                  {% elif is_agreement %}
+                    {% define 'active' as is_agreement %}
+                  {% endif %}
+                    <div class="nav_list">
+                      <a href="/distributor" class="nav_link {{is_home}}"> <i class="bx bx-building-house nav_icon"></i><span class="ms-1 d-none d-sm-inline">Главная страница</span> </a>
+                      <a href="/distributor/cars" class="nav_link {{is_car}}"> <i class='bx bx-car nav_icon'></i> <span class="nav_name">Загрузить авто</span> </a>
+                      <a href="/distributor/orders" class="nav_link {{is_order}}"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Заказы</span> </a>
+                      <a href="/distributor/agreements" class="nav_link {{is_agreement}}"> <i class='bx bx-file nav_icon'></i> <span class="nav_name">Соглашения</span></a>
+                    </div>
+                </div>
+                <a href="/logout" class="nav_link"><i class='bx bx-log-out nav_icon'></i><span class="nav_name">Выйти</span></a>
+            </nav>
+        </div>
+        <!--Container Main start-->
+        <div class="height-100">
+          {% block sidebar_body %}{% endblock %}
+        </div>
+        <!--Container Main end-->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

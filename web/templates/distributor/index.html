@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Дистрибьютор{% endblock%}
 {% block sidebar_body %}
-<div class="container text-center">
+<div class="container text-center my-custom-scrollbar">
   <div class="row">
     <div class="col">
       <div id="cars" class="container-fluid my-custom-scrollbar">
@@ -24,9 +24,9 @@
                   <img src="{{car.image}}" class="img-fluid rounded-start" width="170">
                 {% endif %}
                 <div class="input-group inc-dec-input-group">
-                  <button type="button" class="btn btn-primary dec-btn" onclick="car_decrease('{{car.id}}');"><i class="bi bi-dash"></i></button>
+                  <button type="button" class="btn btn-primary dec-btn" onclick="car_decrease('{{car.id}}');"><i class="bx bx-minus"></i></button>
                   <input id="value_{{car.id}}" type="text" class="form-control text-center dec-inc-input" aria-label="Username" aria-describedby="basic-addon1" value="{{count}}" readonly>
-                  <button type="button" class="btn btn-primary inc-btn" onclick="car_increase('{{car.id}}');"><i class="bi bi-plus"></i></button>
+                  <button type="button" class="btn btn-primary inc-btn" onclick="car_increase('{{car.id}}');"><i class="bx bx-plus"></i></button>
                 </div>
               </div>
               <div class="col-md-8">

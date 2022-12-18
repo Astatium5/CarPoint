@@ -2,15 +2,6 @@
 {% load static %}
 {% block title %}Загрузка автомобилей{% endblock %}
 {% block sidebar_body %}
-<div id="doneToast" class="toast align-items-center text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body">
-        Файл успешно загружен!
-      </div>
-      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="closeToast('doneToast')"></button>
-    </div>
-</div>
-
 <div id="failToast" class="toast align-items-center text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="d-flex">
     <div class="toast-body">
@@ -20,7 +11,7 @@
   </div>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog">
+<!--<div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -35,14 +26,13 @@
       </p>
     </div>
   </div>
-</div>
-
+</div>-->
 <div id="upload-cars-container" class="container-fluid">
     <label for="docs" class="drop-container">
         <span class="drop-title">Нажмите на область</span>
         Или
         <input type="file" id="docs" accept=".csv" required>
     </label>
-    <a class="shine-button" type="submit" onclick="uploadFile()">Загрузить</a>
+    <a id="shine-button" class="shine-button" type="submit" onclick="uploadFile()">Загрузить</a>
 </div>
 {% endblock %}

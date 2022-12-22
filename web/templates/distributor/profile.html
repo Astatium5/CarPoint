@@ -2,7 +2,8 @@
 {% load static %}
 {% block title %}Профиль{% endblock%}
 {% block sidebar_body %}
-<div id="profileCard" class="card mb-3">
+<div class="container">
+  <div id="profileCard" class="card mb-3">
     <div class="alert alert-dark text-center" role="alert">
         <strong>Данные компании</strong>
     </div>
@@ -31,8 +32,8 @@
           <input class="margin" type="file" formnovalidate id="upload_file" name="file" accept=".jpg,.png">
         </div>
         <button id="save-company-data" type="button" class="btn btn-outline-primary" onclick="saveCompanyData()">Сохранить изменения</button>
-        <!--<button type="button" class="btn btn-outline-danger" onclick="logout()">Выйти</button>-->
       </div>
     </div>
+  </div>
 </div>
 {% endblock %}

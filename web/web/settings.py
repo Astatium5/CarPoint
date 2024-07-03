@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'parser',
+    # 'parser',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +77,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'web.wsgi.application'
+"""
 CSRF_TRUSTED_ORIGINS = [os.getenv('HOST')]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -87,6 +88,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     os.getenv('HOST')
 )
+"""
 
 
 # Database

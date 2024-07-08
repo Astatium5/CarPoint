@@ -186,7 +186,7 @@ class SetColor(admin.ModelAdmin):
 @admin.register(Distributor)
 class Distributor(admin.ModelAdmin):
     fields = ["distributor", "title", "image"]
-    readonly_fields = ("distributor",)
+    # readonly_fields = ("distributor",)
     list_display = ["distributor", "title", "get_image"]
     search_fields = ["title"]
     search_help_text = "Для поиска введите название дистрибьютора"
